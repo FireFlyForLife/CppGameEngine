@@ -7,6 +7,9 @@ and may not be redistributed without written permission.*/
 #include <stdio.h>
 #include <string>
 #include "Input.h"
+#include <functional>
+
+using namespace GameEngine;
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 640;
@@ -149,6 +152,24 @@ SDL_Texture* loadTexture(std::string path)
 	return newTexture;
 }
 
+void lalala(GameEngine::KeyClickArgs* args, int i) {
+	SDL_Log(std::to_string(args->down).c_str());
+	SDL_Log(std::to_string(args->scan_code).c_str());
+}
+
+void mouseLis(MouseClickArgs* args, int i) {
+	std::string cord = std::to_string(args->point.x) + "," + std::to_string(args->point.y);
+	SDL_Log(cord.c_str());
+	SDL_Log(std::to_string(args->down).c_str());
+	SDL_Log(std::to_string(args->scan_code).c_str());
+}
+
+void mouseMov(MouseMoveArgs* args, int i) {
+	SDL_Log(std::to_string(args->dragging).c_str());
+	std::string cord = std::to_string(args->point.x) + "," + std::to_string(args->point.y);
+	SDL_Log(cord.c_str());
+}
+
 int main(int argc, char* args[])
 {
 	//Start up SDL and create window
@@ -171,6 +192,16 @@ int main(int argc, char* args[])
 			//Event handler
 			SDL_Event e;
 
+			decltype(GameEngine::keyClickListeners)::callbackType func = lalala;
+			decltype(mouseClickListeners)::callbackType mfunc = mouseLis;
+			keyUpListeners.addListener(func);
+			keyDownListeners.addListener(func);
+			mouseDownListeners.addListener(mfunc);
+			mouseUpListeners.addListener(mfunc);
+			decltype(mouseMoveListeners)::callbackType mofunc = mouseMov;
+			mouseMoveListeners.addListener(mofunc);
+			
+
 			//While application is running
 			while (!quit)
 			{
@@ -184,7 +215,22 @@ int main(int argc, char* args[])
 					}
 					else if (e.type == SDL_EventType::SDL_KEYDOWN) 
 					{
-						e.key.keysym.sym == SDLK_LEFT;
+						//GameEngine::Input::evtsrc.call((int)e.key.keysym.scancode, "Please no error!");
+						
+						GameEngine::KeyClickArgs args(true, e.key.keysym.scancode);
+						GameEngine::keyDownListeners.call(&args, 0);
+					}
+					else if (e.type == SDL_EventType::SDL_KEYUP) {
+						GameEngine::KeyClickArgs args(false, e.key.keysym.scancode);
+						GameEngine::keyUpListeners.call(&args, 0);
+					}
+					else if (e.type == SDL_EventType::SDL_MOUSEBUTTONDOWN) {
+						MouseClickArgs args({e.button.x, e.button.y}, true, e.button.button);
+						mouseDownListeners.call(&args, 0);
+					}
+					else if (e.type == SDL_EventType::SDL_MOUSEMOTION) {
+						MouseMoveArgs args({ e.motion.x, e.motion.y }, 0);
+						mouseMoveListeners.call(&args, 0);
 					}
 				}
 
