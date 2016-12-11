@@ -1,7 +1,10 @@
 #include "Tile.h"
 
 namespace objects {
+	Tile::Tile()
+	{
 
+	}
 	Tile::Tile(std::string textureLocation)
 	{
 		texture = new Texture(textureLocation);

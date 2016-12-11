@@ -1,6 +1,8 @@
 #include <vector>
+#include <algorithm>
 #include <functional>
 #include <stdio.h>
+#include <map>
 
 namespace GameEngine {
 	template<typename... P>
@@ -8,29 +10,39 @@ namespace GameEngine {
 	public:
 		using callbackType = std::function<void(P...)>;
 
-		bool addListener(const callbackType& handler) {
-			listeners.push_back(handler);
-			return true;
+		int add(const callbackType& handler) {
+			listeners.insert(std::pair<int, callbackType>( index, handler ));
+			return index++;
 		}
 
-		bool delListener(const callbackType& handler) {
-			return false;
+		callbackType* remove(int id) {
+			auto it = listeners.find(id);
+			if (it != listeners.end()) {
+				callbackType callback = it->second;
+				listeners.erase(it);
+				return &callback;
+			}
+
+			return NULL;
 		}
 
 		void call(P&& ... params) {
-			for each (callbackType handler in listeners)
+			for each (auto handler_pair in listeners)
 			{
-				handler(std::forward<P>(params)...);
+				handler_pair.second(std::forward<P>(params)...);
 			}
 		}
 
-		//EventSource& operator+=(const callbackType& handler) { //TODO: test if this works
-		//	this->addListener(handler);
-		//}
-		//EventSource& operator-=(const callbackType& handler) {
-		//	this->delListener(handler);
-		//}
+		EventSource& operator+=(const callbackType& handler) { //this can't return a id, not a good idea :/
+			this->add(handler);
+			return *this;
+		}
+		EventSource& operator-=(const callbackType& handler) { 
+			//this->remove(handler); <==== this is the reason operator overloading doesn't work, I cant compare std:function's so i cant remove the correct listener
+			return *this;
+		}
 	protected:
-		std::vector<callbackType> listeners;
+		std::map<int, callbackType> listeners;
+		int index = 0;
 	};
 }

@@ -5,34 +5,10 @@
 
 namespace GameEngine {
 	/*
-		TODO: Which events need to be fired? And which Structs do they have.
+		TODO: Which events need to be fired?
 	*/
-	/*struct MouseMoveArgs {
-	public:
-		SDL_Point point;
-		bool dragging;
-
-		MouseMoveArgs();
-		MouseMoveArgs(SDL_Point point, bool dragging);
-	};
-
-	struct MouseClickArgs {
-	public:
-		SDL_Point point;
-		bool down;
-		__int8 scan_code;
-
-		MouseClickArgs();
-		MouseClickArgs(SDL_Point point, bool down, __int8 scan_code);
-	};
-
-	struct KeyClickArgs {
-		bool down;
-		__int16 scan_code;
-
-		KeyClickArgs();
-		KeyClickArgs(bool down, __int16 scan_code);
-	};*/
+	//TODO: have the states of input as well
+	
 
 	EventSource<MouseMoveArgs*, int> mouseMoveListeners;
 	EventSource<MouseClickArgs*, int> mouseClickListeners;
@@ -42,4 +18,28 @@ namespace GameEngine {
 	EventSource<KeyClickArgs*, int> keyClickListeners;
 	EventSource<KeyClickArgs*, int> keyDownListeners;
 	EventSource<KeyClickArgs*, int> keyUpListeners;
+
+	void handle_SDL_Event(SDL_Event* e) {
+		if (e->type == SDL_EventType::SDL_KEYDOWN)
+		{
+			GameEngine::KeyClickArgs args(true, e->key.keysym.scancode);
+			GameEngine::keyDownListeners.call(&args, 0);
+		}
+		else if (e->type == SDL_EventType::SDL_KEYUP) {
+			GameEngine::KeyClickArgs args(false, e->key.keysym.scancode);
+			GameEngine::keyUpListeners.call(&args, 0);
+		}
+		else if (e->type == SDL_EventType::SDL_MOUSEBUTTONDOWN) {
+			MouseClickArgs args({ e->button.x, e->button.y }, true, e->button.button);
+			mouseDownListeners.call(&args, 0);
+		}
+		else if (e->type == SDL_EventType::SDL_MOUSEBUTTONUP) {
+			MouseClickArgs args({ e->button.x, e->button.y }, false, e->button.button);
+			mouseUpListeners.call(&args, 0);
+		}
+		else if (e->type == SDL_EventType::SDL_MOUSEMOTION) {
+			MouseMoveArgs args({ e->motion.x, e->motion.y }, e->motion.state);
+			mouseMoveListeners.call(&args, 0);
+		}
+	}
 }

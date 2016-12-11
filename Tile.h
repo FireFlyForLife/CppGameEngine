@@ -12,6 +12,7 @@ namespace objects {
 		Texture* texture = NULL;
 
 	public:
+		Tile();
 		Tile(std::string textureLocation);
 
 		//TODO: Return Point Struct

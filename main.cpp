@@ -194,13 +194,18 @@ int main(int argc, char* args[])
 
 			decltype(GameEngine::keyClickListeners)::callbackType func = lalala;
 			decltype(mouseClickListeners)::callbackType mfunc = mouseLis;
-			keyUpListeners.addListener(func);
-			keyDownListeners.addListener(func);
-			mouseDownListeners.addListener(mfunc);
-			mouseUpListeners.addListener(mfunc);
+			/*keyUpListeners.add(func);
+			keyDownListeners.add(func);
+			mouseDownListeners.add(mfunc);
+			mouseUpListeners.add(mfunc);*/
+			keyUpListeners.add( func);
+			keyDownListeners.add(func);
+			mouseDownListeners.add(mfunc);
+			mouseUpListeners.add(mfunc);
 			decltype(mouseMoveListeners)::callbackType mofunc = mouseMov;
-			mouseMoveListeners.addListener(mofunc);
-			
+			//mouseMoveListeners.add(mofunc);
+			int mofunc_id = mouseMoveListeners.add(mofunc);
+			//mouseMoveListeners.remove(mofunc_id);
 
 			//While application is running
 			while (!quit)
@@ -213,24 +218,8 @@ int main(int argc, char* args[])
 					{
 						quit = true;
 					}
-					else if (e.type == SDL_EventType::SDL_KEYDOWN) 
-					{
-						//GameEngine::Input::evtsrc.call((int)e.key.keysym.scancode, "Please no error!");
-						
-						GameEngine::KeyClickArgs args(true, e.key.keysym.scancode);
-						GameEngine::keyDownListeners.call(&args, 0);
-					}
-					else if (e.type == SDL_EventType::SDL_KEYUP) {
-						GameEngine::KeyClickArgs args(false, e.key.keysym.scancode);
-						GameEngine::keyUpListeners.call(&args, 0);
-					}
-					else if (e.type == SDL_EventType::SDL_MOUSEBUTTONDOWN) {
-						MouseClickArgs args({e.button.x, e.button.y}, true, e.button.button);
-						mouseDownListeners.call(&args, 0);
-					}
-					else if (e.type == SDL_EventType::SDL_MOUSEMOTION) {
-						MouseMoveArgs args({ e.motion.x, e.motion.y }, 0);
-						mouseMoveListeners.call(&args, 0);
+					else {
+						GameEngine::handle_SDL_Event(&e);
 					}
 				}
 

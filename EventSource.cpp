@@ -5,13 +5,13 @@
 
 namespace GameEngine {
 	/*template<typename P>
-	bool EventSource<P>::addListener(const thisHandler & handler)
+	bool EventSource<P>::add(const thisHandler & handler)
 	{
 		listeners.push_back(handler);
 		return true;
 	}
 	template<typename P>
-	bool EventSource<P>::delListener(const thisHandler & handler)
+	bool EventSource<P>::remove(const thisHandler & handler)
 	{
 		
 		return false;
