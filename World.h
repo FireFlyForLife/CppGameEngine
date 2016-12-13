@@ -6,7 +6,7 @@ namespace GameEngine {
 	class World
 	{
 	public:
-		TileMap map;
+		TileMap* map;
 		//std::vector<void> entities;//TODO: Create entity class
 
 	public:

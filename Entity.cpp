@@ -1,6 +1,6 @@
 #include "Entity.h"
 
-namespace objects {
+namespace GameEngine {
 
 	Entity::Entity()
 	{

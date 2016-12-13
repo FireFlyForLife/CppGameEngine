@@ -1,8 +1,7 @@
 #include "GameObject.h"
-namespace objects {
 
+namespace GameEngine {
 	void GameObject::Update()
 	{
 	}
-
 }

@@ -3,7 +3,7 @@
 #include "GameObject.h"
 #include <string>
 
-namespace objects {
+namespace GameEngine {
 
 	class Tile : public GameObject{
 	protected:

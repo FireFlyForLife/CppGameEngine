@@ -3,7 +3,7 @@
 namespace GameEngine {
 	World::World()
 	{
-
+		map = new TileMap(10, 10);
 	}
 
 

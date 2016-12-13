@@ -1,6 +1,6 @@
 #include "Tile.h"
 
-namespace objects {
+namespace GameEngine {
 	Tile::Tile()
 	{
 

@@ -1,6 +1,6 @@
 #pragma once
 
-namespace objects {
+namespace GameEngine {
 	class GameObject {
 	public:
 		virtual void Update();

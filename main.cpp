@@ -8,6 +8,8 @@ and may not be redistributed without written permission.*/
 #include <string>
 #include "Input.h"
 #include <functional>
+#include "World.h"
+#include "Point.h"
 
 using namespace GameEngine;
 
@@ -37,6 +39,7 @@ SDL_Renderer* gRenderer = NULL;
 
 //Current displayed texture
 SDL_Texture* gTexture = NULL;
+GameEngine::World game_world;
 
 bool init()
 {
@@ -186,6 +189,9 @@ int main(int argc, char* args[])
 		}
 		else
 		{
+			Point p{ 4 ,3 };
+			printf(p.toString().c_str());
+
 			//Main loop flag
 			bool quit = false;
 

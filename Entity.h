@@ -2,7 +2,7 @@
 #include "Texture.h"
 #include "GameObject.h"
 
-namespace objects {
+namespace GameEngine {
 
 	class Entity : public GameObject {
 	protected:
