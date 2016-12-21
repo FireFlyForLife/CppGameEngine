@@ -9,6 +9,8 @@ namespace GameEngine
 	class TileMap
 	{
 	public:
+		const int width, height;
+
 		TileMap(int width = 10, int height = 10);
 		~TileMap();
 

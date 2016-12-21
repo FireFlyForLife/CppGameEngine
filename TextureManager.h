@@ -23,7 +23,7 @@ namespace GameEngine {
 		TextureManager(SDL_Renderer*);
 		~TextureManager();
 
-		std::unique_ptr<SingleTexture> get(size_t);
+		SingleTexture* get(size_t);
 		int add(SDL_Texture*, string name);
 
 		SDL_Texture* getDefault();

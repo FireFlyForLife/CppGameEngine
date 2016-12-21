@@ -29,12 +29,12 @@ namespace GameEngine {
 		SDL_DestroyTexture(default_texture);
 	}
 
-	TextureManager::texture_ptr TextureManager::get(size_t id)
+	SingleTexture* TextureManager::get(size_t id)
 	{
 		if (id > texture_array.size() || id < 0)
 			return NULL;
 
-		return texture_array[id].
+		return &texture_array[id];//TODO: Make sure the decontructor deletes all structs
 	}
 
 	SDL_Texture * TextureManager::getDefault()
