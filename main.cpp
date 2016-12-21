@@ -4,7 +4,7 @@ and may not be redistributed without written permission.*/
 //Using SDL, SDL_image, standard IO, and strings
 #include <SDL.h>
 #include <SDL_image.h>
-#include <stdio.h>
+#include <iostream>
 #include <string>
 #include "Input.h"
 #include <functional>
@@ -49,7 +49,7 @@ bool init()
 	//Initialize SDL
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
-		printf("SDL could not initialize! SDL Error: %s\n", SDL_GetError());
+		std::cout << "SDL could not initialize! SDL Error: %s\n" << SDL_GetError() << std::endl;
 		success = false;
 	}
 	else
@@ -57,14 +57,14 @@ bool init()
 		//Set texture filtering to linear
 		if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"))
 		{
-			printf("Warning: Linear texture filtering not enabled!");
+			std::cout << "Warning: Linear texture filtering not enabled!" << std::endl;
 		}
 
 		//Create window
 		gWindow = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 		if (gWindow == NULL)
 		{
-			printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
+			std::cout << "Window could not be created! SDL Error: %s\n" << SDL_GetError() << std::endl;
 			success = false;
 		}
 		else
@@ -73,7 +73,7 @@ bool init()
 			gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
 			if (gRenderer == NULL)
 			{
-				printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
+				std::cout << "Renderer could not be created! SDL Error: %s\n" << SDL_GetError() << std::endl;
 				success = false;
 			}
 			else
@@ -85,7 +85,7 @@ bool init()
 				int imgFlags = IMG_INIT_PNG;
 				if (!(IMG_Init(imgFlags) & imgFlags))
 				{
-					printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
+					std::cout << "SDL_image could not initialize! SDL_image Error: %s\n" << IMG_GetError() << std::endl;
 					success = false;
 				}
 			}
@@ -104,7 +104,7 @@ bool loadMedia()
 	gTexture = loadTexture("Art/Maybe_Grass.png");
 	if (gTexture == NULL)
 	{
-		printf("Failed to load texture image!\n");
+		std::cout << "Failed to load texture image!" << std::endl;
 		success = false;
 	}
 
@@ -137,7 +137,7 @@ SDL_Texture* loadTexture(std::string path)
 	SDL_Surface* loadedSurface = IMG_Load(path.c_str());
 	if (loadedSurface == NULL)
 	{
-		printf("Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError());
+		std::cout << "Unable to load image %s! SDL_image Error: %s\n" << path.c_str() << IMG_GetError() << std::endl;
 	}
 	else
 	{
@@ -145,7 +145,7 @@ SDL_Texture* loadTexture(std::string path)
 		newTexture = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
 		if (newTexture == NULL)
 		{
-			printf("Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError());
+			std::cout << "Unable to create texture from %s! SDL Error: %s\n" << path.c_str() << SDL_GetError() << std::endl;
 		}
 
 		//Get rid of old loaded surface
@@ -178,19 +178,19 @@ int main(int argc, char* args[])
 	//Start up SDL and create window
 	if (!init())
 	{
-		printf("Failed to initialize!\n");
+		std::cout << "Failed to initialize!" << std::endl;
 	}
 	else
 	{
 		//Load media
 		if (!loadMedia())
 		{
-			printf("Failed to load media!\n");
+			std::cout << "Failed to load media!" << std::endl;
 		}
 		else
 		{
 			Point p{ 4 ,3 };
-			printf(p.toString().c_str());
+			std::cout << p.toStr() << std::endl;
 
 			//Main loop flag
 			bool quit = false;

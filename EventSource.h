@@ -1,7 +1,6 @@
 #include <vector>
 #include <algorithm>
 #include <functional>
-#include <stdio.h>
 #include <map>
 
 namespace GameEngine {

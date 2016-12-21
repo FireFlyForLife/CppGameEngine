@@ -12,9 +12,9 @@ namespace GameEngine
 		TileMap(int width = 10, int height = 10);
 		~TileMap();
 
-		Tile* at(Point p);
-		void setTile(Tile, Point);
-		bool blocking(Point p);
+		Tile* at(Point);
+		void set(Tile*, Point);
+		bool blocking(Point);
 	protected:
 		std::vector<std::vector<Tile*>> tiles;
 	};

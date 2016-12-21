@@ -21,4 +21,20 @@ namespace GameEngine
 			}
 		}
 	}
+
+	Tile * TileMap::at(Point p)
+	{
+		return tiles[p.x][p.y];
+	}
+
+	void TileMap::set(Tile* tile, Point p)
+	{
+		tiles[p.x][p.y] = tile;
+	}
+
+	bool TileMap::blocking(Point p)
+	{
+		Tile* tile = at(p);
+		return tile->blocking();
+	}
 }

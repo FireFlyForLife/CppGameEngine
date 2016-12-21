@@ -7,9 +7,9 @@ namespace GameEngine {
 
 	class Tile : public GameObject{
 	protected:
-		__int32 x = 0; 
+		__int32 x = 0;
 		__int32 y = 0;
-		Texture* texture = NULL;
+		uint16_t texture = NULL;
 
 	public:
 		Tile();
@@ -20,6 +20,10 @@ namespace GameEngine {
 		__int32 GetY();
 		void SetX(__int32 x);
 		void SetY(__int32 y);
+		
+		virtual bool blocking();
+		virtual int weight();
+
 		
 	};
 

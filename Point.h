@@ -30,10 +30,8 @@ struct Point
 		return Point(x / point.x, y / point.y);
 	}
 
-	std::string toString() const;
+	std::string toStr() const;
 
 	operator SDL_Point() const;
-
-	operator std::string() const;
 };
 

@@ -1,7 +1,5 @@
 #pragma once
 #include "EventSource.h"
-#include <stdio.h>
-#include <string>
 
 namespace GameEngine {
 	/*template<typename P>

@@ -7,7 +7,7 @@ namespace GameEngine {
 	}
 	Tile::Tile(std::string textureLocation)
 	{
-		texture = new Texture(textureLocation);
+		texture = NULL;
 	}
 
 	__int32 Tile::GetX()
@@ -27,6 +27,16 @@ namespace GameEngine {
 	void Tile::SetY(__int32 y)
 	{
 		this->y = y;
+	}
+
+	bool Tile::blocking()
+	{
+		return false;
+	}
+
+	int Tile::weight()
+	{
+		return 1;
 	}
 
 }
