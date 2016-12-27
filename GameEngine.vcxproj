@@ -126,6 +126,7 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Point.cpp" />
+    <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureManager.cpp" />
@@ -143,6 +144,7 @@
     <ClInclude Include="Includes.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Point.h" />
+    <ClInclude Include="Rectangle.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureManager.h" />

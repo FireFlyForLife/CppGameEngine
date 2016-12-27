@@ -14,8 +14,6 @@ namespace GameEngine {
 
 	void Renderer::renderTileMap(TileMap& map)
 	{
-		for (size_t i = 0; i < map.width; i++) {
-			std::array<int, map.width> gello;
-		}
+		//Get a list of pointers
 	}
 }

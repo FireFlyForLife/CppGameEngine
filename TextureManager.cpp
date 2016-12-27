@@ -4,41 +4,111 @@
 namespace GameEngine {
 	TextureManager::TextureManager(SDL_Renderer* renderer) : renderer(renderer)
 	{
-		Uint32 rMask = 0x4B000000;
-		Uint32 gMask = 0x00000000;
-		Uint32 bMask = 0x00008200;
-		Uint32 aMask = 0x000000FF;
-		SDL_Surface* default_surface = SDL_CreateRGBSurface(0, 16, 16, 16,
+		Uint32 rMask, gMask, bMask, aMask;
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+		rMask = 0xff000000;
+		gMask = 0x00ff0000;
+		bMask = 0x0000ff00;
+		aMask = 0x000000ff;
+#else
+		rMask = 0x000000ff;
+		gMask = 0x0000ff00;
+		bMask = 0x00ff0000;
+		aMask = 0xff000000;
+#endif
+
+		SDL_Surface* default_surface = SDL_CreateRGBSurface(0, 16, 16, 32,
 			rMask, gMask, bMask, aMask);
 
-		SDL_Rect inner{ 1, 1, 14, 14 };
-		SDL_FillRect(default_surface, &inner, 0x9400D3FF);
+		SDL_Rect bg{ 0, 0, 16, 16 };
+		SDL_FillRect(default_surface, &bg, SDL_MapRGBA(default_surface->format, 75, 0, 130, 255));
 
-		default_texture = SDL_CreateTextureFromSurface(renderer, default_surface);
+		SDL_Rect inner{ 1, 1, 14, 14 };
+		SDL_FillRect(default_surface, &inner, SDL_MapRGBA(default_surface->format, 75, 0, 130, 200));
+
+		SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, default_surface);
+		default_texture = new SingleTexture();
+		default_texture->raw_texture = texture;
+		default_texture->bounds = { 0,0,16,16 };
 
 		SDL_FreeSurface(default_surface);
 	}
 
 	TextureManager::~TextureManager()
 	{
-		for (int i = 0; i < raw_texture_array.size(); i++) {
-			SDL_Texture* texture = raw_texture_array[i].get();
+		std::list<SDL_Texture*>::const_iterator iterator;
+		for (iterator = raw_texture_list.begin(); iterator != raw_texture_list.end(); ++iterator) {
+			SDL_Texture* texture = *iterator;
 			SDL_DestroyTexture(texture);
 		}
 
-		SDL_DestroyTexture(default_texture);
+		for each (SingleTexture* single_texture in texture_array)
+		{
+			delete single_texture;
+		}
+
+		SDL_DestroyTexture(default_texture->raw_texture);
+		delete default_texture;
 	}
 
-	SingleTexture* TextureManager::get(size_t id)
+	SingleTexture& TextureManager::get(size_t id)
 	{
-		if (id > texture_array.size() || id < 0)
-			return NULL;
+		if (id > index || id < 0) {
+			return *default_texture;
+		}
 
-		return &texture_array[id];//TODO: Make sure the decontructor deletes all structs
+		return *texture_array[id];//TODO: Make sure the decontructor deletes all structs
 	}
 
-	SDL_Texture * TextureManager::getDefault()
+	SingleTexture& TextureManager::get(string name)
 	{
-		return default_texture;
+		std::unordered_map<string, size_t>::iterator iterator = id_dictionairy.find(name);
+		if (iterator != id_dictionairy.end()) {
+			size_t id = iterator->second;
+			
+			return get(id);
+		}
+
+		return *default_texture;
+	}
+
+	size_t TextureManager::add(SDL_Texture* texture, string name)
+	{
+		auto raw_texture = get_raw_texture(texture);
+		if (!raw_texture) {
+			raw_texture = texture;
+			raw_texture_list.push_back(raw_texture);
+		}
+		//TODO: Finish adding SingleTexture
+
+		//TODO: Increment index
+
+		return 0;
+	}
+
+	SingleTexture& TextureManager::getDefault()
+	{
+		return *default_texture;
+	}
+
+	SDL_Texture* TextureManager::get_raw_texture(SDL_Texture * texture)
+	{
+		for each (SDL_Texture* texture_raw in raw_texture_list)
+		{
+			if (texture_raw == texture) {
+				return texture_raw;
+			}
+		}
+		return nullptr;
+	}
+	SingleTexture* TextureManager::get_SingleTexture(SDL_Texture* texture_ptr, SDL_Rect& bounds)
+	{
+		for each (SingleTexture* single_texture in texture_array)
+		{
+			if (single_texture->raw_texture == texture_ptr && single_texture->bounds == bounds) {
+				return single_texture;
+			}
+		}
+		return nullptr;
 	}
 }
