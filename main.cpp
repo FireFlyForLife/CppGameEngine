@@ -1,7 +1,4 @@
-/*This source code copyrighted by Lazy Foo' Productions (2004-2015)
-and may not be redistributed without written permission.*/
-
-//Using SDL, SDL_image, standard IO, and strings
+#pragma once
 #include <SDL.h>
 #include <SDL_image.h>
 #include <iostream>
@@ -11,6 +8,8 @@ and may not be redistributed without written permission.*/
 #include "World.h"
 #include "Point.h"
 #include "TextureManager.h"
+#include "Globals.h"
+//#include "Renderer.h"
 
 using namespace GameEngine;
 
@@ -42,8 +41,10 @@ SDL_Renderer* gRenderer = NULL;
 SDL_Texture* gTexture = NULL;
 
 GameEngine::World* game_world = nullptr;
-GameEngine::TextureManager* texture_manager = nullptr;
-using namespace GameEngine;
+
+//GameEngine::TextureManager* texture_manager = nullptr;
+//GameEngine::Renderer* renderer = nullptr;
+//using namespace GameEngine;
 bool init()
 {
 	//Initialization flag
@@ -176,11 +177,6 @@ void mouseMov(MouseMoveArgs* args, int i) {
 	SDL_Log(cord.c_str());
 }
 
-//TODO: Ctrl x this to the renderer
-void renderSingleTexture(const SingleTexture& texture, SDL_Rect* target) {
-	SDL_RenderCopy(gRenderer, texture.raw_texture, &((SDL_Rect)texture.bounds), target);
-}
-
 int main(int argc, char* args[])
 {
 	//Start up SDL and create window
@@ -201,7 +197,10 @@ int main(int argc, char* args[])
 			std::cout << p.toStr() << std::endl;
 
 			game_world = new World();
-			texture_manager = new TextureManager(gRenderer);
+			//renderer = new Renderer(gRenderer);
+			//texture_manager = new TextureManager(gRenderer);
+
+			//Universal::texture_manager.setupDefault(gRenderer);
 
 			//Main loop flag
 			bool quit = false;
@@ -237,16 +236,17 @@ int main(int argc, char* args[])
 				//Clear screen
 				SDL_RenderClear(gRenderer);
 
-				SingleTexture& texture = texture_manager->get(1);
-
+				//SingleTexture& texture = Universal::texture_manager.get(1);
+				//renderer->renderTileMap(*game_world->map);
 				//Render texture to screen
-				for (int x = 0; x < SCREEN_WIDTH; x += texturesize) {
-					for (int y = 0; y < SCREEN_HEIGHT; y += texturesize) {
-						SDL_Rect rect = { x, y, texturesize, texturesize };
-						//SDL_RenderCopy(gRenderer, gTexture, NULL, &rect);
-						renderSingleTexture(texture, &rect);
-					}
-				}
+				//for (int x = 0; x < SCREEN_WIDTH; x += texturesize) {
+				//	for (int y = 0; y < SCREEN_HEIGHT; y += texturesize) {
+				//		SDL_Rect rect = { x, y, texturesize, texturesize };
+				//		//SDL_RenderCopy(gRenderer, gTexture, NULL, &rect);
+				//		//renderSingleTexture(texture, &rect);
+				//		renderer->renderSingleTexture(&texture, rect);
+				//	}
+				//}
 				//SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);
 
 				//Update screen

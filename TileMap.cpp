@@ -22,9 +22,14 @@ namespace GameEngine
 		}
 	}
 
-	Tile * TileMap::at(Point p)
+	Tile * TileMap::at(Point p) const
 	{
 		return tiles[p.x][p.y];
+	}
+
+	Tile * TileMap::at(int x, int y) const
+	{
+		return tiles[x][y];
 	}
 
 	void TileMap::set(Tile* tile, Point p)

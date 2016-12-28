@@ -18,19 +18,19 @@ namespace GameEngine {
 	Rectangle::~Rectangle()
 	{
 	}
-	Rectangle & Rectangle::operator+(const Rectangle & rect)
+	Rectangle Rectangle::operator+(const Rectangle & rect)
 	{
 		return Rectangle(x + rect.x, y + rect.y, width + rect.width, height + rect.height);
 	}
-	Rectangle & Rectangle::operator-(const Rectangle & rect)
+	Rectangle Rectangle::operator-(const Rectangle & rect)
 	{
 		return Rectangle(x - rect.x, y - rect.y, width - rect.width, height - rect.height);
 	}
-	Rectangle & Rectangle::operator*(const Rectangle & rect)
+	Rectangle Rectangle::operator*(const Rectangle & rect)
 	{
 		return Rectangle(x * rect.x, y * rect.y, width * rect.width, height * rect.height);
 	}
-	Rectangle & Rectangle::operator/(const Rectangle & rect)
+	Rectangle Rectangle::operator/(const Rectangle & rect)
 	{
 		return Rectangle(x / rect.x, y / rect.y, width / rect.width, height / rect.height);
 	}
@@ -42,7 +42,7 @@ namespace GameEngine {
 	{
 		return x == rect.x && y == rect.y && width == rect.w && height == rect.h;
 	}
-	std::string & Rectangle::toStr() const
+	std::string Rectangle::toStr() const
 	{
 		std::string txt("Rectangle[x:" + std::to_string(x) +
 			" ,y:" + std::to_string(y) +

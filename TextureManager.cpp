@@ -2,36 +2,20 @@
 
 
 namespace GameEngine {
+	TextureManager::TextureManager()
+	{
+		SingleTexture* texture = new SingleTexture();
+		texture->bounds = { 0, 0, 16, 16 };
+		texture->raw_texture = NULL;
+		default_texture = texture;
+	}
 	TextureManager::TextureManager(SDL_Renderer* renderer) : renderer(renderer)
 	{
-		Uint32 rMask, gMask, bMask, aMask;
-#if SDL_BYTEORDER == SDL_BIG_ENDIAN
-		rMask = 0xff000000;
-		gMask = 0x00ff0000;
-		bMask = 0x0000ff00;
-		aMask = 0x000000ff;
-#else
-		rMask = 0x000000ff;
-		gMask = 0x0000ff00;
-		bMask = 0x00ff0000;
-		aMask = 0xff000000;
-#endif
-
-		SDL_Surface* default_surface = SDL_CreateRGBSurface(0, 16, 16, 32,
-			rMask, gMask, bMask, aMask);
-
-		SDL_Rect bg{ 0, 0, 16, 16 };
-		SDL_FillRect(default_surface, &bg, SDL_MapRGBA(default_surface->format, 75, 0, 130, 255));
-
-		SDL_Rect inner{ 1, 1, 14, 14 };
-		SDL_FillRect(default_surface, &inner, SDL_MapRGBA(default_surface->format, 75, 0, 130, 200));
-
-		SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, default_surface);
-		default_texture = new SingleTexture();
-		default_texture->raw_texture = texture;
-		default_texture->bounds = { 0,0,16,16 };
-
-		SDL_FreeSurface(default_surface);
+		setupDefault(renderer);
+		SingleTexture* texture = new SingleTexture();
+		texture->bounds = { 0, 0, 16, 16 };
+		texture->raw_texture = NULL;
+		default_texture = texture;
 	}
 
 	TextureManager::~TextureManager()
@@ -84,6 +68,45 @@ namespace GameEngine {
 		//TODO: Increment index
 
 		return 0;
+	}
+
+	void TextureManager::setupDefault(SDL_Renderer * renderer)
+	{
+		//TODO: Should I save this SDL_Renderer?
+
+		Uint32 rMask, gMask, bMask, aMask;
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+		rMask = 0xff000000;
+		gMask = 0x00ff0000;
+		bMask = 0x0000ff00;
+		aMask = 0x000000ff;
+#else
+		rMask = 0x000000ff;
+		gMask = 0x0000ff00;
+		bMask = 0x00ff0000;
+		aMask = 0xff000000;
+#endif
+
+		SDL_Surface* default_surface = SDL_CreateRGBSurface(0, 16, 16, 32,
+			rMask, gMask, bMask, aMask);
+
+		SDL_Rect bg{ 0, 0, 16, 16 };
+		SDL_FillRect(default_surface, &bg, SDL_MapRGBA(default_surface->format, 75, 0, 130, 255));
+
+		SDL_Rect inner{ 1, 1, 14, 14 };
+		SDL_FillRect(default_surface, &inner, SDL_MapRGBA(default_surface->format, 75, 0, 130, 200));
+
+		SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, default_surface);
+		default_texture = new SingleTexture();
+		default_texture->raw_texture = texture;
+		default_texture->bounds = { 0,0,16,16 };
+
+		SDL_FreeSurface(default_surface);
+	}
+
+	void TextureManager::setupDefault(SingleTexture * newTexture)
+	{
+		default_texture = newTexture;
 	}
 
 	SingleTexture& TextureManager::getDefault()

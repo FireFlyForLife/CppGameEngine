@@ -141,6 +141,7 @@
     <ClInclude Include="Events.h" />
     <ClInclude Include="EventSource.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Globals.h" />
     <ClInclude Include="Includes.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Point.h" />

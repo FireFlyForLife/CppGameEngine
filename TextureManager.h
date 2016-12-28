@@ -20,6 +20,7 @@ namespace GameEngine {
 	public:
 		static const size_t maxTextures = 2 ^ 5;
 
+		TextureManager();
 		TextureManager(SDL_Renderer*);
 		~TextureManager();
 
@@ -27,6 +28,8 @@ namespace GameEngine {
 		SingleTexture& get(string);
 		size_t add(SDL_Texture*, string);
 
+		void setupDefault(SDL_Renderer*);
+		void setupDefault(SingleTexture*);
 		SingleTexture& getDefault();
 
 	protected:

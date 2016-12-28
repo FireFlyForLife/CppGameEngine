@@ -29,6 +29,11 @@ namespace GameEngine {
 		this->y = y;
 	}
 
+	uint16_t Tile::GetTexture()
+	{
+		return texture;
+	}
+
 	bool Tile::blocking()
 	{
 		return false;

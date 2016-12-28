@@ -14,7 +14,8 @@ namespace GameEngine
 		TileMap(int width = 10, int height = 10);
 		~TileMap();
 
-		Tile* at(Point);
+		 Tile* at(Point) const;
+		Tile* at(int, int) const;
 		void set(Tile*, Point);
 		bool blocking(Point);
 	protected:

@@ -16,15 +16,15 @@ namespace GameEngine {
 		Rectangle(const SDL_Rect& rect);
 		~Rectangle();
 
-		Rectangle& operator+(const Rectangle& rect);
-		Rectangle& operator-(const Rectangle& rect);
-		Rectangle& operator*(const Rectangle& rect);
-		Rectangle& operator/(const Rectangle& rect);
+		Rectangle operator+(const Rectangle& rect);
+		Rectangle operator-(const Rectangle& rect);
+		Rectangle operator*(const Rectangle& rect);
+		Rectangle operator/(const Rectangle& rect);
 		//TODO: Add += -= etc operators
 		bool operator==(const Rectangle& rect);
 		bool operator==(const SDL_Rect& rect);
 
-		std::string& toStr() const;
+		std::string toStr() const;
 
 		operator SDL_Rect() const;
 	};

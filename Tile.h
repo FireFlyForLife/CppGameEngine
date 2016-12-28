@@ -20,6 +20,8 @@ namespace GameEngine {
 		__int32 GetY();
 		void SetX(__int32 x);
 		void SetY(__int32 y);
+
+		uint16_t GetTexture();
 		
 		virtual bool blocking();
 		virtual int weight();
