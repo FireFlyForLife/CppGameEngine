@@ -2,7 +2,7 @@
 #include "TextureManager.h"
 
 namespace GameEngine {
-	namespace Universal {
-		TextureManager texture_manager;
+	namespace Global {
+		extern TextureManager texture_manager;
 	}
 }

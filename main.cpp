@@ -9,7 +9,8 @@
 #include "Point.h"
 #include "TextureManager.h"
 #include "Globals.h"
-//#include "Renderer.h"
+#include "Renderer.h"
+#include "Player.h"
 
 using namespace GameEngine;
 
@@ -42,8 +43,8 @@ SDL_Texture* gTexture = NULL;
 
 GameEngine::World* game_world = nullptr;
 
-//GameEngine::TextureManager* texture_manager = nullptr;
-//GameEngine::Renderer* renderer = nullptr;
+GameEngine::TextureManager* texture_manager = nullptr;
+GameEngine::Renderer* renderer = nullptr;
 //using namespace GameEngine;
 bool init()
 {
@@ -197,10 +198,22 @@ int main(int argc, char* args[])
 			std::cout << p.toStr() << std::endl;
 
 			game_world = new World();
-			//renderer = new Renderer(gRenderer);
+			renderer = new Renderer(gRenderer);
 			//texture_manager = new TextureManager(gRenderer);
 
-			//Universal::texture_manager.setupDefault(gRenderer);
+			Global::texture_manager.setupDefault(gRenderer);
+			Global::texture_manager.add(loadTexture("Art/Maybe_Grass.png"), "grass");
+			int player_texture_ID = Global::texture_manager.add(loadTexture("Art/Little_Player.png"), "player");
+
+			for (int x = 0; x < 10; x++) {
+				for (int y = 0; y < 10; y++) {
+					Tile* tile = new Tile("grass");
+					game_world->map->set(tile, Point(x, y));
+				}
+			}
+
+			Player* player = new Player(10, 10, "player");
+			game_world->entity_list->entities.push_back(player);
 
 			//Main loop flag
 			bool quit = false;
@@ -236,16 +249,17 @@ int main(int argc, char* args[])
 				//Clear screen
 				SDL_RenderClear(gRenderer);
 
-				//SingleTexture& texture = Universal::texture_manager.get(1);
-				//renderer->renderTileMap(*game_world->map);
-				//Render texture to screen
+				SingleTexture& texture = Global::texture_manager.get(1);
+				renderer->renderTileMap(*game_world->map);
+				renderer->renderEntityList(*game_world->entity_list);
+				
 				//for (int x = 0; x < SCREEN_WIDTH; x += texturesize) {
 				//	for (int y = 0; y < SCREEN_HEIGHT; y += texturesize) {
 				//		SDL_Rect rect = { x, y, texturesize, texturesize };
 				//		//SDL_RenderCopy(gRenderer, gTexture, NULL, &rect);
 				//		//renderSingleTexture(texture, &rect);
 				//		renderer->renderSingleTexture(&texture, rect);
-				//	}
+				//	}//TODO: Fix this block
 				//}
 				//SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);
 

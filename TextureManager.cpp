@@ -20,7 +20,7 @@ namespace GameEngine {
 
 	TextureManager::~TextureManager()
 	{
-		std::list<SDL_Texture*>::const_iterator iterator;
+		decltype(raw_texture_list)::const_iterator iterator;
 		for (iterator = raw_texture_list.begin(); iterator != raw_texture_list.end(); ++iterator) {
 			SDL_Texture* texture = *iterator;
 			SDL_DestroyTexture(texture);
@@ -35,7 +35,7 @@ namespace GameEngine {
 		delete default_texture;
 	}
 
-	SingleTexture& TextureManager::get(size_t id)
+	SingleTexture& TextureManager::get(int id)
 	{
 		if (id > index || id < 0) {
 			return *default_texture;
@@ -46,28 +46,82 @@ namespace GameEngine {
 
 	SingleTexture& TextureManager::get(string name)
 	{
-		std::unordered_map<string, size_t>::iterator iterator = id_dictionairy.find(name);
-		if (iterator != id_dictionairy.end()) {
-			size_t id = iterator->second;
-			
+		int id = getID(name);
+		if (id != -1) {
 			return get(id);
 		}
 
 		return *default_texture;
 	}
 
-	size_t TextureManager::add(SDL_Texture* texture, string name)
+	int TextureManager::add(SDL_Texture* texture, const string& name)
 	{
+		Rectangle bounds;
+		bounds.x = 0;
+		bounds.y = 0;
+		int w, h;
+		SDL_QueryTexture(texture, NULL, NULL, &w, &h);
+		bounds.width = w;
+		bounds.height = h;
+
+		return add(texture, name, bounds);
+	}
+
+	int TextureManager::add(SDL_Texture * texture, const string& texture_name, const Rectangle& bounds)
+	{
+		int texture_id = getID(texture_name);
+		if (texture_id != -1) {
+			std::cerr << "Texture name: '" << texture_name << "' is already defined with id: '" << texture_id << "'." << std::endl;
+			return texture_id;
+		}
+
 		auto raw_texture = get_raw_texture(texture);
-		if (!raw_texture) {
+		if (raw_texture == nullptr) {
 			raw_texture = texture;
 			raw_texture_list.push_back(raw_texture);
 		}
-		//TODO: Finish adding SingleTexture
+		
+		auto single_texture_id = get_SingleTexture_ID(texture, bounds);
+		if (single_texture_id == -1) {
+			SingleTexture* single_texture = new SingleTexture();
+			single_texture->raw_texture = raw_texture;
+			single_texture->bounds = bounds;
 
-		//TODO: Increment index
+			//add singletexture to array
+			if (index < maxTextures) {
+				texture_array[index] = single_texture;
+				//register id with string
+				registerID(texture_name, index);
 
-		return 0;
+				return index++;
+			}
+			else {
+				delete single_texture;
+			}
+		}
+
+		return single_texture_id;
+	}
+
+	int TextureManager::getID(string texture_name)
+	{
+		decltype(id_dictionairy)::iterator iterator = id_dictionairy.find(texture_name);
+		if (iterator != id_dictionairy.end()) {
+			int id = iterator->second;
+			return id;
+		}
+
+		return -1;
+	}
+
+	void TextureManager::registerID(string key, int id)
+	{
+		if (id >= 0 && id <= index) {
+			decltype(id_dictionairy)::iterator iterator = id_dictionairy.find(key);
+			if (iterator == id_dictionairy.end()) {
+				id_dictionairy.insert(std::pair<string, int>(key, id));
+			}
+		}
 	}
 
 	void TextureManager::setupDefault(SDL_Renderer * renderer)
@@ -124,7 +178,7 @@ namespace GameEngine {
 		}
 		return nullptr;
 	}
-	SingleTexture* TextureManager::get_SingleTexture(SDL_Texture* texture_ptr, SDL_Rect& bounds)
+	SingleTexture* TextureManager::get_SingleTexture(SDL_Texture* texture_ptr, const Rectangle& bounds)
 	{
 		for each (SingleTexture* single_texture in texture_array)
 		{
@@ -133,5 +187,15 @@ namespace GameEngine {
 			}
 		}
 		return nullptr;
+	}
+
+	int TextureManager::get_SingleTexture_ID(SDL_Texture* texture_ptr, const Rectangle& bounds)
+	{
+		for (int i = 0; i < index; i++) {
+			if (texture_array[i]->raw_texture == texture_ptr && texture_array[i]->bounds == bounds) {
+				return i;
+			}
+		}
+		return -1;
 	}
 }

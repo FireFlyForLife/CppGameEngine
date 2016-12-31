@@ -1,6 +1,7 @@
 #pragma once
 #include "Texture.h"
 #include "GameObject.h"
+#include "Globals.h"
 #include <string>
 
 namespace GameEngine {
@@ -9,11 +10,12 @@ namespace GameEngine {
 	protected:
 		__int32 x = 0;
 		__int32 y = 0;
-		uint16_t texture = NULL;
+		int texture = NULL;
 
 	public:
 		Tile();
-		Tile(std::string textureLocation);
+		Tile(std::string texture_name);
+		Tile(size_t texture_id);
 
 		//TODO: Return Point Struct
 		__int32 GetX();
@@ -21,7 +23,7 @@ namespace GameEngine {
 		void SetX(__int32 x);
 		void SetY(__int32 y);
 
-		uint16_t GetTexture();
+		int GetTexture();
 		
 		virtual bool blocking();
 		virtual int weight();

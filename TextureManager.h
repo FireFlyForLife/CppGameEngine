@@ -5,6 +5,8 @@
 #include <memory>
 #include <string>
 #include <unordered_map>
+#include <limits.h>
+#include <iostream>
 #include "Rectangle.h"
 
 using std::string;
@@ -24,9 +26,12 @@ namespace GameEngine {
 		TextureManager(SDL_Renderer*);
 		~TextureManager();
 
-		SingleTexture& get(size_t);
+		SingleTexture& get(int);
 		SingleTexture& get(string);
-		size_t add(SDL_Texture*, string);
+		int add(SDL_Texture*, const string&);
+		int add(SDL_Texture*, const string&, const Rectangle& bounds);
+		int getID(string);
+		void registerID(string, int);
 
 		void setupDefault(SDL_Renderer*);
 		void setupDefault(SingleTexture*);
@@ -36,12 +41,13 @@ namespace GameEngine {
 		SDL_Renderer* renderer = NULL;
 
 		SDL_Texture* get_raw_texture(SDL_Texture*);//overload with SingleTexture objects
-		SingleTexture* get_SingleTexture(SDL_Texture*, SDL_Rect&);//overload with SingleTexture object
+		SingleTexture* get_SingleTexture(SDL_Texture*, const Rectangle&);//overload with SingleTexture object
+		int get_SingleTexture_ID(SDL_Texture*, const Rectangle&);
 
 		std::list<SDL_Texture*> raw_texture_list;
 		std::array<SingleTexture*, maxTextures> texture_array;
-		size_t index = 0;
-		std::unordered_map<string, size_t> id_dictionairy;
+		int index = 0;
+		std::unordered_map<string, int> id_dictionairy;
 
 	private:
 		SingleTexture* default_texture = NULL;

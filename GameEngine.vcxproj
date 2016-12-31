@@ -73,6 +73,10 @@
     <IncludePath>$(SolutionDir)..\Cpp_Lib\SDL2_image-2.0.1\include;$(SolutionDir)..\Cpp_Lib\SDL2-2.0.5\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)..\Cpp_Lib\SDL2_image-2.0.1\lib\x86;$(SolutionDir)..\Cpp_Lib\SDL2-2.0.5\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(SolutionDir)..\Cpp_Lib\SDL2_image-2.0.1\include;$(SolutionDir)..\Cpp_Lib\SDL2-2.0.5\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)..\Cpp_Lib\SDL2_image-2.0.1\lib\x86;$(SolutionDir)..\Cpp_Lib\SDL2-2.0.5\lib\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -102,6 +106,7 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -120,11 +125,15 @@
   <ItemGroup>
     <ClCompile Include="Debug_utils.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="EntityList.cpp" />
     <ClCompile Include="Events.cpp" />
     <ClCompile Include="EventSource.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Globals.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Pathfinder.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Point.cpp" />
     <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="Renderer.cpp" />
@@ -138,12 +147,15 @@
   <ItemGroup>
     <ClInclude Include="Debug_utils.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="EntityList.h" />
     <ClInclude Include="Events.h" />
     <ClInclude Include="EventSource.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Includes.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="Pathfinder.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="Rectangle.h" />
     <ClInclude Include="Renderer.h" />

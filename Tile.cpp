@@ -1,13 +1,18 @@
 #include "Tile.h"
 
 namespace GameEngine {
-	Tile::Tile()
+	Tile::Tile() : texture(NULL)
 	{
 
 	}
-	Tile::Tile(std::string textureLocation)
+	Tile::Tile(std::string texture_name)
+		: texture(Global::texture_manager.getID(texture_name))
 	{
-		texture = NULL;
+		
+	}
+
+	Tile::Tile(size_t texture_id)
+	{
 	}
 
 	__int32 Tile::GetX()
@@ -29,7 +34,7 @@ namespace GameEngine {
 		this->y = y;
 	}
 
-	uint16_t Tile::GetTexture()
+	int Tile::GetTexture()
 	{
 		return texture;
 	}

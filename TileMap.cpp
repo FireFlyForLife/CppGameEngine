@@ -2,14 +2,12 @@
 
 namespace GameEngine
 {
-	TileMap::TileMap(int width, int height) : width(width), height(height)
+	TileMap::TileMap(int width, int height, int scale) : width(width), height(height), tile_scale(scale)
 	{
 		tiles.resize(width);
 		for (int i = 0; i < width; i++) {
 			tiles[i].resize(height, NULL);
 		}
-
-
 	}
 
 	TileMap::~TileMap()
