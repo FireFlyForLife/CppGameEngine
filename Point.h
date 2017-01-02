@@ -13,29 +13,37 @@ namespace GameEngine {
 		Point(const SDL_Point& point);
 		~Point();
 
-		Point& operator+(const Point& point) {
+		Point& operator+(const Point& point) const {
 			return Point(x + point.x, y + point.y);
 		}
 
-		Point& operator-(const Point& point) {
+		Point& operator-(const Point& point) const {
 			return Point(x - point.x, y - point.y);
 		}
 
-		Point& operator*(const Point& point) {
+		Point& operator*(const Point& point) const {
 			return Point(x * point.x, y * point.y);
 		}
 
-		bool operator==(const Point& point) {
+		bool operator==(const Point& point) const {
 			return x == point.x && y == point.y;
 		}
 
-		bool operator==(const SDL_Point& point) {
+		bool operator==(const SDL_Point& point) const{
 			return x == point.x && y == point.y;
+		}
+
+		bool operator!=(const Point& point) const {
+			return x != point.x || y != point.y;
+		}
+
+		bool operator!=(const SDL_Point& point) const {
+			return x != point.x || y != point.y;
 		}
 		//TODO: Add += -= etc operators
 
 		///watch out for DividedByZeroException
-		Point& operator/(const Point& point) {
+		Point& operator/(const Point& point) const{
 			return Point(x / point.x, y / point.y);
 		}
 

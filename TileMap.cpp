@@ -20,24 +20,49 @@ namespace GameEngine
 		}
 	}
 
-	Tile * TileMap::at(Point p) const
+	bool TileMap::inRange(const Point & p) const
 	{
-		return tiles[p.x][p.y];
+		return inRange(p.x, p.y);
+	}
+
+	bool TileMap::inRange(int x, int y) const
+	{
+		return x >= 0 && x < width && y >= 0 && y < height;
+	}
+
+	Tile * TileMap::at(const Point& p) const
+	{
+		if (inRange(p))
+			return tiles[p.x][p.y];
+		return nullptr;
 	}
 
 	Tile * TileMap::at(int x, int y) const
 	{
-		return tiles[x][y];
+		if (inRange(x, y))
+			return tiles[x][y];
+		return nullptr;
 	}
 
-	void TileMap::set(Tile* tile, Point p)
+	double TileMap::cost(const Point & point) const
 	{
+		Tile* tile = at(point);
+		return tile ? tile->weight() : 100;
+	}
+
+	void TileMap::set(Tile* tile, const Point &p)
+	{
+		if (!inRange(p))
+			return;
+
 		tiles[p.x][p.y] = tile;
 	}
 
-	bool TileMap::blocking(Point p)
+	bool TileMap::blocking(const Point& p) const
 	{
 		Tile* tile = at(p);
-		return tile->blocking();
+		if (tile)
+			return tile->blocking();
+		return true;
 	}
 }

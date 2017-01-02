@@ -1,18 +1,50 @@
 #include "Renderer.h"
-
+#ifdef _DEBUG
+#include <iostream>
+#endif // !_DEBUG
 
 namespace GameEngine {
 	Renderer::Renderer(SDL_Renderer* renderer) : gRenderer(renderer)
 	{
-
 	}
-
 
 	Renderer::~Renderer()
 	{
 	}
 
-	void Renderer::renderTileMap(const TileMap& map, const Rectangle& bounds)
+	void Renderer::renderWorld(const World & world)
+	{
+		//render tilemap
+		int offsetX, offsetY;
+		if (world.camera != nullptr) {
+			offsetX = -world.camera->x();
+			offsetY = -world.camera->y();
+		}
+		else {
+			offsetX = 0;
+			offsetY = 0;
+		}
+
+		int	scale = world.map->tile_scale;
+		Rectangle bounds;
+		bounds.x = floor(offsetX / scale);
+		bounds.y = floor(offsetY / scale);
+		bounds.width = ceil((Global::SCREEN_WIDTH) / scale);
+		bounds.height = ceil(Global::SCREEN_HEIGHT / scale);
+		Point remaining_offset;
+		remaining_offset.x = offsetX % scale;
+		remaining_offset.y = offsetY % scale;
+
+		renderTileMap(*world.map, bounds, remaining_offset);
+
+		//renderEntities
+		Point offset;
+		offset.x = offsetX;
+		offset.y = offsetY;
+		renderEntityList(*world.entity_list, offset, 0, world.entity_list->entities.size());
+	}
+
+	void Renderer::renderTileMap(const TileMap& map, const Rectangle& bounds, const Point& offset)
 	{
 		int length = map.tile_scale;
 
@@ -24,7 +56,7 @@ namespace GameEngine {
 		for (int x = bounds.x; x < bounds.width + bounds.x; x++) {
 			for (int y = bounds.y; y < bounds.height + bounds.y; y++) {
 				Tile* tile = map.at(x, y);
-				if (tile != NULL) {
+				if (tile != nullptr) {
 					Point* location = new Point(x, y);
 					ids.push_back(dwasd(tile->GetTexture(), location));
 				}
@@ -37,8 +69,8 @@ namespace GameEngine {
 		{
 			SingleTexture& texture = Global::texture_manager.get(sorted_tile.first);
 			Rectangle target;
-			target.x = sorted_tile.second->x * length;
-			target.y = sorted_tile.second->y * length;
+			target.x = sorted_tile.second->x * length + offset.x;
+			target.y = sorted_tile.second->y * length + offset.y;
 			target.width = length;
 			target.height = length;
 			renderSingleTexture(texture, target);
@@ -49,10 +81,11 @@ namespace GameEngine {
 	void Renderer::renderTileMap(const TileMap & map)
 	{
 		Rectangle bound(0, 0, map.width, map.height);
-		renderTileMap(map, bound);
+		Point empty_point;
+		renderTileMap(map, bound, empty_point);
 	}
 
-	void Renderer::renderEntityList(const EntityList & list, size_t from, size_t to)
+	void Renderer::renderEntityList(const EntityList & list, const Point& offset, size_t from, size_t to)
 	{
 		for (size_t i = from; i < to; i++) {
 			Entity* entity = list.entities.at(i);
@@ -73,7 +106,8 @@ namespace GameEngine {
 	{
 		size_t to = list.entities.size();
 		size_t from = 0;
-		renderEntityList(list, from, to);
+		Point empty_offset;
+		renderEntityList(list, empty_offset, from, to);
 	}
 
 	void Renderer::renderSingleTexture(const SingleTexture& texture, const Rectangle& target)

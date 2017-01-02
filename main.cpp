@@ -11,12 +11,18 @@
 #include "Globals.h"
 #include "Renderer.h"
 #include "Player.h"
+#include "Camera.h"
+#include "MoveableCamera.h"
+#define CRTDBG_MAP_ALLOC
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
 
 using namespace GameEngine;
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+//const int SCREEN_WIDTH = 640;
+//const int SCREEN_HEIGHT = 480;
 
 const int texturesize = 16;
 
@@ -66,7 +72,7 @@ bool init()
 		}
 
 		//Create window
-		gWindow = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+		gWindow = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, Global::SCREEN_WIDTH, Global::SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 		if (gWindow == NULL)
 		{
 			std::cout << "Window could not be created! SDL Error: %s\n" << SDL_GetError() << std::endl;
@@ -202,11 +208,11 @@ int main(int argc, char* args[])
 			//texture_manager = new TextureManager(gRenderer);
 
 			Global::texture_manager.setupDefault(gRenderer);
-			Global::texture_manager.add(loadTexture("Art/Maybe_Grass.png"), "grass");
+			int grass_texture_ID =	Global::texture_manager.add(loadTexture("Art/Maybe_Grass.png"), "grass");
 			int player_texture_ID = Global::texture_manager.add(loadTexture("Art/Little_Player.png"), "player");
 
-			for (int x = 0; x < 10; x++) {
-				for (int y = 0; y < 10; y++) {
+			for (int x = 0; x < 140; x++) {
+				for (int y = 0; y < 120; y++) {
 					Tile* tile = new Tile("grass");
 					game_world->map->set(tile, Point(x, y));
 				}
@@ -214,6 +220,10 @@ int main(int argc, char* args[])
 
 			Player* player = new Player(10, 10, "player");
 			game_world->entity_list->entities.push_back(player);
+
+			Camera* camera = new MoveableCamera(100, 0);
+			game_world->camera = camera;
+			game_world->entity_list->entities.push_back(camera);
 
 			//Main loop flag
 			bool quit = false;
@@ -250,9 +260,10 @@ int main(int argc, char* args[])
 				SDL_RenderClear(gRenderer);
 
 				SingleTexture& texture = Global::texture_manager.get(1);
-				renderer->renderTileMap(*game_world->map);
-				renderer->renderEntityList(*game_world->entity_list);
-				
+				//renderer->renderTileMap(*game_world->map);
+				//renderer->renderEntityList(*game_world->entity_list);
+				renderer->renderWorld(*game_world);
+
 				//for (int x = 0; x < SCREEN_WIDTH; x += texturesize) {
 				//	for (int y = 0; y < SCREEN_HEIGHT; y += texturesize) {
 				//		SDL_Rect rect = { x, y, texturesize, texturesize };
@@ -271,6 +282,8 @@ int main(int argc, char* args[])
 
 	//Free resources and close SDL
 	close();
+
+	_CrtDumpMemoryLeaks();
 
 	return 0;
 }

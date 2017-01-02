@@ -1,6 +1,15 @@
 #pragma once
 #include "Point.h"
 #include "World.h"
+#include <unordered_map>
+#include <unordered_set>
+#include <array>
+#include <vector>
+#include <utility>
+#include <queue>
+#include <tuple>
+#include <algorithm>
+#include <functional>
 
 namespace GameEngine
 {
@@ -9,6 +18,7 @@ namespace GameEngine
 		Node* node;
 	};
 
-	Node* findPath(World* game_world);
+	std::vector<Point> findPath(World * game_world, const Point& from, const Point& to);
+	
 }
 

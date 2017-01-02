@@ -6,6 +6,8 @@
 #include "TextureManager.h"
 #include "Globals.h"
 #include "EntityList.h"
+#include "World.h"
+#include <math.h>
 
 namespace GameEngine {
 	class Renderer
@@ -14,9 +16,10 @@ namespace GameEngine {
 		Renderer(SDL_Renderer*);
 		~Renderer();
 		//TODO: Add a camera with zoom.
-		void renderTileMap(const TileMap&, const Rectangle& bounds);
+		void renderWorld(const World&);
+		void renderTileMap(const TileMap&, const Rectangle& bounds, const Point& offset);
 		void renderTileMap(const TileMap&);
-		void renderEntityList(const EntityList&, size_t from, size_t to);
+		void renderEntityList(const EntityList&, const Point& offset, size_t from, size_t to);
 		void renderEntityList(const EntityList&);
 
 		void renderSingleTexture(const SingleTexture&, const Rectangle& target);

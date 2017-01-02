@@ -123,6 +123,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Debug_utils.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityList.cpp" />
@@ -132,6 +133,7 @@
     <ClCompile Include="Globals.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MoveableCamera.cpp" />
     <ClCompile Include="Pathfinder.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Point.cpp" />
@@ -145,6 +147,7 @@
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Debug_utils.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityList.h" />
@@ -154,6 +157,7 @@
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Includes.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="MoveableCamera.h" />
     <ClInclude Include="Pathfinder.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Point.h" />

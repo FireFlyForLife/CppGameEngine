@@ -87,6 +87,12 @@
     <ClCompile Include="Pathfinder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveableCamera.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject.h">
@@ -148,6 +154,12 @@
     </ClInclude>
     <ClInclude Include="Pathfinder.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header Files\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveableCamera.h">
+      <Filter>Header Files\objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -3,8 +3,9 @@
 namespace GameEngine {
 	World::World()
 	{
-		map = new TileMap(10, 10);
+		map = new TileMap(150, 150);
 		entity_list = new EntityList();
+		camera = NULL;
 	}
 
 
