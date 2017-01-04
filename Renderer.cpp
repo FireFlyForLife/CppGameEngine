@@ -17,8 +17,8 @@ namespace GameEngine {
 		//render tilemap
 		int offsetX, offsetY;
 		if (world.camera != nullptr) {
-			offsetX = -world.camera->x();
-			offsetY = -world.camera->y();
+			offsetX = world.camera->x();
+			offsetY = world.camera->y();
 		}
 		else {
 			offsetX = 0;
@@ -29,12 +29,12 @@ namespace GameEngine {
 		Rectangle bounds;
 		bounds.x = floor(offsetX / scale);
 		bounds.y = floor(offsetY / scale);
-		bounds.width = ceil((Global::SCREEN_WIDTH) / scale);
-		bounds.height = ceil(Global::SCREEN_HEIGHT / scale);
+		bounds.width = ceil((Global::SCREEN_WIDTH) / scale) + 1;
+		bounds.height = ceil((Global::SCREEN_HEIGHT) / scale) + 1;
 		Point remaining_offset;
-		remaining_offset.x = offsetX % scale;
-		remaining_offset.y = offsetY % scale;
-
+		remaining_offset.x = -(offsetX % scale);
+		remaining_offset.y = -(offsetY % scale);
+		std::cout << bounds.toStr() << std::endl;
 		renderTileMap(*world.map, bounds, remaining_offset);
 
 		//renderEntities
@@ -53,9 +53,9 @@ namespace GameEngine {
 		typedef std::pair<int, Point*> dwasd;
 		std::vector<dwasd> ids;
 		ids.reserve(tiles_amount);
-		for (int x = bounds.x; x < bounds.width + bounds.x; x++) {
-			for (int y = bounds.y; y < bounds.height + bounds.y; y++) {
-				Tile* tile = map.at(x, y);
+		for (int x = 0; x < bounds.width; x++) {
+			for (int y = 0; y < bounds.height; y++) {
+				Tile* tile = map.at(x + bounds.x, y + bounds.y);
 				if (tile != nullptr) {
 					Point* location = new Point(x, y);
 					ids.push_back(dwasd(tile->GetTexture(), location));

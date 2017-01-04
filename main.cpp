@@ -13,10 +13,6 @@
 #include "Player.h"
 #include "Camera.h"
 #include "MoveableCamera.h"
-#define CRTDBG_MAP_ALLOC
-#define _CRTDBG_MAP_ALLOC
-#include <stdlib.h>
-#include <crtdbg.h>
 
 using namespace GameEngine;
 
@@ -282,8 +278,6 @@ int main(int argc, char* args[])
 
 	//Free resources and close SDL
 	close();
-
-	_CrtDumpMemoryLeaks();
 
 	return 0;
 }
