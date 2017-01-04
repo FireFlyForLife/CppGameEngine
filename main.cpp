@@ -13,6 +13,8 @@
 #include "Player.h"
 #include "Camera.h"
 #include "MoveableCamera.h"
+#include "Pathfinder.h"
+#include "Rock.h"
 
 using namespace GameEngine;
 
@@ -196,9 +198,6 @@ int main(int argc, char* args[])
 		}
 		else
 		{
-			Point p{ 4 ,3 };
-			std::cout << p.toStr() << std::endl;
-
 			game_world = new World();
 			renderer = new Renderer(gRenderer);
 			//texture_manager = new TextureManager(gRenderer);
@@ -206,6 +205,8 @@ int main(int argc, char* args[])
 			Global::texture_manager.setupDefault(gRenderer);
 			int grass_texture_ID =	Global::texture_manager.add(loadTexture("Art/Maybe_Grass.png"), "grass");
 			int player_texture_ID = Global::texture_manager.add(loadTexture("Art/Little_Player.png"), "player");
+			int point_texture_ID = Global::texture_manager.add(loadTexture("Art/Point.png"), "point");
+			int rock_texture_ID = Global::texture_manager.add(loadTexture("Art/Rock.png"), "rock");
 
 			for (int x = 0; x < 140; x++) {
 				for (int y = 0; y < 120; y++) {
@@ -214,10 +215,24 @@ int main(int argc, char* args[])
 				}
 			}
 
+			for (int y = 0; y < 10; y++) {
+				Tile* rock = new Rock();
+				game_world->map->set(rock, Point(10, y));
+			}
+
+			std::vector<Point> path = findPath(game_world, Point{ 0, 0 }, Point{ 15, 2 });
+			int scale = game_world->map->tile_scale;
+			for each (Point p in path)
+			{
+				std::cout << p.toStr() << std::endl;
+				Entity* entity = new Entity(p.x * scale, p.y * scale, point_texture_ID);
+				game_world->entity_list->entities.push_back(entity);
+			}
+
 			Player* player = new Player(10, 10, "player");
 			game_world->entity_list->entities.push_back(player);
 
-			Camera* camera = new MoveableCamera(100, 0);
+			Camera* camera = new MoveableCamera(0, 0);
 			game_world->camera = camera;
 			game_world->entity_list->entities.push_back(camera);
 

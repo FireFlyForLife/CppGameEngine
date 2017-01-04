@@ -34,7 +34,7 @@ namespace GameEngine {
 		Point remaining_offset;
 		remaining_offset.x = -(offsetX % scale);
 		remaining_offset.y = -(offsetY % scale);
-		std::cout << bounds.toStr() << std::endl;
+		
 		renderTileMap(*world.map, bounds, remaining_offset);
 
 		//renderEntities

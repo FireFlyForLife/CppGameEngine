@@ -93,6 +93,9 @@
     <ClCompile Include="MoveableCamera.cpp">
       <Filter>Source Files\objects</Filter>
     </ClCompile>
+    <ClCompile Include="Rock.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject.h">
@@ -159,6 +162,9 @@
       <Filter>Header Files\objects</Filter>
     </ClInclude>
     <ClInclude Include="MoveableCamera.h">
+      <Filter>Header Files\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Rock.h">
       <Filter>Header Files\objects</Filter>
     </ClInclude>
   </ItemGroup>

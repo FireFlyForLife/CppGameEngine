@@ -22,18 +22,25 @@ namespace GameEngine
 	struct PriorityQueue {
 		typedef std::pair<priority_t, T> PQElement;
 
-		//std::priority_queue<PQElement, std::vector<PQElement>, std::greater<PQElement>> elements;
+		class ComparePoint {
+		public:
+			bool operator() (PQElement lhs, PQElement rhs) {
+				return lhs.first > rhs.first;
+			}
+		};
+
+		std::priority_queue<PQElement, std::vector<PQElement>, ComparePoint> elements;
 
 		inline bool empty() const { return false; }//elements.empty(); }
 
 		inline void put(T item, priority_t priority) {
-			//elements.emplace(priority, item);
+			elements.emplace(priority, item);
 		}
 
 		inline T get() {
-			//T best_item = elements.top().second;
-			//elements.pop();
-			return T();
+			T best_item = elements.top().second;
+			elements.pop();
+			return best_item;
 		}
 	};
 

@@ -55,6 +55,7 @@ namespace GameEngine
 		if (!inRange(p))
 			return;
 
+		delete tiles[p.x][p.y];
 		tiles[p.x][p.y] = tile;
 	}
 
