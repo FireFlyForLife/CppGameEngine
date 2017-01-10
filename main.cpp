@@ -3,6 +3,8 @@
 #include <SDL_image.h>
 #include <iostream>
 #include <string>
+#include <chrono>
+#include <thread>
 #include "Input.h"
 #include <functional>
 #include "World.h"
@@ -15,6 +17,7 @@
 #include "MoveableCamera.h"
 #include "Pathfinder.h"
 #include "Rock.h"
+#include "CommandableEntity.h"
 
 using namespace GameEngine;
 
@@ -132,6 +135,9 @@ void close()
 	gWindow = NULL;
 	gRenderer = NULL;
 
+	delete game_world;
+	delete renderer;
+
 	//Quit SDL subsystems
 	IMG_Quit();
 	SDL_Quit();
@@ -207,6 +213,7 @@ int main(int argc, char* args[])
 			int player_texture_ID = Global::texture_manager.add(loadTexture("Art/Little_Player.png"), "player");
 			int point_texture_ID = Global::texture_manager.add(loadTexture("Art/Point.png"), "point");
 			int rock_texture_ID = Global::texture_manager.add(loadTexture("Art/Rock.png"), "rock");
+			int robot_texture_ID = Global::texture_manager.add(loadTexture("Art/Robot.png"), "robot");
 
 			for (int x = 0; x < 140; x++) {
 				for (int y = 0; y < 120; y++) {

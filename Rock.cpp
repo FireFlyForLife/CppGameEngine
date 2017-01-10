@@ -11,6 +11,7 @@ namespace GameEngine
 	Rock::~Rock()
 	{
 	}
+
 	bool Rock::blocking()
 	{
 		return true;

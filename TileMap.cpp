@@ -62,7 +62,7 @@ namespace GameEngine
 	bool TileMap::blocking(const Point& p) const
 	{
 		Tile* tile = at(p);
-		if (tile)
+		if (tile != nullptr)
 			return tile->blocking();
 		return true;
 	}

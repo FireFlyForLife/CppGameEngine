@@ -13,15 +13,15 @@ namespace GameEngine {
 		Point(const SDL_Point& point);
 		~Point();
 
-		Point& operator+(const Point& point) const {
+		Point operator+(const Point& point) const {
 			return Point(x + point.x, y + point.y);
 		}
 
-		Point& operator-(const Point& point) const {
+		Point operator-(const Point& point) const {
 			return Point(x - point.x, y - point.y);
 		}
 
-		Point& operator*(const Point& point) const {
+		Point operator*(const Point& point) const {
 			return Point(x * point.x, y * point.y);
 		}
 
@@ -43,7 +43,7 @@ namespace GameEngine {
 		//TODO: Add += -= etc operators
 
 		///watch out for DividedByZeroException
-		Point& operator/(const Point& point) const{
+		Point operator/(const Point& point) const{
 			return Point(x / point.x, y / point.y);
 		}
 

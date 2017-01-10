@@ -13,4 +13,11 @@ namespace GameEngine {
 	{
 
 	}
+	bool World::blocking(const Point& point)
+	{
+		if (map->blocking(point))
+			return true;
+
+		return false;
+	}
 }

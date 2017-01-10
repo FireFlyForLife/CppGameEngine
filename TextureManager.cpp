@@ -9,7 +9,7 @@ namespace GameEngine {
 		texture->raw_texture = NULL;
 		default_texture = texture;
 	}
-	TextureManager::TextureManager(SDL_Renderer* renderer) : renderer(renderer)
+	TextureManager::TextureManager(SDL_Renderer* renderer)
 	{
 		setupDefault(renderer);
 		SingleTexture* texture = new SingleTexture();
@@ -20,15 +20,19 @@ namespace GameEngine {
 
 	TextureManager::~TextureManager()
 	{
+		std::cout << "deconstructing texturemanager..." << std::endl;
+
 		decltype(raw_texture_list)::const_iterator iterator;
 		for (iterator = raw_texture_list.begin(); iterator != raw_texture_list.end(); ++iterator) {
 			SDL_Texture* texture = *iterator;
 			SDL_DestroyTexture(texture);
 		}
+		raw_texture_list.clear();
 
-		for each (SingleTexture* single_texture in texture_array)
+		for(int i = 0; i < texture_array.size(); i++)
 		{
-			delete single_texture;
+			delete texture_array[i];
+			texture_array[i] = nullptr;
 		}
 
 		SDL_DestroyTexture(default_texture->raw_texture);
@@ -126,8 +130,6 @@ namespace GameEngine {
 
 	void TextureManager::setupDefault(SDL_Renderer * renderer)
 	{
-		//TODO: Should I save this SDL_Renderer?
-
 		Uint32 rMask, gMask, bMask, aMask;
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
 		rMask = 0xff000000;
@@ -158,7 +160,7 @@ namespace GameEngine {
 		SDL_FreeSurface(default_surface);
 	}
 
-	void TextureManager::setupDefault(SingleTexture * newTexture)
+	void TextureManager::setupDefault(SingleTexture * newTexture)//TODO: Make sure the old texture gets destoyed
 	{
 		default_texture = newTexture;
 	}

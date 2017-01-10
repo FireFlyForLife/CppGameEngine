@@ -19,6 +19,7 @@ namespace GameEngine {
 
 	Entity::~Entity()
 	{
+		delete collider;
 	}
 
 	int Entity::getTexture() {
@@ -26,6 +27,17 @@ namespace GameEngine {
 	}
 	void Entity::setTexture(int id) {
 		texture = id;
+	}
+
+	Shape * Entity::getCollider()
+	{
+		return collider;
+	}
+
+	void Entity::setCollider(Shape * newCollider)
+	{
+		delete collider;
+		collider = newCollider;
 	}
 
 	float Entity::x()

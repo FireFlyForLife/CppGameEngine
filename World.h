@@ -15,5 +15,8 @@ namespace GameEngine {
 	public:
 		World();
 		~World();
+
+		//TODO: Add more convenience methods
+		virtual bool blocking(const Point&);
 	};
 }

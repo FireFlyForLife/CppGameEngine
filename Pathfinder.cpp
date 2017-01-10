@@ -31,7 +31,7 @@ namespace GameEngine
 
 		std::priority_queue<PQElement, std::vector<PQElement>, ComparePoint> elements;
 
-		inline bool empty() const { return false; }//elements.empty(); }
+		inline bool empty() const { return elements.empty(); }
 
 		inline void put(T item, priority_t priority) {
 			elements.emplace(priority, item);
@@ -75,7 +75,12 @@ namespace GameEngine
 
 	std::array<Point, 4> getNeighbors(const Point& p) {
 		typedef Point P;
-		return{ p + P{-1,0}, p + P{1, 0}, p + P{0,-1}, p + P{0, 1} };
+		std::array<Point, 4> points { p + P{-1,0}, p + P{1, 0}, p + P{0,-1}, p + P{0, 1} };
+		/*for each (Point p in points)
+		{
+			
+		}*/
+		return points;
 	}
 
 	double heuristic(Point a, Point b) {
@@ -104,6 +109,9 @@ namespace GameEngine
 			}
 
 			for (auto next : getNeighbors(current)) {
+				if (graph.blocking(next))
+					continue;
+
 				double new_cost = cost_so_far[current] + graph.cost(next);
 				if (!cost_so_far.count(next) || new_cost < cost_so_far[next]) {
 					cost_so_far[next] = new_cost;

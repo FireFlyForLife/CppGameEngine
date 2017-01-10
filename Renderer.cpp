@@ -39,8 +39,8 @@ namespace GameEngine {
 
 		//renderEntities
 		Point offset;
-		offset.x = offsetX;
-		offset.y = offsetY;
+		offset.x = -offsetX;
+		offset.y = -offsetY;
 		renderEntityList(*world.entity_list, offset, 0, world.entity_list->entities.size());
 	}
 
@@ -57,7 +57,7 @@ namespace GameEngine {
 			for (int y = 0; y < bounds.height; y++) {
 				Tile* tile = map.at(x + bounds.x, y + bounds.y);
 				if (tile != nullptr) {
-					Point* location = new Point(x, y);
+					Point* location = new Point(x, y); //TODO: Make this pass by value not pointer
 					ids.push_back(dwasd(tile->GetTexture(), location));
 				}
 			}
@@ -90,11 +90,10 @@ namespace GameEngine {
 		for (size_t i = from; i < to; i++) {
 			Entity* entity = list.entities.at(i);
 			if (entity != nullptr) {
-				//TODO: Account for camera
 				SingleTexture& texture = Global::texture_manager.get(entity->getTexture());
 				Rectangle target;
-				target.x = entity->x();
-				target.y = entity->y();
+				target.x = entity->x() + offset.x;
+				target.y = entity->y() + offset.y;
 				target.width = texture.bounds.width;
 				target.height = texture.bounds.height;
 				renderSingleTexture(texture, target);

@@ -7,6 +7,7 @@
 #include <unordered_map>
 #include <limits.h>
 #include <iostream>
+#include <math.h>
 #include "Rectangle.h"
 
 using std::string;
@@ -20,7 +21,7 @@ namespace GameEngine {
 	class TextureManager
 	{
 	public:
-		static const size_t maxTextures = 2 ^ 5;
+		static const size_t maxTextures = 2048;
 
 		TextureManager();
 		TextureManager(SDL_Renderer*);
@@ -38,8 +39,6 @@ namespace GameEngine {
 		SingleTexture& getDefault();
 
 	protected:
-		SDL_Renderer* renderer = NULL;
-
 		SDL_Texture* get_raw_texture(SDL_Texture*);//overload with SingleTexture objects
 		SingleTexture* get_SingleTexture(SDL_Texture*, const Rectangle&);//overload with SingleTexture object
 		int get_SingleTexture_ID(SDL_Texture*, const Rectangle&);
