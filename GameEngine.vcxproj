@@ -123,9 +123,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Building.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
-    <ClCompile Include="CommandableEntity.cpp" />
+    <ClCompile Include="Unit.cpp" />
     <ClCompile Include="Debug_utils.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityList.cpp" />
@@ -143,18 +144,21 @@
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Rock.cpp" />
     <ClCompile Include="Shape.cpp" />
+    <ClCompile Include="Spaceport.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileMap.cpp" />
+    <ClCompile Include="UnitController.cpp" />
     <ClCompile Include="Vector_Utils.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BoxShape.h" />
+    <ClInclude Include="Building.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CollisionManager.h" />
-    <ClInclude Include="CommandableEntity.h" />
+    <ClInclude Include="Unit.h" />
     <ClInclude Include="Debug_utils.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityList.h" />
@@ -172,10 +176,12 @@
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Rock.h" />
     <ClInclude Include="Shape.h" />
+    <ClInclude Include="Spaceport.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileMap.h" />
+    <ClInclude Include="UnitController.h" />
     <ClInclude Include="Vector_Utils.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>

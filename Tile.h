@@ -17,6 +17,8 @@ namespace GameEngine {
 		Tile(std::string texture_name);
 		Tile(size_t texture_id);
 
+		~Tile();
+
 		//TODO: Return Point Struct
 		__int32 GetX();
 		__int32 GetY();

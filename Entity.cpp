@@ -7,12 +7,12 @@ namespace GameEngine {
 	{
 	}
 
-	Entity::Entity(int x, int y, int texture) 
+	Entity::Entity(float x, float y, int texture) 
 		: _x(x), _y(y), texture(texture)
 	{
 	}
 
-	Entity::Entity(int x, int y, std::string texture_name) 
+	Entity::Entity(float x, float y, std::string texture_name) 
 		: Entity(x, y, Global::texture_manager.getID(texture_name))
 	{
 	}

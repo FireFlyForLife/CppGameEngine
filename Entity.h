@@ -5,7 +5,7 @@
 #include <string>
 
 namespace GameEngine {
-	//TODO: Add collision bounds
+	
 	class Entity : public GameObject {
 	protected:
 		float _x = 0;
@@ -15,8 +15,8 @@ namespace GameEngine {
 
 	public:
 		Entity();
-		Entity(int x, int y, int texture = -1);
-		Entity(int x, int y, std::string texture_name);
+		Entity(float x, float y, int texture = -1);
+		Entity(float x, float y, std::string texture_name);
 		~Entity();
 
 		int getTexture();

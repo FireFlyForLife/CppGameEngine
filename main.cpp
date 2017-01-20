@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 #include <iostream>
 #include <string>
 #include <chrono>
@@ -17,7 +18,9 @@
 #include "MoveableCamera.h"
 #include "Pathfinder.h"
 #include "Rock.h"
-#include "CommandableEntity.h"
+#include "Unit.h"
+#include "Spaceport.h"
+#include "UnitController.h"
 
 using namespace GameEngine;
 
@@ -99,6 +102,11 @@ bool init()
 				{
 					std::cout << "SDL_image could not initialize! SDL_image Error: %s\n" << IMG_GetError() << std::endl;
 					success = false;
+
+					if (!TTF_Init()) {
+						std::cout << "SDL_ttf could not initialize! SDL_ttf Error: %s\n" << TTF_GetError() << std::endl;
+						success = false;
+					}
 				}
 			}
 		}
@@ -140,6 +148,7 @@ void close()
 
 	//Quit SDL subsystems
 	IMG_Quit();
+	TTF_Quit();
 	SDL_Quit();
 }
 
@@ -213,7 +222,8 @@ int main(int argc, char* args[])
 			int player_texture_ID = Global::texture_manager.add(loadTexture("Art/Little_Player.png"), "player");
 			int point_texture_ID = Global::texture_manager.add(loadTexture("Art/Point.png"), "point");
 			int rock_texture_ID = Global::texture_manager.add(loadTexture("Art/Rock.png"), "rock");
-			int robot_texture_ID = Global::texture_manager.add(loadTexture("Art/Robot.png"), "robot");
+			Global::texture_manager.add(loadTexture("Art/Robot.png"), "robot");
+			Global::texture_manager.add(loadTexture("Art/Space_Port.png"), "space_port");
 
 			for (int x = 0; x < 140; x++) {
 				for (int y = 0; y < 120; y++) {
@@ -242,6 +252,15 @@ int main(int argc, char* args[])
 			Camera* camera = new MoveableCamera(0, 0);
 			game_world->camera = camera;
 			game_world->entity_list->entities.push_back(camera);
+
+			Spaceport* base = new Spaceport(game_world->map->tile_scale * 5, game_world->map->tile_scale * 5);
+			game_world->entity_list->entities.push_back(base);
+
+			UnitController* unit_controller = new UnitController();
+			game_world->entity_list->entities.push_back(unit_controller);
+			Unit* robot = new Unit(30, 30, "robot");
+			game_world->entity_list->entities.push_back(robot);
+			unit_controller->addUnit(robot);
 
 			//Main loop flag
 			bool quit = false;

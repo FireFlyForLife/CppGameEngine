@@ -25,7 +25,7 @@ namespace GameEngine {
 			offsetY = 0;
 		}
 
-		int	scale = world.map->tile_scale;
+		int scale = world.map->tile_scale;
 		Rectangle bounds;
 		bounds.x = floor(offsetX / scale);
 		bounds.y = floor(offsetY / scale);

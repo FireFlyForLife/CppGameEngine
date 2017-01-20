@@ -15,6 +15,10 @@ namespace GameEngine {
 	{
 	}
 
+	Tile::~Tile()
+	{
+	}
+
 	__int32 Tile::GetX()
 	{
 		return x;

@@ -31,6 +31,12 @@
     <Filter Include="Source Files\physics">
       <UniqueIdentifier>{c03d8d8d-724d-41b5-9f5d-6c01870cda06}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\objects\game">
+      <UniqueIdentifier>{4499be23-84d9-43f0-987a-bc2cf55072c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\objects\game">
+      <UniqueIdentifier>{20d4de91-c760-41c0-9f08-5e05808dc2c8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -108,8 +114,17 @@
     <ClCompile Include="CollisionManager.cpp">
       <Filter>Source Files\physics</Filter>
     </ClCompile>
-    <ClCompile Include="CommandableEntity.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Unit.cpp">
+      <Filter>Source Files\objects\game</Filter>
+    </ClCompile>
+    <ClCompile Include="Spaceport.cpp">
+      <Filter>Source Files\objects\game</Filter>
+    </ClCompile>
+    <ClCompile Include="Building.cpp">
+      <Filter>Source Files\objects\game</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitController.cpp">
+      <Filter>Source Files\objects\game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -191,8 +206,17 @@
     <ClInclude Include="BoxShape.h">
       <Filter>Header Files\physics</Filter>
     </ClInclude>
-    <ClInclude Include="CommandableEntity.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Unit.h">
+      <Filter>Header Files\objects\game</Filter>
+    </ClInclude>
+    <ClInclude Include="Spaceport.h">
+      <Filter>Header Files\objects\game</Filter>
+    </ClInclude>
+    <ClInclude Include="Building.h">
+      <Filter>Header Files\objects\game</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitController.h">
+      <Filter>Header Files\objects\game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
