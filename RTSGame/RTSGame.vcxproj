@@ -121,7 +121,17 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\GameEngine\Building.cpp" />
+    <ClCompile Include="..\GameEngine\Spaceport.cpp" />
+    <ClCompile Include="..\GameEngine\Unit.cpp" />
+    <ClCompile Include="..\GameEngine\UnitController.cpp" />
     <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\GameEngine\Building.h" />
+    <ClInclude Include="..\GameEngine\Spaceport.h" />
+    <ClInclude Include="..\GameEngine\Unit.h" />
+    <ClInclude Include="..\GameEngine\UnitController.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

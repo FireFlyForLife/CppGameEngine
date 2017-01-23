@@ -215,13 +215,12 @@ int main(int argc, char* args[])
 		{
 			game_world = new World();
 			renderer = new Renderer(gRenderer);
-			//texture_manager = new TextureManager(gRenderer);
 
 			Global::texture_manager.setupDefault(gRenderer);
-			int grass_texture_ID = Global::texture_manager.add(loadTexture("Art/Maybe_Grass.png"), "grass");
-			int player_texture_ID = Global::texture_manager.add(loadTexture("Art/Little_Player.png"), "player");
+			Global::texture_manager.add(loadTexture("Art/Maybe_Grass.png"), "grass");
+			Global::texture_manager.add(loadTexture("Art/Little_Player.png"), "player");
 			int point_texture_ID = Global::texture_manager.add(loadTexture("Art/Point.png"), "point");
-			int rock_texture_ID = Global::texture_manager.add(loadTexture("Art/Rock.png"), "rock");
+			Global::texture_manager.add(loadTexture("Art/Rock.png"), "rock");
 			Global::texture_manager.add(loadTexture("Art/Robot.png"), "robot");
 			Global::texture_manager.add(loadTexture("Art/Space_Port.png"), "space_port");
 

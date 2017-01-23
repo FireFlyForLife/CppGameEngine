@@ -156,11 +156,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BoxShape.h" />
-    <ClInclude Include="Building.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="UI_element.h" />
-    <ClInclude Include="Unit.h" />
     <ClInclude Include="Debug_utils.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityList.h" />
@@ -178,12 +176,10 @@
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Rock.h" />
     <ClInclude Include="Shape.h" />
-    <ClInclude Include="Spaceport.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileMap.h" />
-    <ClInclude Include="UnitController.h" />
     <ClInclude Include="Vector_Utils.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>

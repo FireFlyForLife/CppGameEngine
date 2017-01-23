@@ -2,6 +2,8 @@
 #include "Entity.h"
 #include "BoxShape.h"
 
+//TODO: Delete this file from the GameEngine project
+
 namespace GameEngine
 {
 	class Building : public Entity

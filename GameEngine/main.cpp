@@ -1,3 +1,8 @@
+/*
+	This was a test file for when GameEngine and RTSGame were still in one project.
+	For the correct version look in the RTSGame project
+*/
+
 #pragma once
 #include <SDL.h>
 #include <SDL_image.h>
