@@ -10,6 +10,7 @@ namespace GameEngine {
 	public:
 		TileMap* map;
 		EntityList* entity_list;
+		EntityList* UI_elements;
 		Camera* camera;
 
 	public:

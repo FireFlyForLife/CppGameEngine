@@ -1,10 +1,10 @@
 #include "UnitController.h"
-
+#include <iostream>
 
 
 namespace GameEngine
 {
-	UnitController::UnitController()
+	UnitController::UnitController(Camera** mainCameraPointer) : cameraPointer(mainCameraPointer)
 	{
 		mouseDownListeners.add([this](MouseClickArgs* args, int id) { OnMouseDown(args, id); });
 		mouseMoveListeners.add([this](MouseMoveArgs* args, int id) { OnMouseMove(args, id); });
@@ -49,6 +49,8 @@ namespace GameEngine
 
 	void UnitController::OnMouseDown(MouseClickArgs *, int)
 	{
+		Camera* c = *cameraPointer;
+		std::cout << c->x() << std::endl;
 	}
 	void UnitController::OnMouseMove(MouseMoveArgs *, int)
 	{

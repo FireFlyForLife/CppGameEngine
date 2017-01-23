@@ -256,7 +256,8 @@ int main(int argc, char* args[])
 			Spaceport* base = new Spaceport(game_world->map->tile_scale * 5, game_world->map->tile_scale * 5);
 			game_world->entity_list->entities.push_back(base);
 
-			UnitController* unit_controller = new UnitController();
+			Camera** mainCameraPointer = &(game_world->camera);
+			UnitController* unit_controller = new UnitController(mainCameraPointer);
 			game_world->entity_list->entities.push_back(unit_controller);
 			Unit* robot = new Unit(30, 30, "robot");
 			game_world->entity_list->entities.push_back(robot);
@@ -275,7 +276,7 @@ int main(int argc, char* args[])
 			mouseDownListeners.add(mfunc);
 			mouseUpListeners.add(mfunc);
 			decltype(mouseMoveListeners)::callbackType mofunc = mouseMov;
-			int mofunc_id = mouseMoveListeners.add(mofunc);
+			//int mofunc_id = mouseMoveListeners.add(mofunc);
 
 			//While application is running
 			while (!quit)

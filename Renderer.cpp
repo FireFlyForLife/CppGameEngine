@@ -42,6 +42,9 @@ namespace GameEngine {
 		offset.x = -offsetX;
 		offset.y = -offsetY;
 		renderEntityList(*world.entity_list, offset, 0, world.entity_list->entities.size());
+
+		//Render UI
+		renderEntityList(*world.UI_elements, Point(), 0, world.UI_elements->entities.size());
 	}
 
 	void Renderer::renderTileMap(const TileMap& map, const Rectangle& bounds, const Point& offset)

@@ -126,6 +126,7 @@
     <ClCompile Include="Building.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
+    <ClCompile Include="UI_element.cpp" />
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="Debug_utils.cpp" />
     <ClCompile Include="Entity.cpp" />
@@ -158,6 +159,7 @@
     <ClInclude Include="Building.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CollisionManager.h" />
+    <ClInclude Include="UI_element.h" />
     <ClInclude Include="Unit.h" />
     <ClInclude Include="Debug_utils.h" />
     <ClInclude Include="Entity.h" />

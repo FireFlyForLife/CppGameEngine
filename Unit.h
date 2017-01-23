@@ -11,7 +11,7 @@ namespace GameEngine
 	public:
 		Unit(float x, float y, std::string texture);
 		Unit(float x, float y, int id);
-		~Unit();
+		virtual ~Unit();
 
 		virtual void Update() override;
 

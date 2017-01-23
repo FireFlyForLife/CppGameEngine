@@ -17,7 +17,7 @@ namespace GameEngine {
 		Entity();
 		Entity(float x, float y, int texture = -1);
 		Entity(float x, float y, std::string texture_name);
-		~Entity();
+		virtual ~Entity();
 
 		int getTexture();
 		void setTexture(int id);

@@ -12,7 +12,7 @@ namespace GameEngine
 		const int width, height;
 		const int tile_scale;
 
-		TileMap(int width = 10, int height = 10, int scale = 16);
+		TileMap(class World* parent, int width = 10, int height = 10, int scale = 16);
 		~TileMap();
 
 		bool inRange(const Point&) const;
@@ -24,5 +24,6 @@ namespace GameEngine
 		double cost(const Point&) const;
 	protected:
 		std::vector<std::vector<Tile*>> tiles;
+		World* parent;
 	};
 }

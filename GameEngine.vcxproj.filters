@@ -126,6 +126,9 @@
     <ClCompile Include="UnitController.cpp">
       <Filter>Source Files\objects\game</Filter>
     </ClCompile>
+    <ClCompile Include="UI_element.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject.h">
@@ -217,6 +220,9 @@
     </ClInclude>
     <ClInclude Include="UnitController.h">
       <Filter>Header Files\objects\game</Filter>
+    </ClInclude>
+    <ClInclude Include="UI_element.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

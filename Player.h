@@ -11,7 +11,7 @@ namespace GameEngine {
 		const int speed = 4;
 
 		Player(float x, float y, std::string texture_name);
-		~Player();
+		virtual ~Player();
 
 	protected:
 		virtual void OnButtonDown(KeyClickArgs*, int);

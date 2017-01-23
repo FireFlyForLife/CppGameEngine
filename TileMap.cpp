@@ -2,7 +2,7 @@
 
 namespace GameEngine
 {
-	TileMap::TileMap(int width, int height, int scale) : width(width), height(height), tile_scale(scale)
+	TileMap::TileMap(class World* parent, int width, int height, int scale) : parent(parent), width(width), height(height), tile_scale(scale)
 	{
 		tiles.resize(width);
 		for (int i = 0; i < width; i++) {
@@ -57,6 +57,7 @@ namespace GameEngine
 
 		delete tiles[p.x][p.y];
 		tiles[p.x][p.y] = tile;
+		tile->setWorld(parent);
 	}
 
 	bool TileMap::blocking(const Point& p) const

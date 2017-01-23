@@ -3,6 +3,7 @@
 #include "Input.h"
 #include "Unit.h"
 #include "Vector_Utils.h"
+#include "Camera.h"
 
 #include <vector>
 #include <algorithm>
@@ -14,8 +15,8 @@ namespace GameEngine
 	public:
 		bool removeOnUnitDeath = true;
 
-		UnitController();
-		~UnitController();
+		UnitController(Camera** mainCameraPointer);
+		virtual ~UnitController();
 
 		virtual void Update() override;
 
@@ -26,6 +27,7 @@ namespace GameEngine
 
 	protected:
 		std::vector<Unit*> units;
+		Camera** cameraPointer;
 
 	private:
 		void OnMouseDown(MouseClickArgs*, int);

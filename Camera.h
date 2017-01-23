@@ -8,7 +8,7 @@ namespace GameEngine
 	{
 	public:
 		Camera(int x, int y);
-		~Camera();
+		virtual ~Camera();
 
 		float getZoom();
 		void setZoom(float);
