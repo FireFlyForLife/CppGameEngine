@@ -1,3 +1,0 @@
-# CppGameEngine
-
-//TODO: Add Readme file...

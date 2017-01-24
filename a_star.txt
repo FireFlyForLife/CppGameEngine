@@ -1,1 +1,0 @@
-http://www.redblobgames.com/pathfinding/a-star/implementation.html#cplusplus
