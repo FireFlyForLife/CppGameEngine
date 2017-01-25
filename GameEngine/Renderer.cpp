@@ -112,12 +112,15 @@ namespace GameEngine {
 			if (entity != nullptr) {
 				if (entity->renderSelf) {
 					SDL_Surface* surface = entity->getFrame(gRenderer);
-					Rectangle target;
-					target.x = entity->x() + offset.x;
-					target.y = entity->y() + offset.y;
-					target.width = surface->w;
-					target.height = surface->h;
-					renderSurface(surface, &(SDL_Rect)target);
+					if (surface != nullptr) {
+						Rectangle target;
+						target.x = entity->x() + offset.x;
+						target.y = entity->y() + offset.y;
+						target.width = surface->w;
+						target.height = surface->h;
+						renderSurface(surface, &(SDL_Rect)target);
+						SDL_FreeSurface(surface);
+					}
 				} else {
 					SingleTexture& texture = Global::texture_manager.get(entity->getTexture());
 					Rectangle target;

@@ -25,4 +25,19 @@ namespace GameEngine {
 
 		return false;
 	}
+	Point World::toScreenSpace(const Point & worldSpace)
+	{
+		int x = worldSpace.x - camera->x();
+		int y = worldSpace.y - camera->y();
+
+		return Point(x, y);
+	}
+	Point World::toWorldSpace(const Point & screenSpace)
+	{
+		//TODO: Add zooming
+		int x = screenSpace.x + camera->x();
+		int y = screenSpace.y + camera->y();
+
+		return Point(x, y);
+	}
 }

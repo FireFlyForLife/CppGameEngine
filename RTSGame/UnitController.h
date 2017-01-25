@@ -4,9 +4,12 @@
 #include "Unit.h"
 #include "Vector_Utils.h"
 #include "Camera.h"
+#include "SelectionArea.h"
+#include "World.h"
 
 #include <vector>
 #include <algorithm>
+#include <math.h>
 
 namespace GameEngine
 {
@@ -15,7 +18,7 @@ namespace GameEngine
 	public:
 		bool removeOnUnitDeath = true;
 
-		UnitController(Camera** mainCameraPointer);
+		UnitController(World* game_world);
 		virtual ~UnitController();
 
 		virtual void Update() override;
@@ -27,7 +30,8 @@ namespace GameEngine
 
 	protected:
 		std::vector<Unit*> units;
-		Camera** cameraPointer;
+		World* world;
+		SelectionArea* selection_area = nullptr;
 
 	private:
 		void OnMouseDown(MouseClickArgs*, int);

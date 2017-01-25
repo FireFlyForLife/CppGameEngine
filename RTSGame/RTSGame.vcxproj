@@ -121,19 +121,19 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\GameEngine\Building.cpp" />
-    <ClCompile Include="..\GameEngine\Spaceport.cpp" />
-    <ClCompile Include="..\GameEngine\Unit.cpp" />
-    <ClCompile Include="..\GameEngine\UnitController.cpp" />
+    <ClCompile Include="Building.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SelectionArea.cpp" />
+    <ClCompile Include="Spaceport.cpp" />
+    <ClCompile Include="Unit.cpp" />
+    <ClCompile Include="UnitController.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\GameEngine\Building.h" />
-    <ClInclude Include="..\GameEngine\Spaceport.h" />
-    <ClInclude Include="..\GameEngine\Unit.h" />
-    <ClInclude Include="..\GameEngine\UnitController.h" />
+    <ClInclude Include="Building.h" />
     <ClInclude Include="SelectionArea.h" />
+    <ClInclude Include="Spaceport.h" />
+    <ClInclude Include="Unit.h" />
+    <ClInclude Include="UnitController.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

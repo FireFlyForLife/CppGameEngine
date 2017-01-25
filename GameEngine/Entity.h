@@ -11,7 +11,7 @@ namespace GameEngine {
 		float _x = 0;
 		float _y = 0;
 		int texture = 0;
-		Shape* collider;
+		Shape* collider = nullptr;
 
 	public:
 		Entity();

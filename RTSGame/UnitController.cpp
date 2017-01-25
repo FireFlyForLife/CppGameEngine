@@ -1,10 +1,9 @@
 #include "UnitController.h"
-#include <iostream>
 
 
 namespace GameEngine
 {
-	UnitController::UnitController(Camera** mainCameraPointer) : cameraPointer(mainCameraPointer)
+	UnitController::UnitController(World* game_world) : world(game_world)
 	{
 		mouseDownListeners.add([this](MouseClickArgs* args, int id) { OnMouseDown(args, id); });
 		mouseMoveListeners.add([this](MouseMoveArgs* args, int id) { OnMouseMove(args, id); });
@@ -15,6 +14,8 @@ namespace GameEngine
 	{
 		//The unit controller is not the owner of the units, its just a controller thus not
 		//deleting the units on destruction of the controler.
+		
+		delete selection_area;
 	}
 
 	void UnitController::Update()
@@ -34,6 +35,7 @@ namespace GameEngine
 
 	void UnitController::killUnit(Unit * unit)
 	{
+		unit->setHealth(0);
 	}
 
 	Unit * UnitController::getUnit(int index)
@@ -48,15 +50,25 @@ namespace GameEngine
 		return units.size();
 	}
 
-	void UnitController::OnMouseDown(MouseClickArgs *, int)
+	void UnitController::OnMouseDown(MouseClickArgs * args, int)
 	{
-		Camera* c = *cameraPointer;
-		std::cout << c->x() << std::endl;
+		Point world_point = world->toWorldSpace(args->point);
+		delete selection_area;
+		selection_area = new SelectionArea(world_point.x, world_point.y);
+		world->entity_list->entities.push_back(selection_area);
 	}
-	void UnitController::OnMouseMove(MouseMoveArgs *, int)
+	void UnitController::OnMouseMove(MouseMoveArgs * args, int)
 	{
+		if (selection_area != NULL && args->dragging) {
+			Point world_point = world->toWorldSpace(args->point);
+			selection_area->setSecondPoint(world_point);
+		}
 	}
-	void UnitController::OnMouseUp(MouseClickArgs *, int)
+	void UnitController::OnMouseUp(MouseClickArgs * args, int)
 	{
+		EntityList* list = world->entity_list;
+		list->entities.erase(std::remove(list->entities.begin(), list->entities.end(), selection_area), list->entities.end());
+		delete selection_area;
+		selection_area = NULL;
 	}
 }

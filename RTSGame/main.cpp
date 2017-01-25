@@ -266,7 +266,7 @@ int main(int argc, char* args[])
 			game_world->entity_list->entities.push_back(base);
 
 			Camera** mainCameraPointer = &(game_world->camera);
-			UnitController* unit_controller = new UnitController(mainCameraPointer);
+			UnitController* unit_controller = new UnitController(game_world);
 			game_world->entity_list->entities.push_back(unit_controller);
 			Unit* robot = new Unit(30, 30, "robot");
 			game_world->entity_list->entities.push_back(robot);
