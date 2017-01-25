@@ -4,7 +4,7 @@
 
 namespace GameEngine
 {
-	UI_element::UI_element()
+	UI_element::UI_element(int x, int y) : Entity(x, y)
 	{
 	}
 

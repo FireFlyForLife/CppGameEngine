@@ -21,6 +21,7 @@
 #include "Unit.h"
 #include "Spaceport.h"
 #include "UnitController.h"
+#include "Text_UI_element.h"
 
 using namespace GameEngine;
 
@@ -51,15 +52,18 @@ SDL_Renderer* gRenderer = NULL;
 //Current displayed texture
 SDL_Texture* gTexture = NULL;
 
+TTF_Font* font = nullptr;
+
 GameEngine::World* game_world = nullptr;
 
-GameEngine::TextureManager* texture_manager = nullptr;
 GameEngine::Renderer* renderer = nullptr;
 //using namespace GameEngine;
 bool init()
 {
 	//Initialization flag
 	bool success = true;
+
+	
 
 	//Initialize SDL
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -102,16 +106,19 @@ bool init()
 				{
 					std::cout << "SDL_image could not initialize! SDL_image Error: %s\n" << IMG_GetError() << std::endl;
 					success = false;
-
-					if (!TTF_Init()) {
-						std::cout << "SDL_ttf could not initialize! SDL_ttf Error: %s\n" << TTF_GetError() << std::endl;
-						success = false;
-					}
 				}
 			}
 		}
 	}
 
+	if (TTF_Init() == -1) {
+		std::cout << "SDL_ttf could not initialize! SDL_ttf Error: %s\n" << TTF_GetError() << std::endl;
+		success = false;
+	}
+
+	font = TTF_OpenFont("AlphaFridgeMagnets.ttf", 24);
+	if (!font)
+		std::cout << TTF_GetError() << std::endl;
 	return success;
 }
 
@@ -136,6 +143,8 @@ void close()
 	//Free loaded image
 	SDL_DestroyTexture(gTexture);
 	gTexture = NULL;
+
+	TTF_CloseFont(font);
 
 	//Destroy window	
 	SDL_DestroyRenderer(gRenderer);
@@ -223,6 +232,7 @@ int main(int argc, char* args[])
 			Global::texture_manager.add(loadTexture("Art/Rock.png"), "rock");
 			Global::texture_manager.add(loadTexture("Art/Robot.png"), "robot");
 			Global::texture_manager.add(loadTexture("Art/Space_Port.png"), "space_port");
+			Global::texture_manager.add(loadTexture("Art/Selection_Rect.png"), "selection_rectangle");
 
 			for (int x = 0; x < 140; x++) {
 				for (int y = 0; y < 120; y++) {
@@ -261,6 +271,9 @@ int main(int argc, char* args[])
 			Unit* robot = new Unit(30, 30, "robot");
 			game_world->entity_list->entities.push_back(robot);
 			unit_controller->addUnit(robot);
+
+			Text_UI_element* text = new Text_UI_element(100, 0, font, "0", "Resources: ");
+			game_world->UI_elements->entities.push_back(text);
 
 			//Main loop flag
 			bool quit = false;

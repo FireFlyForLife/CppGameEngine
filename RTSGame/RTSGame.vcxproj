@@ -126,12 +126,14 @@
     <ClCompile Include="..\GameEngine\Unit.cpp" />
     <ClCompile Include="..\GameEngine\UnitController.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="SelectionArea.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\GameEngine\Building.h" />
     <ClInclude Include="..\GameEngine\Spaceport.h" />
     <ClInclude Include="..\GameEngine\Unit.h" />
     <ClInclude Include="..\GameEngine\UnitController.h" />
+    <ClInclude Include="SelectionArea.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

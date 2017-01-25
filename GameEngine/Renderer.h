@@ -8,6 +8,7 @@
 #include "EntityList.h"
 #include "World.h"
 #include <math.h>
+#include <tuple>
 
 namespace GameEngine {
 	class Renderer

@@ -16,6 +16,10 @@ namespace GameEngine {
 	struct SingleTexture {
 		SDL_Texture* raw_texture;
 		Rectangle bounds;
+
+		~SingleTexture() {
+			SDL_DestroyTexture(raw_texture);
+		}
 	};
 
 	class TextureManager

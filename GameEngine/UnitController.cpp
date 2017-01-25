@@ -20,7 +20,7 @@ namespace GameEngine
 	void UnitController::Update()
 	{
 		if (removeOnUnitDeath) {
-			units.erase(
+			units.erase(//TODO: Test this
 				std::remove_if(units.begin(), units.end(), 
 					[](Unit* unit) { return unit != nullptr && unit->getHealth() <= 0; }),
 				units.end());
@@ -29,6 +29,7 @@ namespace GameEngine
 
 	void UnitController::addUnit(Unit * unit)
 	{
+		units.push_back(unit);
 	}
 
 	void UnitController::killUnit(Unit * unit)

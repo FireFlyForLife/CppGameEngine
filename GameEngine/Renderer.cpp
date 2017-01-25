@@ -3,6 +3,8 @@
 #include <iostream>
 #endif // !_DEBUG
 
+using std::get;
+
 namespace GameEngine {
 	Renderer::Renderer(SDL_Renderer* renderer) : gRenderer(renderer)
 	{
@@ -53,31 +55,43 @@ namespace GameEngine {
 
 		//Get a list of pointers to texture_ids
 		int tiles_amount = bounds.width * bounds.height;
-		typedef std::pair<int, Point*> dwasd;
-		std::vector<dwasd> ids;
+		typedef std::tuple<int, Tile*, Point*> sortable_tile;
+		std::vector<sortable_tile> ids;
 		ids.reserve(tiles_amount);
 		for (int x = 0; x < bounds.width; x++) {
 			for (int y = 0; y < bounds.height; y++) {
 				Tile* tile = map.at(x + bounds.x, y + bounds.y);
 				if (tile != nullptr) {
 					Point* location = new Point(x, y); //TODO: Make this pass by value not pointer
-					ids.push_back(dwasd(tile->GetTexture(), location));
+					ids.push_back(sortable_tile(tile->GetTexture(), tile, location));
 				}
 			}
 		}
 
 		//TODO: sort the list incrementaly
 
-		for each (dwasd sorted_tile in ids)
+		for each (sortable_tile sorted_tile in ids)
 		{
-			SingleTexture& texture = Global::texture_manager.get(sorted_tile.first);
-			Rectangle target;
-			target.x = sorted_tile.second->x * length + offset.x;
-			target.y = sorted_tile.second->y * length + offset.y;
-			target.width = length;
-			target.height = length;
-			renderSingleTexture(texture, target);
-			delete sorted_tile.second;
+			if (get<1>(sorted_tile)->renderSelf) {
+				std::pair<SingleTexture*, Rectangle*> texture = get<1>(sorted_tile)->getFrame(gRenderer);
+				Rectangle target;
+				target.x = get<2>(sorted_tile)->x * length + offset.x;
+				target.y = get<2>(sorted_tile)->y * length + offset.y;
+				target.width = length;
+				target.height = length;
+				renderSingleTexture(*texture.first, *texture.second);
+			}
+			else {
+				SingleTexture* texture = &Global::texture_manager.get(get<0>(sorted_tile));
+				Rectangle target;
+				target.x = get<2>(sorted_tile)->x * length + offset.x;
+				target.y = get<2>(sorted_tile)->y * length + offset.y;
+				target.width = length;
+				target.height = length;
+				renderSingleTexture(*texture, target);
+			}
+
+			delete get<2>(sorted_tile);
 		}
 	}
 
@@ -93,13 +107,23 @@ namespace GameEngine {
 		for (size_t i = from; i < to; i++) {
 			Entity* entity = list.entities.at(i);
 			if (entity != nullptr) {
-				SingleTexture& texture = Global::texture_manager.get(entity->getTexture());
-				Rectangle target;
-				target.x = entity->x() + offset.x;
-				target.y = entity->y() + offset.y;
-				target.width = texture.bounds.width;
-				target.height = texture.bounds.height;
-				renderSingleTexture(texture, target);
+				if (entity->renderSelf) {
+					std::pair<SingleTexture*, Rectangle*> texture = entity->getFrame(gRenderer);
+					Rectangle target;
+					target.x = entity->x() + offset.x;
+					target.y = entity->y() + offset.y;
+					target.width = texture.first->bounds.width;
+					target.height = texture.first->bounds.height;
+					renderSingleTexture(*texture.first, *texture.second);
+				} else {
+					SingleTexture& texture = Global::texture_manager.get(entity->getTexture());
+					Rectangle target;
+					target.x = entity->x() + offset.x;
+					target.y = entity->y() + offset.y;
+					target.width = texture.bounds.width;
+					target.height = texture.bounds.height;
+					renderSingleTexture(texture, target);
+				}
 			}
 		}
 	}

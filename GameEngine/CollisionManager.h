@@ -14,7 +14,7 @@ namespace GameEngine {
 		return false;
 	}
 
-
+	//TODO: account for non-AABB Boxes
 	template<>
 	inline bool hasOverlap(const BoxShape& a, const BoxShape& b)
 	{

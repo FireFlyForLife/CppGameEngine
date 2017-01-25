@@ -3,8 +3,6 @@
 
 using std::vector;
 
-//MAYBE: Add these functions to a class which inherits from vector.
-
 template<typename T>
 int vector_contains(vector<T>*, T) {
 	for (int i = 0; i < vector->size(); i++) {
