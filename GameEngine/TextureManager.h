@@ -39,8 +39,9 @@ namespace GameEngine {
 		void registerID(string, int);
 
 		void setupDefault(SDL_Renderer*);
-		void setupDefault(SingleTexture*);
+		void setupDefault(SingleTexture* ,SDL_Surface*);
 		SingleTexture& getDefault();
+		SDL_Surface* getDefaultSurface();
 
 	protected:
 		SDL_Texture* get_raw_texture(SDL_Texture*);//overload with SingleTexture objects
@@ -53,6 +54,7 @@ namespace GameEngine {
 		std::unordered_map<string, int> id_dictionairy;
 
 	private:
+		SDL_Surface* default_surface = NULL;
 		SingleTexture* default_texture = NULL;
 	};
 }

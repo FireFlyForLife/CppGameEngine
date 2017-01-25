@@ -73,13 +73,16 @@ namespace GameEngine {
 		for each (sortable_tile sorted_tile in ids)
 		{
 			if (get<1>(sorted_tile)->renderSelf) {
-				std::pair<SingleTexture*, Rectangle*> texture = get<1>(sorted_tile)->getFrame(gRenderer);
+				SDL_Surface* surface = get<1>(sorted_tile)->getFrame(gRenderer);
 				Rectangle target;
 				target.x = get<2>(sorted_tile)->x * length + offset.x;
 				target.y = get<2>(sorted_tile)->y * length + offset.y;
 				target.width = length;
 				target.height = length;
-				renderSingleTexture(*texture.first, *texture.second);
+				if (surface != NULL) {
+					renderSurface(surface, &(SDL_Rect)target);
+				}
+				SDL_FreeSurface(surface);
 			}
 			else {
 				SingleTexture* texture = &Global::texture_manager.get(get<0>(sorted_tile));
@@ -108,13 +111,13 @@ namespace GameEngine {
 			Entity* entity = list.entities.at(i);
 			if (entity != nullptr) {
 				if (entity->renderSelf) {
-					std::pair<SingleTexture*, Rectangle*> texture = entity->getFrame(gRenderer);
+					SDL_Surface* surface = entity->getFrame(gRenderer);
 					Rectangle target;
 					target.x = entity->x() + offset.x;
 					target.y = entity->y() + offset.y;
-					target.width = texture.first->bounds.width;
-					target.height = texture.first->bounds.height;
-					renderSingleTexture(*texture.first, *texture.second);
+					target.width = surface->w;
+					target.height = surface->h;
+					renderSurface(surface, &(SDL_Rect)target);
 				} else {
 					SingleTexture& texture = Global::texture_manager.get(entity->getTexture());
 					Rectangle target;
@@ -134,6 +137,18 @@ namespace GameEngine {
 		size_t from = 0;
 		Point empty_offset;
 		renderEntityList(list, empty_offset, from, to);
+	}
+
+	void Renderer::renderSurface(SDL_Surface* surface, SDL_Rect* target, SDL_Rect* bounds)
+	{
+		SDL_Texture* texture = SDL_CreateTextureFromSurface(gRenderer, surface);
+		renderTexture(texture, target);
+		SDL_DestroyTexture(texture);
+	}
+
+	void Renderer::renderTexture(SDL_Texture* texture, SDL_Rect* target, SDL_Rect* bounds)
+	{
+		SDL_RenderCopy(gRenderer, texture, bounds, target);
 	}
 
 	void Renderer::renderSingleTexture(const SingleTexture& texture, const Rectangle& target)

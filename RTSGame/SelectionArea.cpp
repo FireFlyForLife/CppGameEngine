@@ -5,23 +5,27 @@
 namespace GameEngine
 {
 	SelectionArea::SelectionArea(int x, int y) : end_x(x), end_y(y),
-		Entity(x, y, Global::texture_manager.getID("selection_rectangle"))
+		Entity(x, y)
 	{
 		renderSelf = true;
+		square_16px = IMG_Load("Art/Selection_Rect.png");
 	}
 
 	SelectionArea::~SelectionArea()
 	{
 	}
 
-	std::pair<SingleTexture*, Rectangle*> SelectionArea::getFrame(SDL_Renderer * renderer)
+	SDL_Surface* SelectionArea::getFrame(SDL_Renderer * renderer)
 	{
 		int width = 16;
 		int height = 16;
 		int scale_x = width / (x() - end_x);
 		int scale_y = height / (y() - end_y);
-		SingleTexture* texture = &Global::texture_manager.get(getTexture());
-		return std::pair<SingleTexture*, Rectangle*>(texture, new Rectangle(x(), y(), scale_x, scale_y));//TODO: Fix this memory leak
+		
+		SDL_Surface* surface = SDL_CreateRGBSurface(0, x() - end_x, y() - end_y, 32, 0, 0, 0, 0);
+		SDL_BlitScaled(square_16px, NULL, surface, NULL);
+
+		return surface;
 	}
 
 

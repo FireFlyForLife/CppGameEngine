@@ -15,7 +15,7 @@ namespace GameEngine {
 		void setWorld(World* newWorld);
 
 		bool renderSelf = false;
-		virtual std::pair<SingleTexture*, Rectangle*> getFrame(SDL_Renderer* renderer);
+		virtual SDL_Surface* getFrame(SDL_Renderer* renderer);
 	private:
 		World* living_world;
 	};

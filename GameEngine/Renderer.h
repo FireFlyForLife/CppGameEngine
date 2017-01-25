@@ -23,6 +23,8 @@ namespace GameEngine {
 		void renderEntityList(const EntityList&, const Point& offset, size_t from, size_t to);
 		void renderEntityList(const EntityList&);
 
+		void renderSurface(SDL_Surface*, SDL_Rect* target, SDL_Rect* bounds = NULL);
+		void renderTexture(SDL_Texture*, SDL_Rect* target, SDL_Rect* bounds = NULL);
 		void renderSingleTexture(const SingleTexture&, const Rectangle& target);
 
 	protected:

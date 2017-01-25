@@ -35,6 +35,7 @@ namespace GameEngine {
 			texture_array[i] = nullptr;
 		}
 
+		SDL_FreeSurface(default_surface);
 		SDL_DestroyTexture(default_texture->raw_texture);
 		delete default_texture;
 	}
@@ -143,7 +144,7 @@ namespace GameEngine {
 		aMask = 0xff000000;
 #endif
 
-		SDL_Surface* default_surface = SDL_CreateRGBSurface(0, 16, 16, 32,
+		default_surface = SDL_CreateRGBSurface(0, 16, 16, 32,
 			rMask, gMask, bMask, aMask);
 
 		SDL_Rect bg{ 0, 0, 16, 16 };
@@ -157,17 +158,27 @@ namespace GameEngine {
 		default_texture->raw_texture = texture;
 		default_texture->bounds = { 0,0,16,16 };
 
-		SDL_FreeSurface(default_surface);
+		
 	}
 
-	void TextureManager::setupDefault(SingleTexture * newTexture)//TODO: Make sure the old texture gets destoyed
+	void TextureManager::setupDefault(SingleTexture* newTexture, SDL_Surface * newSurface)//TODO: Make sure the old texture gets destoyed
 	{
+		
+		SDL_FreeSurface(default_surface);
+		delete default_texture;
+
+		default_surface = newSurface;
 		default_texture = newTexture;
 	}
 
 	SingleTexture& TextureManager::getDefault()
 	{
 		return *default_texture;
+	}
+
+	SDL_Surface * TextureManager::getDefaultSurface()
+	{
+		return default_surface;
 	}
 
 	SDL_Texture* TextureManager::get_raw_texture(SDL_Texture * texture)

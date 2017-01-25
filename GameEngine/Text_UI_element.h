@@ -10,7 +10,7 @@ namespace GameEngine
 		Text_UI_element(int x, int y, TTF_Font* font, string text = "", string prefix = "");
 		virtual ~Text_UI_element();
 
-		virtual std::pair<SingleTexture*, Rectangle*> getFrame(SDL_Renderer* renderer) override;
+		virtual SDL_Surface* getFrame(SDL_Renderer* renderer) override;
 
 		void setPrefix(string newString);
 		string getPrefix();
