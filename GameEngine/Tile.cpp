@@ -1,12 +1,12 @@
 #include "Tile.h"
 
 namespace GameEngine {
-	Tile::Tile() : GameObject(), texture(NULL)
+	Tile::Tile() : GameObject(-1)
 	{
 
 	}
 	Tile::Tile(std::string texture_name)
-		: GameObject(), texture(Global::texture_manager.getID(texture_name))
+		: GameObject(Global::texture_manager.getID(texture_name))
 	{
 		
 	}
@@ -36,11 +36,6 @@ namespace GameEngine {
 	void Tile::SetY(__int32 y)
 	{
 		this->y = y;
-	}
-
-	int Tile::GetTexture()
-	{
-		return texture;
 	}
 
 	bool Tile::blocking()

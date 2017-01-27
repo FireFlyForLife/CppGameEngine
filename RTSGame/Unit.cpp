@@ -20,16 +20,16 @@ namespace GameEngine
 	{
 		switch (state)
 		{
-		case IDLE:
+		case UNIT_STATE::IDLE:
 			lookForEnemies();
 			break;
-		case MOVING:
+		case UNIT_STATE::MOVING:
 			if (path.empty())
 				state = IDLE;
 			else
 				moveAlongPath();
 			break;
-		case ATTACKING:
+		case UNIT_STATE::ATTACKING:
 			if (target == nullptr || target->getHealth() <= 0 || !enemyInRange(target)) {
 				target == nullptr;
 				state = IDLE;

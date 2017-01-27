@@ -25,6 +25,7 @@
 #include "Enemy.h"
 #include "HealthBar.h"
 #include "ResourceRock.h"
+#include "ExplosiveEnemy.h"
 
 using namespace GameEngine;
 
@@ -83,7 +84,7 @@ bool init()
 		}
 
 		//Create window
-		gWindow = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, Global::SCREEN_WIDTH, Global::SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+		gWindow = SDL_CreateWindow("RTS: Explosion!", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, Global::SCREEN_WIDTH, Global::SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 		if (gWindow == NULL)
 		{
 			std::cout << "Window could not be created! SDL Error: %s\n" << SDL_GetError() << std::endl;
@@ -277,7 +278,7 @@ int main(int argc, char* args[])
 			game_world->entity_list->entities.push_back(robot);
 			unit_controller->addUnit(robot);
 
-			Enemy* enemy = new Enemy(50, 100, "Art/Enemy.png");
+			Enemy* enemy = new Enemy(50, 100, "enemy");
 			game_world->entity_list->entities.push_back(enemy);
 			HealthBar* bar = new HealthBar(enemy, "Art/Health_Bar.png");
 			game_world->entity_list->entities.push_back(bar);
@@ -287,6 +288,16 @@ int main(int argc, char* args[])
 
 			ResourceRock* r_rock = new ResourceRock(scale * 2, scale * 13);
 			game_world->entity_list->entities.push_back(r_rock);
+
+			SDL_Texture* expl_texture = loadTexture("Art/Explosion.ani.png");
+			Point frame_size(64, 64);
+			Animation expl_ani(expl_texture, frame_size, 100);
+			ExplosiveEnemy* expl_enemy = new ExplosiveEnemy(scale * 25, scale * 10, 
+				"enemy", expl_ani);
+			game_world->entity_list->entities.push_back(expl_enemy);
+			HealthBar* expl_bar = new HealthBar(expl_enemy, "Art/Health_Bar.png");
+			game_world->entity_list->entities.push_back(expl_bar);
+
 
 			//Main loop flag
 			bool quit = false;
@@ -335,7 +346,7 @@ int main(int argc, char* args[])
 				//		//SDL_RenderCopy(gRenderer, gTexture, NULL, &rect);
 				//		//renderSingleTexture(texture, &rect);
 				//		renderer->renderSingleTexture(&texture, rect);
-				//	}//TODO: Fix this block
+				//	}
 				//}
 				//SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);
 

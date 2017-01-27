@@ -44,4 +44,25 @@ namespace GameEngine {
 		return results;
 	}
 
+	Entity * EntityList::findWithTag(const string & tag)
+	{
+		for each (Entity* entity in entities)
+		{
+			if (entity->tag == tag)
+				return entity;
+		}
+		return nullptr;
+	}
+
+	std::vector<Entity*> EntityList::findAllWithTag(const string & tag)
+	{
+		std::vector<Entity*> ret;
+		for each (Entity* entity in entities)
+		{
+			if (entity->tag == tag)
+				ret.push_back(entity);
+		}
+		return ret;
+	}
+
 }

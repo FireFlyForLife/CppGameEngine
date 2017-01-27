@@ -18,7 +18,7 @@ namespace GameEngine {
 		Rectangle bounds;
 
 		~SingleTexture() {
-			SDL_DestroyTexture(raw_texture);
+			std::cout << "SINGLETEXTURE IS DELETED!";
 		}
 	};
 
@@ -35,6 +35,7 @@ namespace GameEngine {
 		SingleTexture& get(string);
 		int add(SDL_Texture*, const string&);
 		int add(SDL_Texture*, const string&, const Rectangle& bounds);
+		int add(SDL_Texture*, const Rectangle& bounds);
 		int getID(string);
 		void registerID(string, int);
 

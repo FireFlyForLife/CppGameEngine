@@ -1,7 +1,11 @@
 #include "GameObject.h"
 
 namespace GameEngine {
-	GameObject::GameObject()
+	GameObject::GameObject() : texture(0)
+	{
+	}
+
+	GameObject::GameObject(int texture_id) : texture(texture_id)
 	{
 	}
 
@@ -23,5 +27,12 @@ namespace GameEngine {
 	SDL_Surface* GameObject::getFrame(SDL_Renderer * renderer)
 	{
 		return Global::texture_manager.getDefaultSurface();
+	}
+
+	int GameObject::getTexture() {
+		return texture;
+	}
+	void GameObject::setTexture(int id) {
+		texture = id;
 	}
 }

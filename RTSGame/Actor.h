@@ -6,7 +6,9 @@ namespace GameEngine
 	class Actor : public Entity
 	{
 	public:
-		using Entity::Entity;
+		Actor();
+		Actor(float x, float y, int texture = -1);
+		Actor(float x, float y, std::string texture_name);
 		virtual ~Actor();
 
 		int getHealth();

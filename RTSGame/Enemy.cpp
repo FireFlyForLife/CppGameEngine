@@ -4,30 +4,81 @@
 
 namespace GameEngine
 {
-	Enemy::Enemy(float x, float y, std::string texture) : Actor(x, y)
+	Enemy::Enemy()
+		: Actor()
 	{
-		this->collider = new BoxShape(0, 0, 16, 16);
-		this->surface = IMG_Load(texture.c_str());
-		//renderSelf = true;
+		findPathToBuilding();
+	}
+
+	Enemy::Enemy(float x, float y, int texture)
+		: Actor(x, y, texture)
+	{
+		findPathToBuilding();
+	}
+
+	Enemy::Enemy(float x, float y, std::string texture_name)
+		: Enemy(x, y, Global::texture_manager.getID(texture_name))
+	{
 	}
 
 	Enemy::~Enemy() {
-		SDL_FreeSurface(surface);
+		
 	}
 
 	void Enemy::Update() {
-		if (health <= 0)
+		if (health <= 0) {
 			enabled = false;
+			return;
+		}
+
+		switch (state)
+		{
+		case ENEMY_STATE::ENEMY_MOVING:
+			if (path.empty())
+				state = ENEMY_ATTACKING;
+			else
+				moveAlongPath();
+			break;
+		case ENEMY_STATE::ENEMY_ATTACKING:
+			if (target == nullptr || target->getHealth() <= 0) {
+				findPathToBuilding();
+			}
+			else {
+				attackBuilding();
+			}
+			break;
+		}
 	}
 
-	SDL_Surface * Enemy::getFrame(SDL_Renderer *)
+	void Enemy::moveAlongPath()
 	{
-		if(health <= 0)
-			return nullptr;
-		
-		SDL_Surface* copy = SDL_CreateRGBSurface(0, surface->w, surface->h, 32, 0, 0, 0, 0);
-		SDL_BlitScaled(surface, NULL, copy, NULL);
+		Vector2 large_direction = Vector2(path[0]) - Vector2(x(), y());
+		if (large_direction.magnitude2() == 0) {
+			path.erase(path.begin());
+			return;
+		}
 
-		return copy;
+		Vector2 dir = large_direction.normalized() * (speed * (float)Global::deltaTime());
+		Vector2 move = v2_min(dir, large_direction);
+		x(x() + move.x);
+		y(y() + move.y);
+		if (move == large_direction) {
+			path.erase(path.begin());
+		}
+	}
+
+	void Enemy::findPathToBuilding()
+	{
+		//std::vector<Entity*> buildings = getWorld()->entity_list->findAllWithTag(target_tag);
+		
+
+		//Point start{ x(), y() };
+		//Point end{ target->x(), target->y() };
+		//path = findPath(getWorld(), start, end);
+	}
+
+	void Enemy::attackBuilding()
+	{
+		target->addHealth(-damage);
 	}
 }

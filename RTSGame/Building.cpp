@@ -6,9 +6,9 @@ namespace GameEngine
 {
 	Building::Building(float x, float y, std::string texture) : Building(x, y, Global::texture_manager.getID(texture))
 	{
-		
+		tag = "building";
 	}
-	Building::Building(float x, float y, int texture_id) : Entity(x, y, texture_id)
+	Building::Building(float x, float y, int texture_id) : Actor(x, y, texture_id)
 	{
 		BoxShape* col = new BoxShape();
 
@@ -17,22 +17,12 @@ namespace GameEngine
 		col->height = singleTexture.bounds.height;
 
 		setCollider(col);
+
+		tag = "building";
 	}
 
 	Building::~Building()
 	{
 	}
 
-	int Building::getHealth()
-	{
-		return health;
-	}
-	void Building::setHealth(int newHealth)
-	{
-		health = newHealth;
-	}
-	void Building::removeHealth(int diffHealth)
-	{
-		health += diffHealth;
-	}
 }

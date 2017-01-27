@@ -10,7 +10,6 @@ namespace GameEngine {
 	protected:
 		float _x = 0;
 		float _y = 0;
-		int texture = 0;
 		Shape* collider = nullptr;
 
 	public:
@@ -18,9 +17,6 @@ namespace GameEngine {
 		Entity(float x, float y, int texture = -1);
 		Entity(float x, float y, std::string texture_name);
 		virtual ~Entity();
-
-		int getTexture();
-		void setTexture(int id);
 
 		Shape* getCollider();
 		void setCollider(Shape* newCollider);

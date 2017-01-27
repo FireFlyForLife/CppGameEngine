@@ -62,7 +62,7 @@ namespace GameEngine {
 			for (int y = 0; y < bounds.height; y++) {
 				Tile* tile = map.at(x + bounds.x, y + bounds.y);
 				if (tile != nullptr && tile->enabled) {
-					int texture_id = tile->GetTexture();
+					int texture_id = tile->getTexture();
 					if (texture_id != -1){
 						Point* location = new Point(x, y); //TODO: Make this pass by value not pointer
 						ids.push_back(sortable_tile(texture_id, tile, location));

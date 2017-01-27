@@ -3,12 +3,12 @@
 namespace GameEngine {
 
 	Entity::Entity() 
-		: GameObject(), _x(0.0f), _y(0.0f), texture(-1)
+		: GameObject(-1), _x(0.0f), _y(0.0f)
 	{
 	}
 
 	Entity::Entity(float x, float y, int texture) 
-		: GameObject(), _x(x), _y(y), texture(texture)
+		: GameObject(texture), _x(x), _y(y)
 	{
 	}
 
@@ -20,13 +20,6 @@ namespace GameEngine {
 	Entity::~Entity()
 	{
 		delete collider;
-	}
-
-	int Entity::getTexture() {
-		return texture;
-	}
-	void Entity::setTexture(int id) {
-		texture = id;
 	}
 
 	Shape * Entity::getCollider()

@@ -74,10 +74,12 @@ namespace GameEngine {
 
 	int TextureManager::add(SDL_Texture * texture, const string& texture_name, const Rectangle& bounds)
 	{
-		int texture_id = getID(texture_name);
-		if (texture_id != -1) {
-			std::cerr << "Texture name: '" << texture_name << "' is already defined with id: '" << texture_id << "'." << std::endl;
-			return texture_id;
+		if (texture_name != "unnamed") {
+			int texture_id = getID(texture_name);
+			if (texture_id != -1) {
+				std::cerr << "Texture name: '" << texture_name << "' is already defined with id: '" << texture_id << "'." << std::endl;
+				return texture_id;
+			}
 		}
 
 		auto raw_texture = get_raw_texture(texture);
@@ -106,6 +108,11 @@ namespace GameEngine {
 		}
 
 		return single_texture_id;
+	}
+
+	int TextureManager::add(SDL_Texture * texture, const Rectangle & bounds)
+	{
+		return add(texture, "unnamed", bounds);
 	}
 
 	int TextureManager::getID(string texture_name)
