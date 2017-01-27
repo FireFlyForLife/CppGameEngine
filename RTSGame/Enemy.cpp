@@ -7,13 +7,11 @@ namespace GameEngine
 	Enemy::Enemy()
 		: Actor()
 	{
-		findPathToBuilding();
 	}
 
 	Enemy::Enemy(float x, float y, int texture)
 		: Actor(x, y, texture)
 	{
-		findPathToBuilding();
 	}
 
 	Enemy::Enemy(float x, float y, std::string texture_name)
@@ -41,6 +39,7 @@ namespace GameEngine
 			break;
 		case ENEMY_STATE::ENEMY_ATTACKING:
 			if (target == nullptr || target->getHealth() <= 0) {
+				state = ENEMY_MOVING;
 				findPathToBuilding();
 			}
 			else {
@@ -52,7 +51,8 @@ namespace GameEngine
 
 	void Enemy::moveAlongPath()
 	{
-		Vector2 large_direction = Vector2(path[0]) - Vector2(x(), y());
+		int scale = getWorld()->map->tile_scale;
+		Vector2 large_direction = Vector2(path[0])*scale - Vector2(x(), y());
 		if (large_direction.magnitude2() == 0) {
 			path.erase(path.begin());
 			return;
@@ -69,12 +69,24 @@ namespace GameEngine
 
 	void Enemy::findPathToBuilding()
 	{
-		//std::vector<Entity*> buildings = getWorld()->entity_list->findAllWithTag(target_tag);
-		
+		std::vector<Entity*> buildings = getWorld()->entity_list->findAllWithTag(target_tag);
+		auto compare = [this](Entity* a, Entity* b) { 
+			return distanceBetween({ x(), y() }, { a->x(), a->y() }) > distanceBetween({ x(), y() }, { b->x(), b->y() });
+		};
+		std::priority_queue<Entity*, std::vector<Entity*>, decltype(compare)> pr_queue(compare);
+		for each (Entity* entity in buildings)
+		{
+			pr_queue.push(entity);
+		}
 
-		//Point start{ x(), y() };
-		//Point end{ target->x(), target->y() };
-		//path = findPath(getWorld(), start, end);
+		Entity* top = pr_queue.top();
+		target = reinterpret_cast<Building*>(top);
+
+		int scale = getWorld()->map->tile_scale;
+
+		Point start{ x() / scale, y() / scale };
+		Point end{ target->x() / scale, target->y() / scale};
+		path = findPath(getWorld(), start, end);
 	}
 
 	void Enemy::attackBuilding()

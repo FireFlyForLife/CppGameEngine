@@ -26,6 +26,7 @@
 #include "HealthBar.h"
 #include "ResourceRock.h"
 #include "ExplosiveEnemy.h"
+#include "SpawnHole.h"
 
 using namespace GameEngine;
 
@@ -239,6 +240,11 @@ int main(int argc, char* args[])
 			Global::texture_manager.add(loadTexture("Art/Selection_Rect.png"), "selection_rectangle");
 			Global::texture_manager.add(loadTexture("Art/Enemy.png"), "enemy");
 			Global::texture_manager.add(loadTexture("Art/Resource_Rock.png"), "resource_rock");
+			Global::texture_manager.add(loadTexture("Art/Hole.png"), "hole");
+			Global::texture_manager.add(loadTexture("Art/Bottom_UI.png"), "bottom_UI");
+			Global::texture_manager.add(loadTexture("Art/Tower.png"), "tower");
+			Global::texture_manager.add(loadTexture("Art/Tower_2.png"), "tower2");
+			Global::texture_manager.add(loadTexture("Art/Worker.png"), "worker");
 
 			for (int x = 0; x < 140; x++) {
 				for (int y = 0; y < 120; y++) {
@@ -298,6 +304,11 @@ int main(int argc, char* args[])
 			HealthBar* expl_bar = new HealthBar(expl_enemy, "Art/Health_Bar.png");
 			game_world->entity_list->entities.push_back(expl_bar);
 
+			SpawnHole* hole = new SpawnHole(scale * 30, scale * 6, expl_ani);
+			game_world->entity_list->entities.push_back(hole);
+
+			UI_element* bottom_UI = new UI_element(Global::SCREEN_WIDTH * 0.5 - 192*0.5, Global::SCREEN_HEIGHT - 48, "bottom_UI");
+			game_world->entity_list->entities.push_back(bottom_UI);
 
 			//Main loop flag
 			bool quit = false;

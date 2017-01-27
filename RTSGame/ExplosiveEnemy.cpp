@@ -21,7 +21,11 @@ namespace GameEngine
 	}
 	void ExplosiveEnemy::Update()
 	{
-		if (getHealth() <= 0)
+		int health = getHealth();
+		if(health > 0)
+			Enemy::Update();
+
+		if (health <= 0)
 			ani_controller.enabled = true;
 
 		ani_controller.Update();

@@ -9,6 +9,7 @@ namespace GameEngine {
 
 		Point();
 		Point(int x, int y);
+		Point(float x, float y);
 		Point(const Point&) = default;
 		Point(const SDL_Point& point);
 		~Point();

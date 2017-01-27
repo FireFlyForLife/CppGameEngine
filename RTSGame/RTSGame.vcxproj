@@ -130,6 +130,7 @@
     <ClCompile Include="ResourceRock.cpp" />
     <ClCompile Include="SelectionArea.cpp" />
     <ClCompile Include="Spaceport.cpp" />
+    <ClCompile Include="SpawnHole.cpp" />
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="UnitController.cpp" />
   </ItemGroup>
@@ -142,6 +143,7 @@
     <ClInclude Include="ResourceRock.h" />
     <ClInclude Include="SelectionArea.h" />
     <ClInclude Include="Spaceport.h" />
+    <ClInclude Include="SpawnHole.h" />
     <ClInclude Include="Unit.h" />
     <ClInclude Include="UnitController.h" />
   </ItemGroup>

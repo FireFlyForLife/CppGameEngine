@@ -66,7 +66,7 @@ namespace GameEngine
 		{
 			Enemy* enemy = dynamic_cast<Enemy*>(entity);
 			if (enemy != nullptr) {
-				if (enemyInRange(enemy)) {
+				if (enemy->getHealth() > 0 && enemyInRange(enemy)) {
 					state = ATTACKING;
 					target = enemy;
 				}

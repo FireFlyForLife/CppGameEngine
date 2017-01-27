@@ -29,4 +29,5 @@ namespace GameEngine {
 	};
 
 	Vector2& v2_min(Vector2&, Vector2&);
+	float distanceBetween(const Vector2& a, const Vector2& b);
 }

@@ -35,20 +35,34 @@ namespace GameEngine {
 				}
 			}
 		}
-		for each (Entity* entity in entity_list->entities)
-		{
+		for (int i = 0; i < entity_list->entities.size(); i++) {
+			Entity* entity = entity_list->entities[i];
 			if (entity != nullptr) {
 				if (entity->getWorld() == nullptr)
 					entity->setWorld(this);//TODO: Move this on add to the entity list
 				entity->Update();
 			}
 		}
-		for each (Entity* entity in UI_elements->entities)
-		{
+		//for each (Entity* entity in entity_list->entities)
+		//{
+		//	if (entity != nullptr) {
+		//		if (entity->getWorld() == nullptr)
+		//			entity->setWorld(this);//TODO: Move this on add to the entity list
+		//		entity->Update();
+		//	}
+		//}
+		for (int i = 0; i < UI_elements->entities.size(); i++) {
+			Entity* entity = UI_elements->entities[i];
 			if (entity != nullptr) {
 				entity->Update();
 			}
 		}
+		/*for each (Entity* entity in UI_elements->entities)
+		{
+			if (entity != nullptr) {
+				entity->Update();
+			}
+		}*/
 
 		Global::time_on_last_frame = SDL_GetTicks();
 	}

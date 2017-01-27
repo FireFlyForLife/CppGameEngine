@@ -74,6 +74,11 @@ namespace GameEngine {
 		return a;
 	}
 
+	float distanceBetween(const Vector2 & a, const Vector2 & b)
+	{
+		return (a - b).magnitude();
+	}
+
 	
 
 }

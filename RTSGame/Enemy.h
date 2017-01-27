@@ -26,12 +26,12 @@ namespace GameEngine
 
 		virtual void Update() override;
 
-		ENEMY_STATE state;
+		ENEMY_STATE state = ENEMY_ATTACKING;
 
 	protected:
 		string target_tag = "building";
 		std::vector<Point> path;
-		float speed = 0.3;
+		float speed = 0.0365;
 		int range = 30;
 		int damage = 15;
 

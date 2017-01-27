@@ -4,7 +4,8 @@
 
 namespace GameEngine
 {
-	Text_UI_element::Text_UI_element(int x, int y, TTF_Font* font, string text, string prefix) : UI_element(x, y), text(text), prefix(prefix), font(font)
+	Text_UI_element::Text_UI_element(int x, int y, TTF_Font* font, string text, string prefix) 
+		: UI_element(x, y), text(text), prefix(prefix), font(font)
 	{
 		renderSelf = true;
 	}

@@ -10,6 +10,9 @@ namespace GameEngine {
 	{
 	}
 
+	Point::Point(float x, float y) : x((int)x), y((int)y)
+	{
+	}
 
 	Point::Point(const SDL_Point & point) : Point(point.x, point.y)
 	{
