@@ -7,6 +7,7 @@ namespace GameEngine {
 
 	class GameObject {
 	public:
+		GameObject();
 		virtual ~GameObject();
 
 		virtual void Update();
@@ -16,6 +17,9 @@ namespace GameEngine {
 
 		bool renderSelf = false;
 		virtual SDL_Surface* getFrame(SDL_Renderer* renderer);
+
+		bool enabled = true;
+
 	private:
 		World* living_world;
 	};

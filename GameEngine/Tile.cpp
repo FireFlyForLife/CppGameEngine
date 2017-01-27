@@ -1,12 +1,12 @@
 #include "Tile.h"
 
 namespace GameEngine {
-	Tile::Tile() : texture(NULL)
+	Tile::Tile() : GameObject(), texture(NULL)
 	{
 
 	}
 	Tile::Tile(std::string texture_name)
-		: texture(Global::texture_manager.getID(texture_name))
+		: GameObject(), texture(Global::texture_manager.getID(texture_name))
 	{
 		
 	}

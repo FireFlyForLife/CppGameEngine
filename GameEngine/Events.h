@@ -6,9 +6,10 @@ namespace GameEngine {
 	public:
 		SDL_Point point;
 		bool dragging;
+		__int8 scan_code;
 
 		MouseMoveArgs();
-		MouseMoveArgs(SDL_Point point, bool dragging);
+		MouseMoveArgs(SDL_Point point, bool dragging, __int8 scan_code);
 	};
 
 	struct MouseClickArgs {

@@ -6,7 +6,7 @@ namespace GameEngine {
 	{
 	}
 
-	Rectangle::Rectangle(int x, int y, int height, int width) : 
+	Rectangle::Rectangle(int x, int y, int width, int height) :
 		x(x), y(y), width(width), height(height)
 	{
 	}

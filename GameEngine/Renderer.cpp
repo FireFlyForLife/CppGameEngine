@@ -61,9 +61,12 @@ namespace GameEngine {
 		for (int x = 0; x < bounds.width; x++) {
 			for (int y = 0; y < bounds.height; y++) {
 				Tile* tile = map.at(x + bounds.x, y + bounds.y);
-				if (tile != nullptr) {
-					Point* location = new Point(x, y); //TODO: Make this pass by value not pointer
-					ids.push_back(sortable_tile(tile->GetTexture(), tile, location));
+				if (tile != nullptr && tile->enabled) {
+					int texture_id = tile->GetTexture();
+					if (texture_id != -1){
+						Point* location = new Point(x, y); //TODO: Make this pass by value not pointer
+						ids.push_back(sortable_tile(texture_id, tile, location));
+					}
 				}
 			}
 		}
@@ -109,7 +112,7 @@ namespace GameEngine {
 	{
 		for (size_t i = from; i < to; i++) {
 			Entity* entity = list.entities.at(i);
-			if (entity != nullptr) {
+			if (entity != nullptr && entity->enabled) {
 				if (entity->renderSelf) {
 					SDL_Surface* surface = entity->getFrame(gRenderer);
 					if (surface != nullptr) {
@@ -122,13 +125,16 @@ namespace GameEngine {
 						SDL_FreeSurface(surface);
 					}
 				} else {
-					SingleTexture& texture = Global::texture_manager.get(entity->getTexture());
-					Rectangle target;
-					target.x = entity->x() + offset.x;
-					target.y = entity->y() + offset.y;
-					target.width = texture.bounds.width;
-					target.height = texture.bounds.height;
-					renderSingleTexture(texture, target);
+					int texture_id = entity->getTexture();
+					if (texture_id != -1) {
+						SingleTexture& texture = Global::texture_manager.get(texture_id);
+						Rectangle target;
+						target.x = entity->x() + offset.x;
+						target.y = entity->y() + offset.y;
+						target.width = texture.bounds.width;
+						target.height = texture.bounds.height;
+						renderSingleTexture(texture, target);
+					}
 				}
 			}
 		}

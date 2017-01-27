@@ -1,11 +1,13 @@
 #pragma once
 #include <vector>
+#include <algorithm>
 
 using std::vector;
 
+//TODO: Add optional compare object, similar to std::sort
 template<typename T>
-int vector_contains(vector<T>*, T) {
-	for (int i = 0; i < vector->size(); i++) {
+int vector_find(vector<T>& vector, T target) {
+	for (int i = 0; i < vector.size(); i++) {
 		if (vector[i] == target)
 			return i;
 	}

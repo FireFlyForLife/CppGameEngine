@@ -1,4 +1,5 @@
 #include "UnitController.h"
+#include <iostream>
 
 
 namespace GameEngine
@@ -12,8 +13,8 @@ namespace GameEngine
 
 	UnitController::~UnitController()
 	{
-		//The unit controller is not the owner of the units, its just a controller thus not
-		//deleting the units on destruction of the controler.
+		//The unit controller is not the owner of the selected, its just a controller thus not
+		//deleting the selected on destruction of the controler.
 		
 		delete selection_area;
 	}
@@ -21,16 +22,18 @@ namespace GameEngine
 	void UnitController::Update()
 	{
 		if (removeOnUnitDeath) {
-			units.erase(//TODO: Test this
-				std::remove_if(units.begin(), units.end(), 
+			selected.erase(//TODO: Test this
+				std::remove_if(selected.begin(), selected.end(), 
 					[](Unit* unit) { return unit != nullptr && unit->getHealth() <= 0; }),
-				units.end());
+				selected.end());
 		}
+
+		
 	}
 
 	void UnitController::addUnit(Unit * unit)
 	{
-		units.push_back(unit);
+		selected.push_back(unit);
 	}
 
 	void UnitController::killUnit(Unit * unit)
@@ -40,35 +43,75 @@ namespace GameEngine
 
 	Unit * UnitController::getUnit(int index)
 	{
-		if (vector_inrange(units, index))
-			return units.at(index);
+		if (vector_inrange(selected, index))
+			return selected.at(index);
 		return nullptr;
 	}
 
 	int UnitController::getUnitAmount()
 	{
-		return units.size();
+		return selected.size();
 	}
 
 	void UnitController::OnMouseDown(MouseClickArgs * args, int)
 	{
-		Point world_point = world->toWorldSpace(args->point);
-		delete selection_area;
-		selection_area = new SelectionArea(world_point.x, world_point.y);
-		world->entity_list->entities.push_back(selection_area);
+		if (args->scan_code == 1) {
+			Point world_point = world->toWorldSpace(args->point);
+			delete selection_area;
+			selection_area = new SelectionArea(world_point.x, world_point.y);
+			world->entity_list->entities.push_back(selection_area);
+		}
+		else if (args->scan_code == 3) {
+			for each (Unit* unit in selected)
+			{
+				int scale = world->map->tile_scale;
+				Point start(unit->x() / scale, unit->y() / scale);
+				Point world_space = world->toWorldSpace(args->point);
+				Point end(world_space.x / scale, world_space.y / scale);
+				std::vector<Point> path = findPath(world, start, end);
+				
+				for (size_t i = 0; i < path.size(); i++)
+				{
+					path[i] = Point(path[i].x * scale, path[i].y * scale);
+				}
+				unit->state = MOVING;
+				unit->path = path;
+			}
+		}
 	}
 	void UnitController::OnMouseMove(MouseMoveArgs * args, int)
 	{
-		if (selection_area != NULL && args->dragging) {
+		if (args->dragging && args->scan_code == 1 &&selection_area != NULL) {
 			Point world_point = world->toWorldSpace(args->point);
 			selection_area->setSecondPoint(world_point);
+			Rectangle bounds = selection_area->getRectangle();
+			BoxShape selection_collider(bounds);
+			for each (Entity* entity in world->entity_list->entities)
+			{
+				Unit* unit = dynamic_cast<Unit*>(entity);
+				if (unit) {
+					BoxShape* collider = dynamic_cast<BoxShape*>(entity->getCollider()); //TODO: Find solution to this
+					if (collider != nullptr) {
+						BoxShape world_collider(*collider);
+						world_collider.x += unit->x();
+						world_collider.y += unit->y();
+						selected.clear();
+						if (hasOverlap(world_collider, selection_collider)) {
+							if (vector_find<Unit*>(selected, unit) == -1)
+								selected.push_back(unit);
+						}
+					}
+				}
+			}
 		}
 	}
 	void UnitController::OnMouseUp(MouseClickArgs * args, int)
 	{
-		EntityList* list = world->entity_list;
-		list->entities.erase(std::remove(list->entities.begin(), list->entities.end(), selection_area), list->entities.end());
-		delete selection_area;
-		selection_area = NULL;
+		if (args->scan_code == 1) {
+			EntityList* list = world->entity_list;
+			list->entities.erase(std::remove(list->entities.begin(), list->entities.end(), selection_area), list->entities.end());
+			delete selection_area;
+			selection_area = NULL;
+		}
 	}
 }

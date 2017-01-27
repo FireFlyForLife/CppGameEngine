@@ -29,7 +29,7 @@ namespace GameEngine {
 			mouseUpListeners.call(&args, 0);
 		}
 		else if (e->type == SDL_EventType::SDL_MOUSEMOTION) {
-			MouseMoveArgs args({ e->motion.x, e->motion.y }, e->motion.state);
+			MouseMoveArgs args({ e->motion.x, e->motion.y }, e->motion.state, e->button.button);
 			mouseMoveListeners.call(&args, 0);
 		}
 	}

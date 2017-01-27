@@ -2,6 +2,7 @@
 #include "Entity.h"
 #include "Point.h"
 #include <SDL_image.h>
+#include "World.h"
 
 namespace GameEngine
 {
@@ -17,6 +18,8 @@ namespace GameEngine
 		void setSecondPoint(const Point&);
 		Point getSecondPoint();
 		Point getFirstPoint();
+
+		Rectangle getRectangle();
 
 	protected:
 		SDL_Surface * square_16px = NULL;

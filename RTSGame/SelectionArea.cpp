@@ -13,19 +13,17 @@ namespace GameEngine
 
 	SelectionArea::~SelectionArea()
 	{
+		SDL_FreeSurface(square_16px);
 	}
 
 	SDL_Surface* SelectionArea::getFrame(SDL_Renderer * renderer)
 	{
-		int dx = fmin(start_x, end_x);
-		int dy = fmin(start_y, end_y);
-		x(dx);
-		y(dy);
+		Rectangle rect = getRectangle();
 
-		int dw = abs(end_x - start_x);
-		int dh = abs(end_y - start_y);
-		
-		SDL_Surface* surface = SDL_CreateRGBSurface(0, dw, dh, 32, 0, 0, 0, 0);
+		x(rect.x);
+		y(rect.y);
+
+		SDL_Surface* surface = SDL_CreateRGBSurface(0, rect.width, rect.height, 32, 0, 0, 0, 0);
 		SDL_BlitScaled(square_16px, NULL, surface, NULL);
 
 		return surface;
@@ -47,5 +45,14 @@ namespace GameEngine
 	Point SelectionArea::getFirstPoint()
 	{
 		return Point(start_x, start_y);
+	}
+	Rectangle SelectionArea::getRectangle()
+	{
+		int pos_x = fmin(start_x, end_x);
+		int pos_y = fmin(start_y, end_y);
+		int w = abs(end_x - start_x);
+		int h = abs(end_y - start_y);
+
+		return Rectangle(pos_x, pos_y, w, h);
 	}
 }

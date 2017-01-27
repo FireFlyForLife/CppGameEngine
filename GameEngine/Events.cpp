@@ -6,8 +6,9 @@ namespace GameEngine {
 	{
 		point = { 0, 0 };
 		dragging = false;
+		scan_code = 0;
 	}
-	MouseMoveArgs::MouseMoveArgs(SDL_Point point, bool dragging) : point(point), dragging(dragging)
+	MouseMoveArgs::MouseMoveArgs(SDL_Point point, bool dragging, __int8 scan_code) : point(point), dragging(dragging), scan_code(scan_code)
 	{
 	}
 #pragma endregion

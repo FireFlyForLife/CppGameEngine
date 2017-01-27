@@ -22,6 +22,9 @@
 #include "Spaceport.h"
 #include "UnitController.h"
 #include "Text_UI_element.h"
+#include "Enemy.h"
+#include "HealthBar.h"
+#include "ResourceRock.h"
 
 using namespace GameEngine;
 
@@ -233,6 +236,8 @@ int main(int argc, char* args[])
 			Global::texture_manager.add(loadTexture("Art/Robot.png"), "robot");
 			Global::texture_manager.add(loadTexture("Art/Space_Port.png"), "space_port");
 			Global::texture_manager.add(loadTexture("Art/Selection_Rect.png"), "selection_rectangle");
+			Global::texture_manager.add(loadTexture("Art/Enemy.png"), "enemy");
+			Global::texture_manager.add(loadTexture("Art/Resource_Rock.png"), "resource_rock");
 
 			for (int x = 0; x < 140; x++) {
 				for (int y = 0; y < 120; y++) {
@@ -262,18 +267,26 @@ int main(int argc, char* args[])
 			game_world->camera = camera;
 			game_world->entity_list->entities.push_back(camera);
 
-			Spaceport* base = new Spaceport(game_world->map->tile_scale * 5, game_world->map->tile_scale * 5);
+			Spaceport* base = new Spaceport(scale * 5, scale * 15);
 			game_world->entity_list->entities.push_back(base);
 
 			Camera** mainCameraPointer = &(game_world->camera);
 			UnitController* unit_controller = new UnitController(game_world);
 			game_world->entity_list->entities.push_back(unit_controller);
-			Unit* robot = new Unit(30, 30, "robot");
+			Unit* robot = new Unit(scale*3, scale*3, "robot");
 			game_world->entity_list->entities.push_back(robot);
 			unit_controller->addUnit(robot);
 
+			Enemy* enemy = new Enemy(50, 100, "Art/Enemy.png");
+			game_world->entity_list->entities.push_back(enemy);
+			HealthBar* bar = new HealthBar(enemy, "Art/Health_Bar.png");
+			game_world->entity_list->entities.push_back(bar);
+
 			Text_UI_element* text = new Text_UI_element(100, 0, font, "0", "Resources: ");
 			game_world->UI_elements->entities.push_back(text);
+
+			ResourceRock* r_rock = new ResourceRock(scale * 2, scale * 13);
+			game_world->entity_list->entities.push_back(r_rock);
 
 			//Main loop flag
 			bool quit = false;
@@ -305,6 +318,8 @@ int main(int argc, char* args[])
 						GameEngine::handle_SDL_Event(&e);
 					}
 				}
+
+				game_world->Update();
 
 				//Clear screen
 				SDL_RenderClear(gRenderer);

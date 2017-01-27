@@ -6,6 +6,9 @@
 #include "Camera.h"
 #include "SelectionArea.h"
 #include "World.h"
+#include "CollisionManager.h"
+#include "Vector_Utils.h"
+#include "Pathfinder.h"
 
 #include <vector>
 #include <algorithm>
@@ -29,7 +32,7 @@ namespace GameEngine
 		int getUnitAmount();
 
 	protected:
-		std::vector<Unit*> units;
+		std::vector<Unit*> selected;
 		World* world;
 		SelectionArea* selection_area = nullptr;
 

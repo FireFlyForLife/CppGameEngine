@@ -3,12 +3,12 @@
 namespace GameEngine {
 
 	Entity::Entity() 
-		: _x(0.0f), _y(0.0f), texture(-1)
+		: GameObject(), _x(0.0f), _y(0.0f), texture(-1)
 	{
 	}
 
 	Entity::Entity(float x, float y, int texture) 
-		: _x(x), _y(y), texture(texture)
+		: GameObject(), _x(x), _y(y), texture(texture)
 	{
 	}
 
