@@ -8,6 +8,7 @@ namespace GameEngine
 		: Building(x, y, "space_port"), ani_controller(this, ani), ui(ui)
 	{
 		setHealth(500);
+		resource = 25;
 		ani_controller.enabled = false;
 		ui->enabled = false;
 	}

@@ -148,6 +148,7 @@
     <ClInclude Include="ExplosiveTower.h" />
     <ClInclude Include="HealthBar.h" />
     <ClInclude Include="PlacementManager.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="ResourceRock.h" />
     <ClInclude Include="SelectionArea.h" />
     <ClInclude Include="Spaceport.h" />
@@ -156,6 +157,12 @@
     <ClInclude Include="Unit.h" />
     <ClInclude Include="UnitController.h" />
     <ClInclude Include="Worker.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="RTSGame.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

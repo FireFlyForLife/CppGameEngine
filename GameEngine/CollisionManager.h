@@ -2,6 +2,8 @@
 #include "BoxShape.h"
 #ifdef _DEBUG
 #include <assert.h>
+#else
+#define assert()
 #endif // DEBUG
 
 namespace GameEngine {

@@ -46,12 +46,16 @@ namespace GameEngine
 	void PlacementManager::OnMouseDown(MouseClickArgs * args, int)
 	{
 		if (bCanPlace && args->scan_code == 1) {
-			placement_entity->x(preview->x());
-			placement_entity->y(preview->y());
-			getWorld()->entity_list->entities.push_back(placement_entity);
-			placement_entity = nullptr;
-			bCanPlace = false;
-			preview->enabled = false;
+			int scale = getWorld()->map->tile_scale;
+			Point loc = { preview->x() / scale, preview->y() / scale};
+			if (!getWorld()->blocking(loc)) {
+				placement_entity->x(preview->x());
+				placement_entity->y(preview->y());
+				getWorld()->entity_list->entities.push_back(placement_entity);
+				placement_entity = nullptr;
+				bCanPlace = false;
+				preview->enabled = false;
+			}
 		}
 	}
 }

@@ -35,12 +35,6 @@
 
 using namespace GameEngine;
 
-//Screen dimension constants
-//const int SCREEN_WIDTH = 640;
-//const int SCREEN_HEIGHT = 480;
-
-const int texturesize = 16;
-
 //Starts up SDL and creates window
 bool init();
 
@@ -53,90 +47,74 @@ void close();
 //Loads individual image as texture
 SDL_Texture* loadTexture(std::string path);
 
+void waitForKeyPress();
+void addToWorld(Entity* entity);
+void addToWorld(UI_element* entity);
+void addToWorld(int x, int y, Tile* entity);
+
 //The window we'll be rendering to
 SDL_Window* gWindow = NULL;
-
-//The window renderer
 SDL_Renderer* gRenderer = NULL;
 
-//Current displayed texture
-SDL_Texture* gTexture = NULL;
-
+//To be deleted
+GameEngine::World* game_world = nullptr;
+GameEngine::Renderer* renderer = nullptr;
+Animation* expl_ani = nullptr;
 TTF_Font* font = nullptr;
 
-GameEngine::World* game_world = nullptr;
-
-GameEngine::Renderer* renderer = nullptr;
-
+//non-owning pointers
 PlacementManager* placement = nullptr;
-
 Spaceport* base = nullptr;
 
-Animation* expl_ani = nullptr;
-
-//using namespace GameEngine;
 bool init()
 {
-	//Initialization flag
-	bool success = true;
-
-	
-
 	//Initialize SDL
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
 		std::cout << "SDL could not initialize! SDL Error: %s\n" << SDL_GetError() << std::endl;
-		success = false;
+		return false;
 	}
-	else
+
+	//Set texture filtering to linear
+	if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"))
 	{
-		//Set texture filtering to linear
-		if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"))
-		{
-			std::cout << "Warning: Linear texture filtering not enabled!" << std::endl;
-		}
-
-		//Create window
-		gWindow = SDL_CreateWindow("RTS: Explosion!", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, Global::SCREEN_WIDTH, Global::SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-		if (gWindow == NULL)
-		{
-			std::cout << "Window could not be created! SDL Error: %s\n" << SDL_GetError() << std::endl;
-			success = false;
-		}
-		else
-		{
-			//Create renderer for window
-			gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
-			if (gRenderer == NULL)
-			{
-				std::cout << "Renderer could not be created! SDL Error: %s\n" << SDL_GetError() << std::endl;
-				success = false;
-			}
-			else
-			{
-				//Initialize renderer color
-				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-
-				//Initialize PNG loading
-				int imgFlags = IMG_INIT_PNG;
-				if (!(IMG_Init(imgFlags) & imgFlags))
-				{
-					std::cout << "SDL_image could not initialize! SDL_image Error: %s\n" << IMG_GetError() << std::endl;
-					success = false;
-				}
-			}
-		}
+		std::cout << "Warning: Linear texture filtering not enabled!" << std::endl;
 	}
 
+	//Create window
+	gWindow = SDL_CreateWindow("RTS: Explosion!", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, Global::SCREEN_WIDTH, Global::SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+	if (gWindow == NULL)
+	{
+		std::cout << "Window could not be created! SDL Error: " << SDL_GetError() << std::endl;
+		return false;
+	}
+
+	//Create renderer for window
+	gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
+	if (gRenderer == NULL)
+	{
+		std::cout << "Renderer could not be created! SDL Error: " << SDL_GetError() << std::endl;
+		return false;
+	}
+
+	//Initialize renderer color
+	SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+
+	//Initialize PNG loading
+	int imgFlags = IMG_INIT_PNG;
+	if (!(IMG_Init(imgFlags) & imgFlags))
+	{
+		std::cout << "SDL_image could not initialize! SDL_image Error: " << IMG_GetError() << std::endl;
+		return false;
+	}
+			
+	//Initialize text rendering
 	if (TTF_Init() == -1) {
-		std::cout << "SDL_ttf could not initialize! SDL_ttf Error: %s\n" << TTF_GetError() << std::endl;
-		success = false;
+		std::cout << "SDL_ttf could not initialize! SDL_ttf Error: " << TTF_GetError() << std::endl;
+		return false;
 	}
 
-	font = TTF_OpenFont("AlphaFridgeMagnets.ttf", 24);
-	if (!font)
-		std::cout << TTF_GetError() << std::endl;
-	return success;
+	return true;
 }
 
 bool loadMedia()
@@ -144,23 +122,32 @@ bool loadMedia()
 	//Loading success flag
 	bool success = true;
 
-	//Load PNG texture
-	gTexture = loadTexture("Art/Maybe_Grass.png");
-	if (gTexture == NULL)
-	{
-		std::cout << "Failed to load texture image!" << std::endl;
-		success = false;
-	}
+	Global::texture_manager.setupDefault(gRenderer);
+	Global::texture_manager.add(loadTexture("Art/Maybe_Grass.png"),		"grass");
+	Global::texture_manager.add(loadTexture("Art/Little_Player.png"),	"player");
+	Global::texture_manager.add(loadTexture("Art/Point.png"),			"point");
+	Global::texture_manager.add(loadTexture("Art/Rock.png"),			"rock");
+	Global::texture_manager.add(loadTexture("Art/Robot.png"),			"robot");
+	Global::texture_manager.add(loadTexture("Art/Space_Port.png"),		"space_port");
+	Global::texture_manager.add(loadTexture("Art/Selection_Rect.png"),	"selection_rectangle");
+	Global::texture_manager.add(loadTexture("Art/Enemy.png"),			"enemy");
+	Global::texture_manager.add(loadTexture("Art/Resource_Rock.png"),	"resource_rock");
+	Global::texture_manager.add(loadTexture("Art/Hole.png"),			"hole");
+	Global::texture_manager.add(loadTexture("Art/Bottom_UI.png"),		"bottom_UI");
+	Global::texture_manager.add(loadTexture("Art/Tower.png"),			"tower");
+	Global::texture_manager.add(loadTexture("Art/Tower_2.png"),			"tower2");
+	Global::texture_manager.add(loadTexture("Art/Worker.png"),			"worker");
+	Global::texture_manager.add(loadTexture("Art/Preview.png"),			"preview");
+	Global::texture_manager.add(loadTexture("Art/Bomb.png"),			"bomb");
+
+	font = TTF_OpenFont("AlphaFridgeMagnets.ttf", 24);
 
 	return success;
 }
 
 void close()
 {
-	//Free loaded image
-	SDL_DestroyTexture(gTexture);
-	gTexture = NULL;
-
+	//delete font
 	TTF_CloseFont(font);
 
 	//Destroy window	
@@ -171,6 +158,12 @@ void close()
 
 	delete game_world;
 	delete renderer;
+	delete expl_ani;
+
+	game_world = nullptr;
+	renderer = nullptr;
+	expl_ani = nullptr;
+	font = nullptr;
 
 	//Quit SDL subsystems
 	IMG_Quit();
@@ -178,6 +171,7 @@ void close()
 	SDL_Quit();
 }
 
+//function from Lazy Foo's tutorials
 SDL_Texture* loadTexture(std::string path)
 {
 	//The final texture
@@ -205,34 +199,41 @@ SDL_Texture* loadTexture(std::string path)
 	return newTexture;
 }
 
-void lalala(GameEngine::KeyClickArgs* args, int i) {
-	SDL_Log(std::to_string(args->down).c_str());
-	SDL_Log(std::to_string(args->scan_code).c_str());
+//utility methods for adding to the game_world
+void addToWorld(Entity* entity) {
+	game_world->entity_list->entities.push_back(entity);
 }
 
-void mouseLis(MouseClickArgs* args, int i) {
-	std::string cord = std::to_string(args->point.x) + "," + std::to_string(args->point.y);
-	SDL_Log(cord.c_str());
-	SDL_Log(std::to_string(args->down).c_str());
-	SDL_Log(std::to_string(args->scan_code).c_str());
+void addToWorld(UI_element* ui) {
+	game_world->UI_elements->entities.push_back(ui);
 }
 
-void mouseMov(MouseMoveArgs* args, int i) {
-	SDL_Log(std::to_string(args->dragging).c_str());
-	std::string cord = std::to_string(args->point.x) + "," + std::to_string(args->point.y);
-	SDL_Log(cord.c_str());
+void addToWorld(int x, int y, Tile* tile) {
+	Point p{ x, y };
+	game_world->map->set(tile, p);
 }
 
+void waitForKeyPress() {
+	std::cout << "Press Enter to continue..." << std::endl;
+	char c;
+	std::cin >> c;
+}
+
+//when the player presses a button, we give a entity to the PlacementManager to prepare placing the entity
 void OnKeyPress(KeyClickArgs* args, int) {
-	if (args->scan_code == SDL_SCANCODE_B) {
-		ExplosiveTower* tower = new ExplosiveTower(0, 0, *expl_ani,"tower");
+	int resources = base->getResources();
+	if (args->scan_code == SDL_SCANCODE_B && resources >= 10) {
+		ExplosiveTower* tower = new ExplosiveTower(0, 0, *expl_ani, "tower");
 		placement->prepare(tower);
-	}else if (args->scan_code == SDL_SCANCODE_N) {
+		base->addResources(-10);
+	}else if (args->scan_code == SDL_SCANCODE_N && resources >= 50) {
 		Bomb* bomb = new Bomb(0, 0, *expl_ani);
 		placement->prepare(bomb);
-	}else if (args->scan_code == SDL_SCANCODE_M) {
+		base->addResources(-50);
+	}else if (args->scan_code == SDL_SCANCODE_M && resources >= 15) {
 		Worker* worker = new Worker(0, 0, "worker", base);
 		placement->prepare(worker);
+		base->addResources(-15);
 	}
 }
 
@@ -242,169 +243,144 @@ int main(int argc, char* args[])
 	if (!init())
 	{
 		std::cout << "Failed to initialize!" << std::endl;
+		waitForKeyPress();
+		return 1;
 	}
-	else
+
+	//Load media
+	if (!loadMedia())
 	{
-		//Load media
-		if (!loadMedia())
-		{
-			std::cout << "Failed to load media!" << std::endl;
+		std::cout << "Failed to load media!" << std::endl;
+		waitForKeyPress();
+		return 1;
+	}
+	game_world = new World();
+	renderer = new Renderer(gRenderer);
+
+	int scale = game_world->map->tile_scale;
+
+	//add some grass to the background
+	for (int x = 0; x < game_world->map->width; x++) {
+		for (int y = 0; y < game_world->map->height; y++) {
+			Tile* tile = new Tile("grass");
+			game_world->map->set(tile, Point(x, y));
 		}
-		else
+	}
+
+	//create some walls in the map
+	for (int x = 0; x < 10; x++) {
+		for (int y = 0; y < 10; y++) {
+			Tile* rock = new Rock();
+			addToWorld(x, y, rock);
+		}
+	}
+	for (int x = 0; x < 10; x++) {
+		for (int y = 20; y < 20+15; y++) {
+			Tile* rock = new Rock();
+			addToWorld(x, y, rock);
+		}
+	}
+	for (int x = 17; x < 17+10; x++) {
+		for (int y = 5; y < 5+19; y++) {
+			Tile* rock = new Rock();
+			addToWorld(x, y, rock);
+		}
+	}
+
+
+	//setup explosion animation for all exploding actors
+	SDL_Texture* expl_texture = loadTexture("Art/Explosion.ani.png");
+	Point frame_size(64, 64);
+	expl_ani = new Animation(expl_texture, frame_size, 100);
+
+	//add entities to the world
+	Player* player = new Player(scale*4, scale*17, "player");
+	addToWorld(player);
+
+	Camera* camera = new MoveableCamera(0, 0);
+	game_world->camera = camera;
+	addToWorld(camera);
+
+	UnitController* unit_controller = new UnitController(game_world);
+	addToWorld(unit_controller);
+	
+	Unit* robot = new Unit(scale*6, scale*14, "robot");
+	game_world->entity_list->entities.push_back(robot);
+	unit_controller->addUnit(robot);
+
+	Text_UI_element* text = new Text_UI_element(100, 0, font, "0", "Resources: ");
+	addToWorld(text);
+
+	ResourceRock* r_rock = new ResourceRock(scale * 2, scale * 13);
+	addToWorld(r_rock);
+
+	ResourceRock* r_rock_0 = new ResourceRock(scale * 4, scale * 11);
+	addToWorld(r_rock_0);
+
+	ResourceRock* r_rock_1 = new ResourceRock(scale * 1, scale * 15);
+	addToWorld(r_rock_1);
+
+	SpawnHole* hole = new SpawnHole(scale * 30, scale * 6, *expl_ani);
+	addToWorld(hole);
+	SpawnHole* hole_2 = new SpawnHole(scale * 30, scale * 22, *expl_ani);
+	addToWorld(hole_2);
+
+	UI_element* bottom_UI = new UI_element(Global::SCREEN_WIDTH * 0.5 - 192*0.5, Global::SCREEN_HEIGHT - 48, "bottom_UI");
+	addToWorld(bottom_UI);
+
+	Entity* preview = new Entity(0, 0, "preview");
+	placement = new PlacementManager(preview);
+	addToWorld(placement);
+	addToWorld(preview);
+
+	Text_UI_element* game_over = new Text_UI_element(Global::SCREEN_WIDTH / 2 - 100, Global::SCREEN_HEIGHT / 2, font, "Game Over!");
+	base = new Spaceport(scale * 5, scale * 15, *expl_ani, game_over);
+	addToWorld(base);
+	addToWorld(game_over);
+
+	//register a key listener to place towers, bombs and workers
+	decltype(keyClickListeners)::callbackType key_listener = OnKeyPress;
+	keyDownListeners.add(key_listener);
+
+
+	//Main loop flag
+	bool quit = false;
+
+	//Event handler
+	SDL_Event e;
+
+	//While application is running
+	while (!quit)
+	{
+		//Handle events on queue
+		while (SDL_PollEvent(&e) != 0)
 		{
-			game_world = new World();
-			renderer = new Renderer(gRenderer);
-
-			Global::texture_manager.setupDefault(gRenderer);
-			Global::texture_manager.add(loadTexture("Art/Maybe_Grass.png"), "grass");
-			Global::texture_manager.add(loadTexture("Art/Little_Player.png"), "player");
-			int point_texture_ID = Global::texture_manager.add(loadTexture("Art/Point.png"), "point");
-			Global::texture_manager.add(loadTexture("Art/Rock.png"), "rock");
-			Global::texture_manager.add(loadTexture("Art/Robot.png"), "robot");
-			Global::texture_manager.add(loadTexture("Art/Space_Port.png"), "space_port");
-			Global::texture_manager.add(loadTexture("Art/Selection_Rect.png"), "selection_rectangle");
-			Global::texture_manager.add(loadTexture("Art/Enemy.png"), "enemy");
-			Global::texture_manager.add(loadTexture("Art/Resource_Rock.png"), "resource_rock");
-			Global::texture_manager.add(loadTexture("Art/Hole.png"), "hole");
-			Global::texture_manager.add(loadTexture("Art/Bottom_UI.png"), "bottom_UI");
-			Global::texture_manager.add(loadTexture("Art/Tower.png"), "tower");
-			Global::texture_manager.add(loadTexture("Art/Tower_2.png"), "tower2");
-			Global::texture_manager.add(loadTexture("Art/Worker.png"), "worker");
-			Global::texture_manager.add(loadTexture("Art/Preview.png"), "preview");
-			Global::texture_manager.add(loadTexture("Art/Bomb.png"), "bomb");
-
-			for (int x = 0; x < 140; x++) {
-				for (int y = 0; y < 120; y++) {
-					Tile* tile = new Tile("grass");
-					game_world->map->set(tile, Point(x, y));
-				}
-			}
-
-			for (int y = 0; y < 10; y++) {
-				Tile* rock = new Rock();
-				game_world->map->set(rock, Point(10, y));
-			}
-
-			std::vector<Point> path = findPath(game_world, Point{ 0, 0 }, Point{ 15, 2 });
-			int scale = game_world->map->tile_scale;
-			for each (Point p in path)
+			//User requests quit
+			if (e.type == SDL_QUIT)
 			{
-				std::cout << p.toStr() << std::endl;
-				Entity* entity = new Entity(p.x * scale, p.y * scale, point_texture_ID);
-				game_world->entity_list->entities.push_back(entity);
+				quit = true;
 			}
-
-			SDL_Texture* expl_texture = loadTexture("Art/Explosion.ani.png");
-			Point frame_size(64, 64);
-			expl_ani = new Animation(expl_texture, frame_size, 100);
-
-			Player* player = new Player(10, 10, "player");
-			game_world->entity_list->entities.push_back(player);
-
-			Camera* camera = new MoveableCamera(0, 0);
-			game_world->camera = camera;
-			game_world->entity_list->entities.push_back(camera);
-
-			Camera** mainCameraPointer = &(game_world->camera);
-			UnitController* unit_controller = new UnitController(game_world);
-			game_world->entity_list->entities.push_back(unit_controller);
-			Unit* robot = new Unit(scale*3, scale*3, "robot");
-			game_world->entity_list->entities.push_back(robot);
-			unit_controller->addUnit(robot);
-
-			Enemy* enemy = new Enemy(50, 100, "enemy");
-			game_world->entity_list->entities.push_back(enemy);
-			HealthBar* bar = new HealthBar(enemy, "Art/Health_Bar.png");
-			game_world->entity_list->entities.push_back(bar);
-
-			Text_UI_element* text = new Text_UI_element(100, 0, font, "0", "Resources: ");
-			game_world->UI_elements->entities.push_back(text);
-
-			ResourceRock* r_rock = new ResourceRock(scale * 2, scale * 13);
-			game_world->entity_list->entities.push_back(r_rock);
-
-			ExplosiveEnemy* expl_enemy = new ExplosiveEnemy(scale * 25, scale * 10, 
-				"enemy", *expl_ani);
-			game_world->entity_list->entities.push_back(expl_enemy);
-			HealthBar* expl_bar = new HealthBar(expl_enemy, "Art/Health_Bar.png");
-			game_world->entity_list->entities.push_back(expl_bar);
-
-			SpawnHole* hole = new SpawnHole(scale * 30, scale * 6, *expl_ani);
-			game_world->entity_list->entities.push_back(hole);
-
-			UI_element* bottom_UI = new UI_element(Global::SCREEN_WIDTH * 0.5 - 192*0.5, Global::SCREEN_HEIGHT - 48, "bottom_UI");
-			game_world->entity_list->entities.push_back(bottom_UI);
-
-			Entity* preview = new Entity(0, 0, "preview");
-			placement = new PlacementManager(preview);
-			game_world->entity_list->entities.push_back(placement);
-			game_world->entity_list->entities.push_back(preview);
-
-			Text_UI_element* game_over = new Text_UI_element(Global::SCREEN_WIDTH / 2 - 100, Global::SCREEN_HEIGHT / 2, font, "Game Over!");
-			base = new Spaceport(scale * 5, scale * 15, *expl_ani, game_over);
-			game_world->entity_list->entities.push_back(base);
-			game_world->UI_elements->entities.push_back(game_over);
-
-			//Main loop flag
-			bool quit = false;
-
-			//Event handler
-			SDL_Event e;
-
-			decltype(keyClickListeners)::callbackType func = lalala;
-			decltype(mouseClickListeners)::callbackType mfunc = mouseLis;
-			keyUpListeners.add(func);
-			keyDownListeners.add(func);
-			mouseDownListeners.add(mfunc);
-			mouseUpListeners.add(mfunc);
-			decltype(mouseMoveListeners)::callbackType mofunc = mouseMov;
-			//int mofunc_id = mouseMoveListeners.add(mofunc);
-			decltype(keyClickListeners)::callbackType key_listener = OnKeyPress;
-			keyDownListeners.add(key_listener);
-
-			//While application is running
-			while (!quit)
-			{
-				//Handle events on queue
-				while (SDL_PollEvent(&e) != 0)
-				{
-					//User requests quit
-					if (e.type == SDL_QUIT)
-					{
-						quit = true;
-					}
-					else {
-						GameEngine::handle_SDL_Event(&e);
-					}
-				}
-
-				game_world->Update();
-
-				string num = std::to_string(base->getResources());
-				text->setText(num);
-
-				//Clear screen
-				SDL_RenderClear(gRenderer);
-
-				SingleTexture& texture = Global::texture_manager.get(1);
-				//renderer->renderTileMap(*game_world->map);
-				//renderer->renderEntityList(*game_world->entity_list);
-				renderer->renderWorld(*game_world);
-
-				//for (int x = 0; x < SCREEN_WIDTH; x += texturesize) {
-				//	for (int y = 0; y < SCREEN_HEIGHT; y += texturesize) {
-				//		SDL_Rect rect = { x, y, texturesize, texturesize };
-				//		//SDL_RenderCopy(gRenderer, gTexture, NULL, &rect);
-				//		//renderSingleTexture(texture, &rect);
-				//		renderer->renderSingleTexture(&texture, rect);
-				//	}
-				//}
-				//SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);
-
-				//Update screen
-				SDL_RenderPresent(gRenderer);
+			else {
+				//let my input handler dispatch the events
+				GameEngine::handle_SDL_Event(&e);
 			}
 		}
+
+		//Update all active GameObjects
+		game_world->Update();
+
+		//update UI values
+		string num = std::to_string(base->getResources());
+		text->setText(num);
+
+		//Clear screen
+		SDL_RenderClear(gRenderer);
+
+		//let the my renderer render it to a buffer
+		renderer->renderWorld(*game_world);
+
+		//Update screen
+		SDL_RenderPresent(gRenderer);
 	}
 
 	//Free resources and close SDL
