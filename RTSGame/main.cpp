@@ -31,6 +31,7 @@
 #include "Tower.h"
 #include "ExplosiveTower.h"
 #include "Bomb.h"
+#include "Worker.h"
 
 using namespace GameEngine;
 
@@ -68,6 +69,8 @@ GameEngine::World* game_world = nullptr;
 GameEngine::Renderer* renderer = nullptr;
 
 PlacementManager* placement = nullptr;
+
+Spaceport* base = nullptr;
 
 Animation* expl_ani = nullptr;
 
@@ -228,7 +231,8 @@ void OnKeyPress(KeyClickArgs* args, int) {
 		Bomb* bomb = new Bomb(0, 0, *expl_ani);
 		placement->prepare(bomb);
 	}else if (args->scan_code == SDL_SCANCODE_M) {
-
+		Worker* worker = new Worker(0, 0, "worker", base);
+		placement->prepare(worker);
 	}
 }
 
@@ -337,7 +341,7 @@ int main(int argc, char* args[])
 			game_world->entity_list->entities.push_back(preview);
 
 			Text_UI_element* game_over = new Text_UI_element(Global::SCREEN_WIDTH / 2 - 100, Global::SCREEN_HEIGHT / 2, font, "Game Over!");
-			Spaceport* base = new Spaceport(scale * 5, scale * 15, *expl_ani, game_over);
+			base = new Spaceport(scale * 5, scale * 15, *expl_ani, game_over);
 			game_world->entity_list->entities.push_back(base);
 			game_world->UI_elements->entities.push_back(game_over);
 
@@ -375,6 +379,9 @@ int main(int argc, char* args[])
 				}
 
 				game_world->Update();
+
+				string num = std::to_string(base->getResources());
+				text->setText(num);
 
 				//Clear screen
 				SDL_RenderClear(gRenderer);

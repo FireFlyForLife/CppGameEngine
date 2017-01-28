@@ -137,6 +137,7 @@
     <ClCompile Include="Tower.cpp" />
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="UnitController.cpp" />
+    <ClCompile Include="Worker.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
@@ -154,6 +155,7 @@
     <ClInclude Include="Tower.h" />
     <ClInclude Include="Unit.h" />
     <ClInclude Include="UnitController.h" />
+    <ClInclude Include="Worker.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
