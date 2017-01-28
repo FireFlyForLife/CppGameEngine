@@ -70,6 +70,7 @@ namespace GameEngine
 	void Enemy::findPathToBuilding()
 	{
 		std::vector<Entity*> buildings = getWorld()->entity_list->findAllWithTag(target_tag);
+		buildings.erase(std::remove_if(buildings.begin(), buildings.end(), isNotEnabled()), buildings.end());
 		auto compare = [this](Entity* a, Entity* b) { 
 			return distanceBetween({ x(), y() }, { a->x(), a->y() }) > distanceBetween({ x(), y() }, { b->x(), b->y() });
 		};
@@ -78,6 +79,9 @@ namespace GameEngine
 		{
 			pr_queue.push(entity);
 		}
+
+		if (pr_queue.size() <= 0)
+			return;
 
 		Entity* top = pr_queue.top();
 		target = reinterpret_cast<Building*>(top);
@@ -91,6 +95,15 @@ namespace GameEngine
 
 	void Enemy::attackBuilding()
 	{
-		target->addHealth(-damage);
+		Uint32 time = SDL_GetTicks();
+		if (lastHit + attack_delay < time) {
+			target->addHealth(-damage);
+			lastHit = time;
+			std::cout << target->getHealth() << std::endl;
+		}
+	}
+	bool Enemy::isNotEnabled::operator()(Entity * entity)
+	{
+		return !(entity != nullptr && entity->enabled);
 	}
 }

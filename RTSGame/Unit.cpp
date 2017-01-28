@@ -31,7 +31,7 @@ namespace GameEngine
 			break;
 		case UNIT_STATE::ATTACKING:
 			if (target == nullptr || target->getHealth() <= 0 || !enemyInRange(target)) {
-				target == nullptr;
+				target = nullptr;
 				state = IDLE;
 			}
 			else

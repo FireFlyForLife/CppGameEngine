@@ -27,6 +27,10 @@
 #include "ResourceRock.h"
 #include "ExplosiveEnemy.h"
 #include "SpawnHole.h"
+#include "PlacementManager.h"
+#include "Tower.h"
+#include "ExplosiveTower.h"
+#include "Bomb.h"
 
 using namespace GameEngine;
 
@@ -62,6 +66,11 @@ TTF_Font* font = nullptr;
 GameEngine::World* game_world = nullptr;
 
 GameEngine::Renderer* renderer = nullptr;
+
+PlacementManager* placement = nullptr;
+
+Animation* expl_ani = nullptr;
+
 //using namespace GameEngine;
 bool init()
 {
@@ -211,6 +220,18 @@ void mouseMov(MouseMoveArgs* args, int i) {
 	SDL_Log(cord.c_str());
 }
 
+void OnKeyPress(KeyClickArgs* args, int) {
+	if (args->scan_code == SDL_SCANCODE_B) {
+		ExplosiveTower* tower = new ExplosiveTower(0, 0, *expl_ani,"tower");
+		placement->prepare(tower);
+	}else if (args->scan_code == SDL_SCANCODE_N) {
+		Bomb* bomb = new Bomb(0, 0, *expl_ani);
+		placement->prepare(bomb);
+	}else if (args->scan_code == SDL_SCANCODE_M) {
+
+	}
+}
+
 int main(int argc, char* args[])
 {
 	//Start up SDL and create window
@@ -245,6 +266,8 @@ int main(int argc, char* args[])
 			Global::texture_manager.add(loadTexture("Art/Tower.png"), "tower");
 			Global::texture_manager.add(loadTexture("Art/Tower_2.png"), "tower2");
 			Global::texture_manager.add(loadTexture("Art/Worker.png"), "worker");
+			Global::texture_manager.add(loadTexture("Art/Preview.png"), "preview");
+			Global::texture_manager.add(loadTexture("Art/Bomb.png"), "bomb");
 
 			for (int x = 0; x < 140; x++) {
 				for (int y = 0; y < 120; y++) {
@@ -267,15 +290,16 @@ int main(int argc, char* args[])
 				game_world->entity_list->entities.push_back(entity);
 			}
 
+			SDL_Texture* expl_texture = loadTexture("Art/Explosion.ani.png");
+			Point frame_size(64, 64);
+			expl_ani = new Animation(expl_texture, frame_size, 100);
+
 			Player* player = new Player(10, 10, "player");
 			game_world->entity_list->entities.push_back(player);
 
 			Camera* camera = new MoveableCamera(0, 0);
 			game_world->camera = camera;
 			game_world->entity_list->entities.push_back(camera);
-
-			Spaceport* base = new Spaceport(scale * 5, scale * 15);
-			game_world->entity_list->entities.push_back(base);
 
 			Camera** mainCameraPointer = &(game_world->camera);
 			UnitController* unit_controller = new UnitController(game_world);
@@ -295,20 +319,27 @@ int main(int argc, char* args[])
 			ResourceRock* r_rock = new ResourceRock(scale * 2, scale * 13);
 			game_world->entity_list->entities.push_back(r_rock);
 
-			SDL_Texture* expl_texture = loadTexture("Art/Explosion.ani.png");
-			Point frame_size(64, 64);
-			Animation expl_ani(expl_texture, frame_size, 100);
 			ExplosiveEnemy* expl_enemy = new ExplosiveEnemy(scale * 25, scale * 10, 
-				"enemy", expl_ani);
+				"enemy", *expl_ani);
 			game_world->entity_list->entities.push_back(expl_enemy);
 			HealthBar* expl_bar = new HealthBar(expl_enemy, "Art/Health_Bar.png");
 			game_world->entity_list->entities.push_back(expl_bar);
 
-			SpawnHole* hole = new SpawnHole(scale * 30, scale * 6, expl_ani);
+			SpawnHole* hole = new SpawnHole(scale * 30, scale * 6, *expl_ani);
 			game_world->entity_list->entities.push_back(hole);
 
 			UI_element* bottom_UI = new UI_element(Global::SCREEN_WIDTH * 0.5 - 192*0.5, Global::SCREEN_HEIGHT - 48, "bottom_UI");
 			game_world->entity_list->entities.push_back(bottom_UI);
+
+			Entity* preview = new Entity(0, 0, "preview");
+			placement = new PlacementManager(preview);
+			game_world->entity_list->entities.push_back(placement);
+			game_world->entity_list->entities.push_back(preview);
+
+			Text_UI_element* game_over = new Text_UI_element(Global::SCREEN_WIDTH / 2 - 100, Global::SCREEN_HEIGHT / 2, font, "Game Over!");
+			Spaceport* base = new Spaceport(scale * 5, scale * 15, *expl_ani, game_over);
+			game_world->entity_list->entities.push_back(base);
+			game_world->UI_elements->entities.push_back(game_over);
 
 			//Main loop flag
 			bool quit = false;
@@ -316,7 +347,7 @@ int main(int argc, char* args[])
 			//Event handler
 			SDL_Event e;
 
-			decltype(GameEngine::keyClickListeners)::callbackType func = lalala;
+			decltype(keyClickListeners)::callbackType func = lalala;
 			decltype(mouseClickListeners)::callbackType mfunc = mouseLis;
 			keyUpListeners.add(func);
 			keyDownListeners.add(func);
@@ -324,6 +355,8 @@ int main(int argc, char* args[])
 			mouseUpListeners.add(mfunc);
 			decltype(mouseMoveListeners)::callbackType mofunc = mouseMov;
 			//int mofunc_id = mouseMoveListeners.add(mofunc);
+			decltype(keyClickListeners)::callbackType key_listener = OnKeyPress;
+			keyDownListeners.add(key_listener);
 
 			//While application is running
 			while (!quit)

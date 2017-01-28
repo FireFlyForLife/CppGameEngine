@@ -34,12 +34,19 @@ namespace GameEngine
 		float speed = 0.0365;
 		int range = 30;
 		int damage = 15;
+		int attack_delay = 500;
+		Uint32 lastHit = SDL_GetTicks();
 
 		Building* target = nullptr;
 
 		void moveAlongPath();
 		void findPathToBuilding();
 		void attackBuilding();
+
+	private:
+		struct isNotEnabled {
+			bool operator()(Entity* entity);
+		};
 	};
 
 }

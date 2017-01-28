@@ -122,28 +122,36 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
+    <ClCompile Include="Bomb.cpp" />
     <ClCompile Include="Building.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="ExplosiveEnemy.cpp" />
+    <ClCompile Include="ExplosiveTower.cpp" />
     <ClCompile Include="HealthBar.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PlacementManager.cpp" />
     <ClCompile Include="ResourceRock.cpp" />
     <ClCompile Include="SelectionArea.cpp" />
     <ClCompile Include="Spaceport.cpp" />
     <ClCompile Include="SpawnHole.cpp" />
+    <ClCompile Include="Tower.cpp" />
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="UnitController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
+    <ClInclude Include="Bomb.h" />
     <ClInclude Include="Building.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="ExplosiveEnemy.h" />
+    <ClInclude Include="ExplosiveTower.h" />
     <ClInclude Include="HealthBar.h" />
+    <ClInclude Include="PlacementManager.h" />
     <ClInclude Include="ResourceRock.h" />
     <ClInclude Include="SelectionArea.h" />
     <ClInclude Include="Spaceport.h" />
     <ClInclude Include="SpawnHole.h" />
+    <ClInclude Include="Tower.h" />
     <ClInclude Include="Unit.h" />
     <ClInclude Include="UnitController.h" />
   </ItemGroup>
