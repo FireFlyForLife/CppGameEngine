@@ -19,3 +19,8 @@ template<typename T>
 bool vector_inrange(const vector<T>& vector, int index) {
 	return index >= 0 && index < vector.size();
 }
+
+template<typename T>
+auto vector_itaratorAt(const vector<T>& vector, size_t index) {
+	return vector.begin() + index;
+}

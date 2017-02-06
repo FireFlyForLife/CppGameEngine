@@ -5,7 +5,6 @@ namespace GameEngine {
 	{
 		map = new TileMap(this, 150, 150);
 		entity_list = new EntityList();
-		camera = NULL;
 		UI_elements = new EntityList();
 	}
 
@@ -29,55 +28,43 @@ namespace GameEngine {
 	{
 		for (int x = 0; x < map->width; x++) {
 			for (int y = 0; y < map->height; y++) {
-				Tile* tile = map->at(x, y);
+				tile_ptr tile = map->at(x, y);
 				if (tile != nullptr) {
 					tile->Update();
 				}
 			}
 		}
 		for (int i = 0; i < entity_list->entities.size(); i++) {
-			Entity* entity = entity_list->entities[i];
+			std::shared_ptr<Entity> entity = entity_list->entities[i];
 			if (entity != nullptr) {
 				if (entity->getWorld() == nullptr)
 					entity->setWorld(this);//TODO: Move this on add to the entity list
 				entity->Update();
 			}
 		}
-		//for each (Entity* entity in entity_list->entities)
-		//{
-		//	if (entity != nullptr) {
-		//		if (entity->getWorld() == nullptr)
-		//			entity->setWorld(this);//TODO: Move this on add to the entity list
-		//		entity->Update();
-		//	}
-		//}
 		for (int i = 0; i < UI_elements->entities.size(); i++) {
-			Entity* entity = UI_elements->entities[i];
+			std::shared_ptr<Entity> entity = UI_elements->entities[i];
 			if (entity != nullptr) {
 				entity->Update();
 			}
 		}
-		/*for each (Entity* entity in UI_elements->entities)
-		{
-			if (entity != nullptr) {
-				entity->Update();
-			}
-		}*/
 
 		Global::time_on_last_frame = SDL_GetTicks();
 	}
 	Point World::toScreenSpace(const Point & worldSpace)
 	{
-		int x = worldSpace.x - camera->x();
-		int y = worldSpace.y - camera->y();
+		if (camera.expired())
+			return worldSpace;
+		int x = worldSpace.x - camera.lock()->x();
+		int y = worldSpace.y - camera.lock()->y();
 
 		return Point(x, y);
 	}
 	Point World::toWorldSpace(const Point & screenSpace)
 	{
 		//TODO: Add zooming
-		int x = screenSpace.x + camera->x();
-		int y = screenSpace.y + camera->y();
+		int x = screenSpace.x + camera.lock()->x();
+		int y = screenSpace.y + camera.lock()->y();
 
 		return Point(x, y);
 	}

@@ -12,12 +12,6 @@ namespace GameEngine
 
 	TileMap::~TileMap()
 	{
-		for each (std::vector<Tile*> tile_vector in tiles)
-		{
-			for each (Tile* tile in tile_vector) {
-				delete tile;
-			}
-		}
 	}
 
 	bool TileMap::inRange(const Point & p) const
@@ -30,14 +24,14 @@ namespace GameEngine
 		return x >= 0 && x < width && y >= 0 && y < height;
 	}
 
-	Tile * TileMap::at(const Point& p) const
+	tile_ptr TileMap::at(const Point& p) const
 	{
 		if (inRange(p))
 			return tiles[p.x][p.y];
 		return nullptr;
 	}
 
-	Tile * TileMap::at(int x, int y) const
+	tile_ptr TileMap::at(int x, int y) const
 	{
 		if (inRange(x, y))
 			return tiles[x][y];
@@ -46,23 +40,30 @@ namespace GameEngine
 
 	double TileMap::cost(const Point & point) const
 	{
-		Tile* tile = at(point);
+		tile_ptr tile = at(point);
 		return tile ? tile->weight() : 100;
 	}
 
-	void TileMap::set(Tile* tile, const Point &p)
+	void TileMap::set(tile_ptr tile, const Point &p)
 	{
 		if (!inRange(p))
 			return;
 
-		delete tiles[p.x][p.y];
 		tiles[p.x][p.y] = tile;
-		tile->setWorld(parent);
+		tiles[p.x][p.y]->setWorld(parent);
+	}
+
+	void TileMap::set(Tile* tile, const Point& p) {
+		if (!inRange(p))
+			return;
+
+		tiles[p.x][p.y].reset(tile);
+		tiles[p.x][p.y]->setWorld(parent);
 	}
 
 	bool TileMap::blocking(const Point& p) const
 	{
-		Tile* tile = at(p);
+		tile_ptr tile = at(p);
 		if (tile != nullptr)
 			return tile->blocking();
 		return true;

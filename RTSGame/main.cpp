@@ -201,11 +201,11 @@ SDL_Texture* loadTexture(std::string path)
 
 //utility methods for adding to the game_world
 void addToWorld(Entity* entity) {
-	game_world->entity_list->entities.push_back(entity);
+	game_world->entity_list->entities.push_back(std::shared_ptr<Entity>(entity));
 }
 
 void addToWorld(UI_element* ui) {
-	game_world->UI_elements->entities.push_back(ui);
+	game_world->UI_elements->entities.push_back(std::shared_ptr<Entity>(ui));
 }
 
 void addToWorld(int x, int y, Tile* tile) {
@@ -305,7 +305,7 @@ int main(int argc, char* args[])
 	addToWorld(unit_controller);
 	
 	Unit* robot = new Unit(scale*6, scale*14, "robot");
-	game_world->entity_list->entities.push_back(robot);
+	addToWorld(robot);
 	unit_controller->addUnit(robot);
 
 	Text_UI_element* text = new Text_UI_element(100, 0, font, "0", "Resources: ");

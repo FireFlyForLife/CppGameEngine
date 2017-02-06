@@ -4,6 +4,7 @@
 #endif // !_DEBUG
 
 using std::get;
+using std::shared_ptr;
 
 namespace GameEngine {
 	Renderer::Renderer(SDL_Renderer* renderer) : gRenderer(renderer)
@@ -18,9 +19,9 @@ namespace GameEngine {
 	{
 		//render tilemap
 		int offsetX, offsetY;
-		if (world.camera != nullptr) {
-			offsetX = world.camera->x();
-			offsetY = world.camera->y();
+		if (!world.camera.expired()) {
+			offsetX = world.camera.lock()->x();
+			offsetY = world.camera.lock()->y();
 		}
 		else {
 			offsetX = 0;
@@ -55,12 +56,12 @@ namespace GameEngine {
 
 		//Get a list of pointers to texture_ids
 		int tiles_amount = bounds.width * bounds.height;
-		typedef std::tuple<int, Tile*, Point*> sortable_tile;
+		typedef std::tuple<int, tile_ptr, Point*> sortable_tile;
 		std::vector<sortable_tile> ids;
 		ids.reserve(tiles_amount);
 		for (int x = 0; x < bounds.width; x++) {
 			for (int y = 0; y < bounds.height; y++) {
-				Tile* tile = map.at(x + bounds.x, y + bounds.y);
+				tile_ptr tile = map.at(x + bounds.x, y + bounds.y);
 				if (tile != nullptr && tile->enabled) {
 					int texture_id = tile->getTexture();
 					if (texture_id != -1){
@@ -111,7 +112,7 @@ namespace GameEngine {
 	void Renderer::renderEntityList(const EntityList & list, const Point& offset, size_t from, size_t to)
 	{
 		for (size_t i = from; i < to; i++) {
-			Entity* entity = list.entities.at(i);
+			shared_ptr<Entity> entity = list.entities.at(i);
 			if (entity != nullptr && entity->enabled) {
 				if (entity->renderSelf) {
 					SDL_Surface* surface = entity->getFrame(gRenderer);

@@ -6,6 +6,8 @@
 
 namespace GameEngine
 {
+	using tile_ptr = std::shared_ptr<Tile>;
+
 	class TileMap
 	{
 	public:
@@ -17,13 +19,14 @@ namespace GameEngine
 
 		bool inRange(const Point&) const;
 		bool inRange(int x, int y) const;
-		Tile* at(const Point&) const;
-		Tile* at(int, int) const;
+		tile_ptr at(const Point&) const;
+		tile_ptr at(int, int) const;
+		void set(tile_ptr, const Point&);
 		void set(Tile*, const Point&);
 		bool blocking(const Point&) const;
 		double cost(const Point&) const;
 	protected:
-		std::vector<std::vector<Tile*>> tiles;
+		std::vector<std::vector<tile_ptr>> tiles;
 		World* parent;
 	};
 }

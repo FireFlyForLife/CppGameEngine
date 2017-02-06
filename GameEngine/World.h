@@ -11,7 +11,7 @@ namespace GameEngine {
 		TileMap* map;
 		EntityList* entity_list;
 		EntityList* UI_elements;
-		Camera* camera;
+		std::weak_ptr<Camera> camera;
 
 	public:
 		World();
