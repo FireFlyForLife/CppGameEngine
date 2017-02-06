@@ -2,7 +2,7 @@
 
 
 namespace GameEngine {
-	EntityList::EntityList()
+	EntityList::EntityList(World* world) : parent(world)
 	{
 	}
 
@@ -20,6 +20,7 @@ namespace GameEngine {
 	ent_ptr EntityList::add(ent_ptr ptr)
 	{
 		entities.push_back(ptr);
+		ptr->setWorld(parent);
 		return ptr;
 	}
 
@@ -27,6 +28,7 @@ namespace GameEngine {
 	{
 		ent_ptr pointer(ptr);
 		entities.push_back(pointer);
+		pointer->setWorld(parent);
 		return pointer;
 	}
 

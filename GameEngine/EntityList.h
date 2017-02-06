@@ -10,7 +10,7 @@ namespace GameEngine {
 	class EntityList
 	{
 	public:
-		EntityList();
+		EntityList(World* world);
 		~EntityList();
 
 		size_t size();
@@ -32,6 +32,9 @@ namespace GameEngine {
 
 	public:
 		std::vector<ent_ptr> entities;
+
+	protected:
+		World* parent = nullptr;
 
 	public:
 		auto begin();

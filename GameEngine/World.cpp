@@ -4,8 +4,8 @@ namespace GameEngine {
 	World::World()
 	{
 		map = new TileMap(this, 150, 150);
-		entity_list = new EntityList();
-		UI_elements = new EntityList();
+		entity_list = new EntityList(this);
+		UI_elements = new EntityList(this);
 	}
 
 

@@ -33,8 +33,8 @@ void close();
 SDL_Texture* loadTexture(std::string path);
 
 void waitForKeyPress();
-void addToWorld(Entity* entity);
-void addToWorld(UI_element* entity);
+ent_ptr addToWorld(Entity* entity);
+ent_ptr addToWorld(UI_element* entity);
 void addToWorld(int x, int y, Tile* entity);
 
 //The window we'll be rendering to
@@ -231,11 +231,11 @@ int main(int argc, char* args[])
 		Global::SCREEN_WIDTH / 2 - game_world->map->tile_scale / 2, 
 		Global::SCREEN_HEIGHT / 2 - game_world->map->tile_scale / 2, 
 		"player");
-	addToWorld(player);
+	ent_ptr player_ptr = addToWorld(player);
 
-	Camera* camera = new FollowingCamera(player);
-	ent_ptr c_ptr= addToWorld(camera);
-	game_world->camera = c_ptr;
+	FollowingCamera* camera = new FollowingCamera(player_ptr);
+	ent_ptr camera_ptr = addToWorld(camera);
+	game_world->camera = std::static_pointer_cast<Camera>( camera_ptr );
 
 	//Main loop flag
 	bool quit = false;
