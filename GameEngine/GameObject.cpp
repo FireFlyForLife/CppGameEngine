@@ -21,7 +21,7 @@ namespace GameEngine {
 	}
 	void GameObject::setWorld(World * newWorld)
 	{
-		//The old world pointer does not need to be deleted because it is not an 'owning' pointer.
+		//The old world_ptr pointer does not need to be deleted because it is not an 'owning' pointer.
 		living_world = newWorld;
 	}
 	SDL_Surface* GameObject::getFrame(SDL_Renderer * renderer)
