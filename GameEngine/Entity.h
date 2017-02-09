@@ -5,7 +5,12 @@
 #include <string>
 
 namespace GameEngine {
-	
+	enum ENTITY_MOVEMENT {
+		STATIC,
+		KINEMATIC,
+		DYNAMIC
+	};
+
 	class Entity : public GameObject {
 	protected:
 		float _x = 0;
@@ -25,6 +30,8 @@ namespace GameEngine {
 		void x(float);
 		float y();
 		void y(float);
+
+		ENTITY_MOVEMENT movement_type = ENTITY_MOVEMENT::KINEMATIC;
 
 	};
 

@@ -12,7 +12,6 @@ namespace GameEngine {
 
 	template<typename E, typename T>
 	inline bool hasOverlap(const E& a, const T& b) {
-		if(hasOverlap(b, a))
 		assert(false && "Only specialisations are allowed");
 		return false;
 	}
