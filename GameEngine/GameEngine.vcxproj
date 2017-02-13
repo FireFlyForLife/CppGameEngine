@@ -130,6 +130,8 @@
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="FollowingCamera.cpp" />
     <ClCompile Include="PhysicsEngine.cpp" />
+    <ClCompile Include="PhysicsGlobals.cpp" />
+    <ClCompile Include="PhysicsPlayer.cpp" />
     <ClCompile Include="Text_UI_element.cpp" />
     <ClCompile Include="UI_element.cpp" />
     <ClCompile Include="Debug_utils.cpp" />
@@ -165,6 +167,8 @@
     <ClInclude Include="FollowingCamera.h" />
     <ClInclude Include="Physics.h" />
     <ClInclude Include="PhysicsEngine.h" />
+    <ClInclude Include="PhysicsGlobals.h" />
+    <ClInclude Include="PhysicsPlayer.h" />
     <ClInclude Include="Text_UI_element.h" />
     <ClInclude Include="UI_element.h" />
     <ClInclude Include="Debug_utils.h" />

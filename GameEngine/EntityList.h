@@ -37,7 +37,7 @@ namespace GameEngine {
 		World* parent = nullptr;
 
 	public:
-		auto begin();
-		auto end();
+		std::vector<ent_ptr>::iterator begin();
+		std::vector<ent_ptr>::iterator end();
 	};
 }

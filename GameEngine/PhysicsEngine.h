@@ -1,6 +1,7 @@
 #pragma once
 #include "World.h"
 #include "Vector2.h"
+#include "PhysicsGlobals.h"
 
 namespace GameEngine
 {
@@ -13,7 +14,7 @@ namespace GameEngine
 
 		void update();
 
-		Vector2 gravity{ -9.81, 0 };
+		Vector2 gravity{ 0.f, -9.81f };
 
 	protected:
 		World* world_ptr = nullptr;

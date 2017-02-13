@@ -53,4 +53,14 @@ namespace GameEngine {
 		_y = y;
 	}
 
+	void Entity::setVel(Vector2 newVel)
+	{
+		vel = newVel;
+	}
+
+	Vector2 & Entity::getVel()
+	{
+		return vel;
+	}
+
 }

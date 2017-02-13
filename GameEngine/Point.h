@@ -51,5 +51,7 @@ namespace GameEngine {
 		std::string toStr() const;
 
 		operator SDL_Point() const;
+
+		static const Point zero;
 	};
 }

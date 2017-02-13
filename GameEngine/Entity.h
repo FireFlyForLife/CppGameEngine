@@ -2,12 +2,13 @@
 #include "GameObject.h"
 #include "Globals.h"
 #include "Shape.h"
+#include "Vector2.h"
 #include <string>
 
 namespace GameEngine {
-	enum ENTITY_MOVEMENT {
+	enum PHYSICS_TYPE {
+		NONE,
 		STATIC,
-		KINEMATIC,
 		DYNAMIC
 	};
 
@@ -16,6 +17,7 @@ namespace GameEngine {
 		float _x = 0;
 		float _y = 0;
 		Shape* collider = nullptr;
+		Vector2 vel;
 
 	public:
 		Entity();
@@ -26,12 +28,16 @@ namespace GameEngine {
 		Shape* getCollider();
 		void setCollider(Shape* newCollider);
 
+		//TODO: Get rid of these anoying getters and setters.
 		float x();
 		void x(float);
 		float y();
 		void y(float);
 
-		ENTITY_MOVEMENT movement_type = ENTITY_MOVEMENT::KINEMATIC;
+		void setVel(Vector2 newVel);
+		Vector2& getVel();
+
+		PHYSICS_TYPE physics_type = PHYSICS_TYPE::STATIC;
 
 	};
 

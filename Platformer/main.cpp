@@ -17,6 +17,9 @@
 #include "Rock.h"
 #include "Player.h"
 #include "FollowingCamera.h"
+#include "EntityWall.h"
+#include "Physics.h"
+#include "PhysicsPlayer.h"
 
 using namespace GameEngine;
 
@@ -44,6 +47,7 @@ SDL_Renderer* gRenderer = NULL;
 //To be deleted
 GameEngine::World* game_world = nullptr;
 GameEngine::Renderer* renderer = nullptr;
+GameEngine::PhysicsEngine* physics_engine = nullptr;
 TTF_Font* font = nullptr;
 
 bool init()
@@ -106,6 +110,7 @@ bool loadMedia()
 	Global::texture_manager.add(loadTexture("Art/Robot.png"), "player");
 	Global::texture_manager.add(loadTexture("Art/Grass.png"), "grass");
 	Global::texture_manager.add(loadTexture("Art/Rock.png"), "rock");
+	Global::texture_manager.add(loadTexture("Art/Preview.png"), "preview");
 
 	font = TTF_OpenFont("AlphaFridgeMagnets.ttf", 24);
 
@@ -125,9 +130,11 @@ void close()
 
 	delete game_world;
 	delete renderer;
+	delete physics_engine;
 
 	game_world = nullptr;
 	renderer = nullptr;
+	physics_engine = nullptr;
 	font = nullptr;
 
 	//Quit SDL subsystems
@@ -201,6 +208,10 @@ int main(int argc, char* args[])
 	}
 	game_world = new World();
 	renderer = new Renderer(gRenderer);
+	physics_engine = new PhysicsEngine(game_world);
+	physics_engine->gravity = Vector2(0, -0.5f);
+
+	int scale = game_world->map->tile_scale;
 
 	//add some grass to the background
 	for (int x = 0; x < game_world->map->width; x++) {
@@ -223,19 +234,30 @@ int main(int argc, char* args[])
 			addToWorld(x, y, rock);
 		}
 	}
+	for (int x = 0; x < 20; x++) {
+		EntityWall* ent_wall = new EntityWall(x*scale, 10 * scale, "preview");
+		addToWorld(ent_wall);
+	}
 
-	int scale = game_world->map->tile_scale;
+	
 
 	//add entities to the world
-	Player* player = new Player(
-		Global::SCREEN_WIDTH / 2 - game_world->map->tile_scale / 2, 
-		Global::SCREEN_HEIGHT / 2 - game_world->map->tile_scale / 2, 
+	PhysicsPlayer* player = new PhysicsPlayer(
+		scale * 5, 
+		scale * 2, 
 		"player");
 	ent_ptr player_ptr = addToWorld(player);
 
 	FollowingCamera* camera = new FollowingCamera(player_ptr);
+	camera->offset = Point(Global::SCREEN_WIDTH / 2 - game_world->map->tile_scale / 2, Global::SCREEN_HEIGHT / 2 - game_world->map->tile_scale / 2 );
 	ent_ptr camera_ptr = addToWorld(camera);
 	game_world->camera = std::static_pointer_cast<Camera>( camera_ptr );
+
+	EntityWall* ent_wall = new EntityWall(
+		Global::SCREEN_WIDTH / 2 - game_world->map->tile_scale / 2 + 2 * scale,
+		Global::SCREEN_HEIGHT / 2 - game_world->map->tile_scale / 2,
+		"preview");
+	addToWorld(ent_wall);
 
 	//Main loop flag
 	bool quit = false;
@@ -262,6 +284,9 @@ int main(int argc, char* args[])
 
 		//Update all active GameObjects
 		game_world->Update();
+
+		//handle collision
+		physics_engine->update();
 
 		//Clear screen
 		SDL_RenderClear(gRenderer);

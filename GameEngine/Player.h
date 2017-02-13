@@ -2,6 +2,7 @@
 #include <string>
 #include "Entity.h"
 #include "Input.h"
+#include "BoxShape.h"
 
 namespace GameEngine {
 	class Player :

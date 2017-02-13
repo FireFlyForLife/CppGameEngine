@@ -33,6 +33,8 @@ namespace GameEngine {
 		SDL_Point p{ this->x, this->y };
 		return p;
 	}
+
+	const Point Point::zero = Point(0, 0);
 }
 
 

@@ -78,7 +78,8 @@ namespace GameEngine {
 		{
 			Shape* collider = entity->getCollider();
 			BoxShape* box = static_cast<BoxShape*>(collider);
-			if (collider != nullptr && hasOverlap(collider, collider))
+			Point posB(entity->x(), entity->y());
+			if (collider != nullptr && hasOverlap(Point::zero, collider, posB, collider))
 				results.push_back(entity);
 		}
 
@@ -106,12 +107,12 @@ namespace GameEngine {
 		return ret;
 	}
 
-	auto EntityList::begin()
+	std::vector<ent_ptr>::iterator EntityList::begin()
 	{
 		return entities.begin();
 	}
 
-	auto EntityList::end()
+	std::vector<ent_ptr>::iterator EntityList::end()
 	{
 		return entities.end();
 	}

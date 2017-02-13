@@ -8,6 +8,8 @@ namespace GameEngine
 		: Entity(x, y, Global::texture_manager.getID(texture_name))
 	{
 		keyDownListeners.add([this](KeyClickArgs * args, int unused) {OnButtonDown(args, unused); });
+		collider = new BoxShape(0, 0, 16, 16);
+		physics_type = PHYSICS_TYPE::DYNAMIC;
 	}
 
 
