@@ -50,9 +50,6 @@ namespace GameEngine
 				vel.y = jumpForce;
 				on_ground = false;
 			}
-			else {
-				vel.y += speed / 2;
-			}
 			break;
 		case SDL_SCANCODE_S:
 			vel.y += -speed / 2;
@@ -75,7 +72,7 @@ namespace GameEngine
 	}
 	void PhysicsPlayer::OnCollision(ent_ptr & a, ent_ptr & b)
 	{
-		std::cout << "COLLLL" << std::endl;
-		on_ground = true;
+		if(a.get() == this && b->y() > a->y())
+			on_ground = true;
 	}
 }

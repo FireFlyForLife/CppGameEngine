@@ -10,9 +10,9 @@ namespace GameEngine
 	class PhysicsPlayer : public Entity
 	{
 	public:
-		const float speed = 1.f;
-		const float jumpForce = 4.f;
-		const float maxSpeed = 5.f;
+		const float speed = 2.f;
+		const float jumpForce = 8.f;
+		const float maxSpeed = 10.f;
 
 		PhysicsPlayer(float x, float y, string texture);
 		PhysicsPlayer(float x, float y, int texture_id);

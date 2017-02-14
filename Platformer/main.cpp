@@ -20,6 +20,7 @@
 #include "EntityWall.h"
 #include "Physics.h"
 #include "PhysicsPlayer.h"
+#include "SelectionManager.h"
 
 using namespace GameEngine;
 
@@ -239,7 +240,8 @@ int main(int argc, char* args[])
 		addToWorld(ent_wall);
 	}
 
-	
+	SelectionManager* selection_manager = new SelectionManager();
+	addToWorld(selection_manager);
 
 	//add entities to the world
 	PhysicsPlayer* player = new PhysicsPlayer(

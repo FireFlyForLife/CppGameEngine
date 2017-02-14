@@ -120,6 +120,8 @@
   <ItemGroup>
     <ClCompile Include="EntityWall.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="SelectionArea.cpp" />
+    <ClCompile Include="SelectionManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GameEngine\GameEngine.vcxproj">
@@ -128,6 +130,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EntityWall.h" />
+    <ClInclude Include="SelectionArea.h" />
+    <ClInclude Include="SelectionManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
