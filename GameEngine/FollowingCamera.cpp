@@ -18,7 +18,7 @@ namespace GameEngine
 	{
 	}
 
-	void FollowingCamera::Update()
+	void FollowingCamera::LateUpdate()
 	{
 		if (!target.expired()) {
 			std::shared_ptr<Entity> ptr = target.lock();
@@ -27,6 +27,8 @@ namespace GameEngine
 				x(ptr->x() - offset.x);
 			if(moveY)
 				y(ptr->y() - offset.y);
+
+			//std::cout << ptr->x() << ":" << ptr->y() << std::endl;
 		}
 	}
 }

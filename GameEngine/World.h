@@ -20,6 +20,7 @@ namespace GameEngine {
 		//TODO: Add more convenience methods
 		virtual bool blocking(const Point&);
 		virtual void Update();
+		virtual void LateUpdate();
 		
 		Point toScreenSpace(const Point&);
 		Point toWorldSpace(const Point&);

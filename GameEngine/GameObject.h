@@ -12,6 +12,7 @@ namespace GameEngine {
 		virtual ~GameObject();
 
 		virtual void Update();
+		virtual void LateUpdate();
 
 		World* getWorld();
 		void setWorld(World* newWorld);

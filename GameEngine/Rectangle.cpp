@@ -11,6 +11,11 @@ namespace GameEngine {
 	{
 	}
 
+	Rectangle::Rectangle(float x, float y, float width, float height)
+		: x(x), y(y), width(width), height(height)
+	{
+	}
+
 	Rectangle::Rectangle(const SDL_Rect & rect) : Rectangle(rect.x, rect.y, rect.w, rect.h)
 	{
 	}

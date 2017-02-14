@@ -38,7 +38,7 @@ namespace GameEngine {
 			std::shared_ptr<Entity> entity = entity_list->entities[i];
 			if (entity != nullptr) {
 				if (entity->getWorld() == nullptr)
-					entity->setWorld(this);//TODO: Move this on add to the entity list
+					entity->setWorld(this);//TODO: Should I remove this?
 				entity->Update();
 			}
 		}
@@ -51,6 +51,30 @@ namespace GameEngine {
 
 		Global::time_on_last_frame = SDL_GetTicks();
 	}
+
+	void World::LateUpdate() {
+		for (int x = 0; x < map->width; x++) {
+			for (int y = 0; y < map->height; y++) {
+				tile_ptr tile = map->at(x, y);
+				if (tile != nullptr) {
+					tile->LateUpdate();
+				}
+			}
+		}
+		for (int i = 0; i < entity_list->entities.size(); i++) {
+			std::shared_ptr<Entity> entity = entity_list->entities[i];
+			if (entity != nullptr) {
+				entity->LateUpdate();
+			}
+		}
+		for (int i = 0; i < UI_elements->entities.size(); i++) {
+			std::shared_ptr<Entity> entity = UI_elements->entities[i];
+			if (entity != nullptr) {
+				entity->LateUpdate();
+			}
+		}
+	}
+
 	Point World::toScreenSpace(const Point & worldSpace)
 	{
 		if (camera.expired())

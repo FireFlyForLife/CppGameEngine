@@ -12,6 +12,7 @@ namespace GameEngine {
 
 		Rectangle();
 		Rectangle(int x, int y, int width, int height);
+		Rectangle(float x, float y, float width, float height);
 		Rectangle(const Rectangle& rect) = default;
 		Rectangle(const SDL_Rect& rect);
 		~Rectangle();

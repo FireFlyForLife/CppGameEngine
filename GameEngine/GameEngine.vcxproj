@@ -126,6 +126,7 @@
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="AnimationController.cpp" />
+    <ClCompile Include="BoxShape.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="FollowingCamera.cpp" />
@@ -165,6 +166,8 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="FollowingCamera.h" />
+    <ClInclude Include="GenericPoint.h" />
+    <ClInclude Include="GenericRectangle.h" />
     <ClInclude Include="Physics.h" />
     <ClInclude Include="PhysicsEngine.h" />
     <ClInclude Include="PhysicsGlobals.h" />

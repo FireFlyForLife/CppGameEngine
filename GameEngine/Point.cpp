@@ -10,7 +10,7 @@ namespace GameEngine {
 	{
 	}
 
-	Point::Point(float x, float y) : x((int)x), y((int)y)
+	Point::Point(float x, float y) : x(x), y(y)
 	{
 	}
 

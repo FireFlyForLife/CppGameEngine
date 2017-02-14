@@ -11,7 +11,7 @@ namespace GameEngine
 		FollowingCamera(std::weak_ptr<Entity> eniity, const Point& offset);
 		virtual ~FollowingCamera();
 
-		virtual void Update() override;
+		virtual void LateUpdate() override;
 
 		Point offset;
 

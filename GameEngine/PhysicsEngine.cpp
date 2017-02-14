@@ -26,7 +26,7 @@ namespace GameEngine
 
 		for each (ent_ptr entity in entity_list)
 		{
-			Vector2 vel = entity->getVel();
+			Vector2& vel = entity->getVel();
 
 			if (entity->physics_type == PHYSICS_TYPE::DYNAMIC) 
 				vel = vel + gravity;
@@ -55,6 +55,8 @@ namespace GameEngine
 							Point posB(target->x(), target->y());
 							if (hasOverlap(posA, *col, posB, *col_t)) {
 								correctOverlap(*entity, *target);
+								//no bouncing implemented yet
+								//entity->getVel() = Vector2(0, 0);
 								Global::CollisionEvent.call(entity, target);
 							}
 						}

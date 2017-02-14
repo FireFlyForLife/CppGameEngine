@@ -56,10 +56,14 @@ namespace GameEngine {
 		moveY = abs(t) < u ? t : u;
 
 		// only use whichever offset is the smallest
-		if (abs(moveX) < abs(moveY))
+		if (abs(moveX) < abs(moveY)) {
 			moveY = 0.0f;
-		else
+			a.getVel().x = 0.f;
+		}
+		else {
 			moveX = 0.0f;
+			a.getVel().y = 0.f;
+		}
 
 		a.x(a.x() + moveX);
 		a.y(a.y() + moveY);

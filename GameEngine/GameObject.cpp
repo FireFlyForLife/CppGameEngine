@@ -15,6 +15,9 @@ namespace GameEngine {
 	void GameObject::Update()
 	{
 	}
+	void GameObject::LateUpdate()
+	{
+	}
 	World * GameObject::getWorld()
 	{
 		return living_world;

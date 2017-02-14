@@ -1,11 +1,15 @@
 #pragma once
 #include <SDL.h>
 #include <string>
+
 namespace GameEngine {
-	struct Point
+
+	//TODO: Look at: http://stackoverflow.com/questions/14294267/class-template-for-numeric-types
+	template<T>
+	struct GenericPoint
 	{
-		float x;
-		float y;
+		T x;
+		T y;
 
 		Point();
 		Point(int x, int y);
@@ -30,7 +34,7 @@ namespace GameEngine {
 			return x == point.x && y == point.y;
 		}
 
-		bool operator==(const SDL_Point& point) const{
+		bool operator==(const SDL_Point& point) const {
 			return x == point.x && y == point.y;
 		}
 
@@ -44,7 +48,7 @@ namespace GameEngine {
 		//TODO: Add += -= etc operators
 
 		///watch out for DividedByZeroException
-		Point operator/(const Point& point) const{
+		Point operator/(const Point& point) const {
 			return Point(x / point.x, y / point.y);
 		}
 

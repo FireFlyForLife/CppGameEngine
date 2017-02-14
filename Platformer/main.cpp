@@ -288,6 +288,9 @@ int main(int argc, char* args[])
 		//handle collision
 		physics_engine->update();
 
+		//call lateupdate
+		game_world->LateUpdate();
+
 		//Clear screen
 		SDL_RenderClear(gRenderer);
 

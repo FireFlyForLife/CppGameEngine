@@ -2,6 +2,8 @@
 #include "Entity.h"
 #include "Physics.h"
 #include "Input.h"
+#include <math.h>
+#include "Globals.h"
 
 namespace GameEngine
 {
@@ -9,10 +11,17 @@ namespace GameEngine
 	{
 	public:
 		const float speed = 1.f;
+		const float jumpForce = 4.f;
+		const float maxSpeed = 5.f;
 
 		PhysicsPlayer(float x, float y, string texture);
 		PhysicsPlayer(float x, float y, int texture_id);
 		virtual ~PhysicsPlayer();
+
+		virtual void Update() override;
+
+	protected:
+		bool on_ground = false;
 
 	private:
 		void OnButtonDown(KeyClickArgs* args, int);

@@ -30,6 +30,11 @@ namespace GameEngine
 	{
 	}
 
+	void PhysicsPlayer::Update()
+	{
+		std::cout << Global::deltaTime() << std::endl;
+	}
+
 	void PhysicsPlayer::OnButtonDown(KeyClickArgs * args, int)
 	{
 		switch (args->scan_code)
@@ -41,12 +46,21 @@ namespace GameEngine
 			vel.x = speed;
 			break;
 		case SDL_SCANCODE_W:
-			vel.y = speed;
+			if (on_ground) {
+				vel.y = jumpForce;
+				on_ground = false;
+			}
+			else {
+				vel.y += speed / 2;
+			}
 			break;
 		case SDL_SCANCODE_S:
-			vel.y = -speed;
+			vel.y += -speed / 2;
 			break;
 		}
+
+		vel.x = fmin(vel.x, maxSpeed);
+		vel.y = fmin(vel.y, maxSpeed);
 	}
 
 	void PhysicsPlayer::OnButtonUp(KeyClickArgs * args, int)
@@ -55,12 +69,13 @@ namespace GameEngine
 		if (scan == SDL_SCANCODE_A || scan == SDL_SCANCODE_D) {
 			vel.x = 0;
 		}
-		else if (scan == SDL_SCANCODE_W || scan == SDL_SCANCODE_S) {
+		/*else if (scan == SDL_SCANCODE_W || scan == SDL_SCANCODE_S) {
 			vel.y = 0;
-		}
+		}*/
 	}
 	void PhysicsPlayer::OnCollision(ent_ptr & a, ent_ptr & b)
 	{
 		std::cout << "COLLLL" << std::endl;
+		on_ground = true;
 	}
 }
