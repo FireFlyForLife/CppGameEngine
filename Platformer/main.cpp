@@ -21,6 +21,7 @@
 #include "Physics.h"
 #include "PhysicsPlayer.h"
 #include "SelectionManager.h"
+#include "PlatformPlayer.h"
 
 using namespace GameEngine;
 
@@ -50,6 +51,7 @@ GameEngine::World* game_world = nullptr;
 GameEngine::Renderer* renderer = nullptr;
 GameEngine::PhysicsEngine* physics_engine = nullptr;
 TTF_Font* font = nullptr;
+Animation* explosion = nullptr;
 
 bool init()
 {
@@ -132,10 +134,12 @@ void close()
 	delete game_world;
 	delete renderer;
 	delete physics_engine;
+	delete explosion;
 
 	game_world = nullptr;
 	renderer = nullptr;
 	physics_engine = nullptr;
+	explosion = nullptr;
 	font = nullptr;
 
 	//Quit SDL subsystems
@@ -173,6 +177,10 @@ SDL_Texture* loadTexture(std::string path)
 }
 
 //utility methods for adding to the game_world
+#pragma region Utils
+
+
+
 ent_ptr addToWorld(Entity* entity) {
 	return game_world->entity_list->add( entity );
 }
@@ -191,6 +199,7 @@ void waitForKeyPress() {
 	char c;
 	std::cin >> c;
 }
+#pragma endregion
 
 int main(int argc, char* args[])
 {
@@ -243,11 +252,15 @@ int main(int argc, char* args[])
 	SelectionManager* selection_manager = new SelectionManager();
 	addToWorld(selection_manager);
 
+	SDL_Texture* expl_texture = loadTexture("Art/Explosion.ani.png");
+	Point size(64, 64);
+	explosion = new Animation(expl_texture, size, 100);
+
 	//add entities to the world
-	PhysicsPlayer* player = new PhysicsPlayer(
+	PlatformPlayer* player = new PlatformPlayer(
 		scale * 5, 
 		scale * 2, 
-		"player");
+		*explosion);
 	ent_ptr player_ptr = addToWorld(player);
 
 	FollowingCamera* camera = new FollowingCamera(player_ptr);

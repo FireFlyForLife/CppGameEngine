@@ -1,0 +1,263 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="GameEngine::AnimationController" Collapsed="true">
+    <Position X="18" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACQAACAAAAAACAAAIACAAAAAAACAAAAAQAAAAAABAAA=</HashCode>
+      <FileName>AnimationController.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameEngine::Text_UI_element" Collapsed="true">
+    <Position X="3.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAABAAAIAAAAAQCACAABAAAgAIAAAAICAAAAI=</HashCode>
+      <FileName>Text_UI_element.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameEngine::UI_element" Collapsed="true">
+    <Position X="3.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>UI_element.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameEngine::EntityList" Collapsed="true">
+    <Position X="19.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAEABAAIAABMAQAAEAAUAAgAAAggACAAA=</HashCode>
+      <FileName>EntityList.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameEngine::EventSource&lt;...P&gt;" Collapsed="true">
+    <Position X="21.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAEAAAAAQAAAIAAAAAAAAAAAAADAAA=</HashCode>
+      <FileName>EventSource.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameEngine::Renderer" Collapsed="true">
+    <Position X="18" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAgAAASAAAAAAAAAAEAAAIIAAAAAAAAAACAAABAAAA=</HashCode>
+      <FileName>Renderer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameEngine::TextureManager" Collapsed="true">
+    <Position X="21.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAIEAQAACgFAABQAAABAAAAABAAAAAIACDAEA=</HashCode>
+      <FileName>TextureManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameEngine::TileMap" Collapsed="true">
+    <Position X="23.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAARAQAQAAAAAAgAQABAggAAAAAICAAA=</HashCode>
+      <FileName>TileMap.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameEngine::World" Collapsed="true">
+    <Position X="18" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAEAAAAhAAAAAgAAAAIAAAAAACAQAkAAAgAAAAAAA=</HashCode>
+      <FileName>World.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameEngine::Camera" Collapsed="true">
+    <Position X="8.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAQAAABAAAAQAAAABAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Camera.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameEngine::FollowingCamera" Collapsed="true">
+    <Position X="10" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAABIBAAIAAAAAAACAAAAAAAAAAAAAI=</HashCode>
+      <FileName>FollowingCamera.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameEngine::PhysicsPlayer" Collapsed="true">
+    <Position X="5.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQgAEAAAAAAAAQCCAAAAAAIAAAAAUAAIAAAAAAAAAA=</HashCode>
+      <FileName>PhysicsPlayer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameEngine::Entity" Collapsed="true">
+    <Position X="7.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EQAAAAAIAAQAAAAAADAAAAAAACAAAAAACABgEgAAAAA=</HashCode>
+      <FileName>Entity.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameEngine::GameObject" Collapsed="true">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABQAACAAABAAAgAEAACAIAAAQAAAAgEwAAAAAAIAAAA=</HashCode>
+      <FileName>GameObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameEngine::MoveableCamera" Collapsed="true">
+    <Position X="7.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAACAAAAAAAAAAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>MoveableCamera.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameEngine::Player" Collapsed="true">
+    <Position X="12.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAACAAAAAAAAAAAAQAAAAAAAQAAABA=</HashCode>
+      <FileName>Player.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameEngine::Rock" Collapsed="true">
+    <Position X="1" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEAAABAAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>Rock.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameEngine::Tile" Collapsed="true">
+    <Position X="1" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAYAAAAAAAAAAAAAAAAgYABgACAAAQA=</HashCode>
+      <FileName>Tile.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameEngine::BoxShape" Collapsed="true">
+    <Position X="0.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BoxShape.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameEngine::PhysicsEngine" Collapsed="true">
+    <Position X="23.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAoAAQAAAAAAAAAAAAAAAAAAAAAAAAAQAAAEAAA=</HashCode>
+      <FileName>PhysicsEngine.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameEngine::Shape" Collapsed="true">
+    <Position X="15.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Shape.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Texture" Collapsed="true">
+    <Position X="19.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAQAAAAAACoAQAAAAAAAAAAAAAAiAAAAIAAAAAgAA=</HashCode>
+      <FileName>Texture.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="std::hash&lt;GameEngine::Point&gt;" Collapsed="true">
+    <Position X="21.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pathfinder.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="GameEngine::PriorityQueue&lt;T, priority_t&gt;" Collapsed="true">
+    <Position X="18" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAABAAAAAAQAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pathfinder.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="GameEngine::Animation" Collapsed="true">
+    <Position X="18" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAAgAAAAAAAAAAAAAAQAAAgE=</HashCode>
+      <FileName>Animation.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="GameEngine::GenericPoint&lt;&gt;" Collapsed="true">
+    <Position X="19.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAgAACAAABAQQAAAAAAAAAAABgAAAAAAA=</HashCode>
+      <FileName>GenericPoint.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="GameEngine::GenericRectangle&lt;T&gt;" Collapsed="true">
+    <Position X="0.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAQAAAAQAQAAAAQAIAAAAABAAAABgAAAAAAA=</HashCode>
+      <FileName>GenericRectangle.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="GameEngine::MouseMoveArgs" Collapsed="true">
+    <Position X="19.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAIAAAAAAgBAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Events.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="GameEngine::MouseClickArgs" Collapsed="true">
+    <Position X="18" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAACAAAAAAAAAAABAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Events.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="GameEngine::KeyClickArgs" Collapsed="true">
+    <Position X="23.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAACAAAAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Events.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="GameEngine::Node" Collapsed="true">
+    <Position X="21.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pathfinder.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="GameEngine::SingleTexture" Collapsed="true">
+    <Position X="21.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAgAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>TextureManager.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="GameEngine::Point" Collapsed="true">
+    <Position X="23.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAgAACAAABAQQAAAAAAAAAAABgAAAAAAA=</HashCode>
+      <FileName>Point.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="GameEngine::Rectangle" Collapsed="true">
+    <Position X="19.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAgAAAAAAAQAQAAAAQAAAAAgABAAAABgAAAAAAA=</HashCode>
+      <FileName>Rectangle.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="GameEngine::Vector2" Collapsed="true">
+    <Position X="23.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAEAAAAAAABAAAAAAAAAQAAAAAAAAAAAQBgAAAAAAA=</HashCode>
+      <FileName>Vector2.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Typedef Name="GameEngine::Event" Collapsed="true">
+    <Position X="18" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Includes.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Enum Name="GameEngine::PHYSICS_TYPE" Collapsed="true">
+    <Position X="18" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAQQAAAAAAAAAAAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entity.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

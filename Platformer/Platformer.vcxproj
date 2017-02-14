@@ -118,8 +118,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Character.cpp" />
     <ClCompile Include="EntityWall.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PlatformPlayer.cpp" />
     <ClCompile Include="SelectionArea.cpp" />
     <ClCompile Include="SelectionManager.cpp" />
   </ItemGroup>
@@ -129,9 +131,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Character.h" />
     <ClInclude Include="EntityWall.h" />
+    <ClInclude Include="PlatformPlayer.h" />
     <ClInclude Include="SelectionArea.h" />
     <ClInclude Include="SelectionManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
