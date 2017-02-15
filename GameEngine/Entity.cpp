@@ -5,16 +5,19 @@ namespace GameEngine {
 	Entity::Entity() 
 		: GameObject(-1), _x(0.0f), _y(0.0f)
 	{
+		callUpdate = true;
 	}
 
 	Entity::Entity(float x, float y, int texture) 
 		: GameObject(texture), _x(x), _y(y)
 	{
+		callUpdate = true;
 	}
 
 	Entity::Entity(float x, float y, std::string texture_name) 
 		: Entity(x, y, Global::texture_manager.getID(texture_name))
 	{
+		callUpdate = true;
 	}
 
 	Entity::~Entity()

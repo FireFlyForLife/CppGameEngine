@@ -29,7 +29,7 @@ namespace GameEngine {
 		for (int x = 0; x < map->width; x++) {
 			for (int y = 0; y < map->height; y++) {
 				tile_ptr tile = map->at(x, y);
-				if (tile != nullptr) {
+				if (tile != nullptr && tile->callUpdate) {//TODO: Make this a register, instead of checking 2500 tiles for nothing
 					tile->Update();
 				}
 			}
@@ -56,7 +56,7 @@ namespace GameEngine {
 		for (int x = 0; x < map->width; x++) {
 			for (int y = 0; y < map->height; y++) {
 				tile_ptr tile = map->at(x, y);
-				if (tile != nullptr) {
+				if (tile != nullptr && tile->callUpdate) {
 					tile->LateUpdate();
 				}
 			}

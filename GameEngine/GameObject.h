@@ -23,6 +23,7 @@ namespace GameEngine {
 		bool renderSelf = false;
 		virtual SDL_Surface* getFrame(SDL_Renderer* renderer);
 
+		bool callUpdate = false;
 		bool enabled = true;
 		string tag;
 	protected:

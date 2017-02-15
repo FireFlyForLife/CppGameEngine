@@ -21,6 +21,11 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GameEngine\GameEngine.vcxproj">
+      <Project>{9b40fc72-6ccd-42a5-ad96-ffd821fb8578}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{0BFEDF74-5972-4481-B3EB-4DAE657BABEA}</ProjectGuid>
     <RootNamespace>Tests</RootNamespace>

@@ -30,7 +30,7 @@ namespace GameEngine
 
 	void SelectionManager::OnMouseDown(MouseClickArgs * args, int)
 	{
-		if (args->scan_code == 1) {
+		if (args->scan_code == 3) {
 			if (selection_area) {
 				getWorld()->entity_list->destroy(selection_area);
 				selection_area.reset();
@@ -46,7 +46,8 @@ namespace GameEngine
 	}
 	void SelectionManager::OnMouseMove(MouseMoveArgs * args, int)
 	{
-		if (args->dragging && args->scan_code == 1 && selection_area != NULL) {
+		
+		if (args->dragging && args->scan_code == 4 && selection_area != NULL) {
 			World* world = getWorld();
 			Point world_point = world->toWorldSpace(args->point);
 			selection_area->setSecondPoint(world_point);
@@ -54,7 +55,7 @@ namespace GameEngine
 	}
 	void SelectionManager::OnMouseUp(MouseClickArgs * args, int)
 	{
-		if (args->scan_code == 1) {
+		if (args->scan_code == 3) {
 			
 		}
 	}

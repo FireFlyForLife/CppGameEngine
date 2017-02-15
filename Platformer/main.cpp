@@ -115,6 +115,7 @@ bool loadMedia()
 	Global::texture_manager.add(loadTexture("Art/Grass.png"), "grass");
 	Global::texture_manager.add(loadTexture("Art/Rock.png"), "rock");
 	Global::texture_manager.add(loadTexture("Art/Preview.png"), "preview");
+	Global::texture_manager.add(loadTexture("Art/Crosshair.png"), "crosshair");
 
 	font = TTF_OpenFont("AlphaFridgeMagnets.ttf", 24);
 
@@ -179,8 +180,6 @@ SDL_Texture* loadTexture(std::string path)
 
 //utility methods for adding to the game_world
 #pragma region Utils
-
-
 
 ent_ptr addToWorld(Entity* entity) {
 	return game_world->entity_list->add( entity );

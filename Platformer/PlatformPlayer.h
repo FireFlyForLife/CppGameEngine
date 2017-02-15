@@ -1,6 +1,7 @@
 #pragma once
 #include "PhysicsPlayer.h"
 #include "AnimationController.h"
+#include "GunShot.h"
 
 namespace GameEngine
 {
@@ -18,8 +19,14 @@ namespace GameEngine
 
 	protected:
 		AnimationController ani_controller;
+		std::weak_ptr<Entity> crosshair;
 
 		int health = 100;
+
+	private:
+		void OnMouseDown(MouseClickArgs*, int);
+		void OnMouseMove(MouseMoveArgs*, int);
+		void OnMouseUp(MouseClickArgs*, int);
 	};
 
 }

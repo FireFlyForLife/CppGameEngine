@@ -79,7 +79,7 @@ namespace GameEngine {
 			Shape* collider = entity->getCollider();
 			BoxShape* box = static_cast<BoxShape*>(collider);
 			Point posB(entity->x(), entity->y());
-			if (collider != nullptr && hasOverlap(Point::zero, collider, posB, collider))
+			if (collider != nullptr && hasOverlap(Point::zero, boxshape, posB, *box))
 				results.push_back(entity);
 		}
 
