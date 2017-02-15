@@ -37,13 +37,18 @@ namespace GameEngine
 	void PlatformPlayer::OnMouseDown(MouseClickArgs * args, int)
 	{
 		if (args->scan_code == 1) {
-			GunShot* shot = new GunShot(x(), y(), Vector2(args->point.x, args->point.y));
+			const float startOffset = 20;
+			Vector2 start(x(), y());
+			Vector2 end(getWorld()->toWorldSpace( args->point ));
+			Vector2 dir = (end - start).normalized();
+			Vector2 s = start + dir * startOffset;
+			GunShot* shot = new GunShot(s.x, s.y, dir, 1225);
 			getWorld()->entity_list->add(shot);
 		}
 		else if (args->scan_code == 3) {
 			crosshair.lock()->enabled = false;
 		}
-			
+		
 	}
 
 	void PlatformPlayer::OnMouseMove(MouseMoveArgs * args, int)

@@ -36,15 +36,13 @@ namespace GameEngine {
 		}
 		for (int i = 0; i < entity_list->entities.size(); i++) {
 			std::shared_ptr<Entity> entity = entity_list->entities[i];
-			if (entity != nullptr) {
-				if (entity->getWorld() == nullptr)
-					entity->setWorld(this);//TODO: Should I remove this?
+			if (entity != nullptr && entity->callUpdate) {
 				entity->Update();
 			}
 		}
 		for (int i = 0; i < UI_elements->entities.size(); i++) {
 			std::shared_ptr<Entity> entity = UI_elements->entities[i];
-			if (entity != nullptr) {
+			if (entity != nullptr && entity->callUpdate) {
 				entity->Update();
 			}
 		}
@@ -63,13 +61,13 @@ namespace GameEngine {
 		}
 		for (int i = 0; i < entity_list->entities.size(); i++) {
 			std::shared_ptr<Entity> entity = entity_list->entities[i];
-			if (entity != nullptr) {
+			if (entity != nullptr && entity->callUpdate) {
 				entity->LateUpdate();
 			}
 		}
 		for (int i = 0; i < UI_elements->entities.size(); i++) {
 			std::shared_ptr<Entity> entity = UI_elements->entities[i];
-			if (entity != nullptr) {
+			if (entity != nullptr && entity->callUpdate) {
 				entity->LateUpdate();
 			}
 		}
