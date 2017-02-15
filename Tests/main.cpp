@@ -16,12 +16,8 @@
 #include "UI_element.h"
 #include "Rock.h"
 #include "Player.h"
-#include "FollowingCamera.h"
-#include "EntityWall.h"
+#include "MoveableCamera.h"
 #include "Physics.h"
-#include "PhysicsPlayer.h"
-#include "SelectionManager.h"
-#include "PlatformPlayer.h"
 #include "FPSCounter.h"
 
 using namespace GameEngine;
@@ -52,7 +48,6 @@ GameEngine::World* game_world = nullptr;
 GameEngine::Renderer* renderer = nullptr;
 GameEngine::PhysicsEngine* physics_engine = nullptr;
 TTF_Font* font = nullptr;
-Animation* explosion = nullptr;
 
 bool init()
 {
@@ -110,13 +105,7 @@ bool loadMedia()
 	//Loading success flag
 	bool success = true;
 
-	Global::texture_manager.setupDefault(gRenderer);
-	Global::texture_manager.add(loadTexture("Art/Robot.png"), "player");
-	Global::texture_manager.add(loadTexture("Art/Grass.png"), "grass");
-	Global::texture_manager.add(loadTexture("Art/Rock.png"), "rock");
-	Global::texture_manager.add(loadTexture("Art/Preview.png"), "preview");
-
-	font = TTF_OpenFont("AlphaFridgeMagnets.ttf", 24);
+	//font = TTF_OpenFont("AlphaFridgeMagnets.ttf", 24);
 
 	return success;
 }
@@ -135,12 +124,10 @@ void close()
 	delete game_world;
 	delete renderer;
 	delete physics_engine;
-	delete explosion;
 
 	game_world = nullptr;
 	renderer = nullptr;
 	physics_engine = nullptr;
-	explosion = nullptr;
 	font = nullptr;
 
 	//Quit SDL subsystems
@@ -183,7 +170,7 @@ SDL_Texture* loadTexture(std::string path)
 
 
 ent_ptr addToWorld(Entity* entity) {
-	return game_world->entity_list->add( entity );
+	return game_world->entity_list->add(entity);
 }
 
 ent_ptr addToWorld(UI_element* ui) {
@@ -219,8 +206,8 @@ int main(int argc, char* args[])
 	}
 	game_world = new World();
 	renderer = new Renderer(gRenderer);
-	physics_engine = new PhysicsEngine(game_world);
-	physics_engine->gravity = Vector2(0, -0.5f);
+	//physics_engine = new PhysicsEngine(game_world);
+	//physics_engine->gravity = Vector2(0, -0.5f);
 
 	int scale = game_world->map->tile_scale;
 
@@ -232,48 +219,8 @@ int main(int argc, char* args[])
 		}
 	}
 
-	//create some walls in the map
-	for (int x = 0; x < 10; x++) {
-		for (int y = 20; y < 20 + 15; y++) {
-			Tile* rock = new Rock();
-			addToWorld(x, y, rock);
-		}
-	}
-	for (int x = 17; x < 17 + 10; x++) {
-		for (int y = 5; y < 5 + 19; y++) {
-			Tile* rock = new Rock();
-			addToWorld(x, y, rock);
-		}
-	}
-	for (int x = 0; x < 20; x++) {
-		EntityWall* ent_wall = new EntityWall(x*scale, 10 * scale, "preview");
-		addToWorld(ent_wall);
-	}
-
-	SelectionManager* selection_manager = new SelectionManager();
-	addToWorld(selection_manager);
-
-	SDL_Texture* expl_texture = loadTexture("Art/Explosion.ani.png");
-	Point size(64, 64);
-	explosion = new Animation(expl_texture, size, 100);
-
-	//add entities to the world
-	PlatformPlayer* player = new PlatformPlayer(
-		scale * 5, 
-		scale * 2, 
-		*explosion);
-	ent_ptr player_ptr = addToWorld(player);
-
-	FollowingCamera* camera = new FollowingCamera(player_ptr);
-	camera->offset = Point(Global::SCREEN_WIDTH / 2 - game_world->map->tile_scale / 2, Global::SCREEN_HEIGHT / 2 - game_world->map->tile_scale / 2 );
+	MoveableCamera* camera = new MoveableCamera(0,0);
 	ent_ptr camera_ptr = addToWorld(camera);
-	game_world->camera = std::static_pointer_cast<Camera>( camera_ptr );
-
-	EntityWall* ent_wall = new EntityWall(
-		Global::SCREEN_WIDTH / 2 - game_world->map->tile_scale / 2 + 2 * scale,
-		Global::SCREEN_HEIGHT / 2 - game_world->map->tile_scale / 2,
-		"preview");
-	addToWorld(ent_wall);
 
 	FPSCounter* counter = new FPSCounter();
 	addToWorld(counter);
@@ -305,10 +252,10 @@ int main(int argc, char* args[])
 		game_world->Update();
 
 		//handle collision
-		physics_engine->update();
+		//physics_engine->update();
 
 		//call lateupdate
-		game_world->LateUpdate();
+		//game_world->LateUpdate();
 
 		//Clear screen
 		SDL_RenderClear(gRenderer);
