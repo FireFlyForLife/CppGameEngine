@@ -26,14 +26,14 @@ namespace GameEngine {
 	}
 	void World::Update()
 	{
-		for (int x = 0; x < map->width; x++) {
-			for (int y = 0; y < map->height; y++) {
-				tile_ptr tile = map->at(x, y);
-				if (tile != nullptr && tile->callUpdate) {//TODO: Make this a register, instead of checking 2500 tiles for nothing
-					tile->Update();
-				}
-			}
-		}
+		//for (int x = 0; x < map->width; x++) {
+		//	for (int y = 0; y < map->height; y++) {
+		//		tile_ptr tile = map->at(x, y);
+		//		if (tile != nullptr && tile->callUpdate) {//TODO: Make this a register, instead of checking 2500 tiles for nothing
+		//			tile->Update();
+		//		}
+		//	}
+		//}
 		for (int i = 0; i < entity_list->entities.size(); i++) {
 			std::shared_ptr<Entity> entity = entity_list->entities[i];
 			if (entity != nullptr && entity->callUpdate) {
@@ -51,14 +51,14 @@ namespace GameEngine {
 	}
 
 	void World::LateUpdate() {
-		for (int x = 0; x < map->width; x++) {
+		/*for (int x = 0; x < map->width; x++) {
 			for (int y = 0; y < map->height; y++) {
 				tile_ptr tile = map->at(x, y);
 				if (tile != nullptr && tile->callUpdate) {
 					tile->LateUpdate();
 				}
 			}
-		}
+		}*/
 		for (int i = 0; i < entity_list->entities.size(); i++) {
 			std::shared_ptr<Entity> entity = entity_list->entities[i];
 			if (entity != nullptr && entity->callUpdate) {

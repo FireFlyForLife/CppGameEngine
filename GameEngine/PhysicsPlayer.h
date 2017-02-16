@@ -11,7 +11,7 @@ namespace GameEngine
 	{
 	public:
 		const float speed = 2.f;
-		const float jumpForce = 8.f;
+		const float jumpForce = 3.f;
 		const float maxSpeed = 10.f;
 
 		PhysicsPlayer(float x, float y, string texture);

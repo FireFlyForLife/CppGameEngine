@@ -23,6 +23,8 @@
 #include "SelectionManager.h"
 #include "PlatformPlayer.h"
 #include "FPSCounter.h"
+#include "ScalableTargetWall.h"
+#include "EnemyCharacter.h"
 
 using namespace GameEngine;
 
@@ -116,6 +118,7 @@ bool loadMedia()
 	Global::texture_manager.add(loadTexture("Art/Rock.png"), "rock");
 	Global::texture_manager.add(loadTexture("Art/Preview.png"), "preview");
 	Global::texture_manager.add(loadTexture("Art/Crosshair.png"), "crosshair");
+	Global::texture_manager.add(loadTexture("Art/Enemy.png"), "enemy");
 
 	font = TTF_OpenFont("AlphaFridgeMagnets.ttf", 24);
 
@@ -219,9 +222,10 @@ int main(int argc, char* args[])
 	game_world = new World();
 	renderer = new Renderer(gRenderer);
 	physics_engine = new PhysicsEngine(game_world);
-	physics_engine->gravity = Vector2(0, -0.5f);
+	physics_engine->gravity = Vector2(0, -0.1f);
 
 	int scale = game_world->map->tile_scale;
+	int level = scale * 32;
 
 	//add some grass to the background
 	for (int x = 0; x < game_world->map->width; x++) {
@@ -249,6 +253,13 @@ int main(int argc, char* args[])
 		addToWorld(ent_wall);
 	}
 
+	ScalableTargetWall* beginWall = new ScalableTargetWall(scale * 23, level, "Art/Platform.png", Vector2(32, 160));
+	addToWorld(beginWall);
+	ScalableTargetWall* floor = new ScalableTargetWall(scale * 23, level + 160, "Art/Platform.png", Vector2(320, 32));
+	addToWorld(floor);
+	EnemyCharacter* enemy = new EnemyCharacter(scale * 30, level + 144, "enemy");
+	addToWorld(enemy);
+
 	SelectionManager* selection_manager = new SelectionManager();
 	addToWorld(selection_manager);
 
@@ -258,8 +269,8 @@ int main(int argc, char* args[])
 
 	//add entities to the world
 	PlatformPlayer* player = new PlatformPlayer(
-		scale * 5, 
-		scale * 2, 
+		scale * 25, 
+		level,
 		*explosion);
 	ent_ptr player_ptr = addToWorld(player);
 
@@ -269,8 +280,8 @@ int main(int argc, char* args[])
 	game_world->camera = std::static_pointer_cast<Camera>( camera_ptr );
 
 	EntityWall* ent_wall = new EntityWall(
-		Global::SCREEN_WIDTH / 2 - game_world->map->tile_scale / 2 + 2 * scale,
-		Global::SCREEN_HEIGHT / 2 - game_world->map->tile_scale / 2,
+		player->x(),
+		player->y() + 32.f,
 		"preview");
 	addToWorld(ent_wall);
 

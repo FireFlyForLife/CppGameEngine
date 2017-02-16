@@ -31,6 +31,9 @@ namespace GameEngine
 			if (entity->physics_type == PHYSICS_TYPE::DYNAMIC) 
 				vel = vel + gravity;
 
+			float seconds = (float)Global::deltaTime() / 1000.f;
+			Vector2 movement(vel * seconds);
+
 			//TOOD: Make the renderer do this reversing instead of fucking with the whole physics coordinate system
 			entity->x(entity->x() + vel.x);
 			entity->y(entity->y() - vel.y);

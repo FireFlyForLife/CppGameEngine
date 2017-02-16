@@ -14,7 +14,7 @@ namespace GameEngine
 		const int damage;
 		const float maxDistance = 1300.f;
 
-		GunShot(float x, float y, const Vector2& dir, float speed = 75.f, SDL_Color color = { 240,0,0 }, int damage = 50);
+		GunShot(float x, float y, const Vector2& dir, float speed = 1225.f, SDL_Color color = { 240,0,0 }, int damage = 50);
 		virtual ~GunShot();
 
 		virtual void Update() override;

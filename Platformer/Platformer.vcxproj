@@ -124,6 +124,7 @@
     <ClCompile Include="GunShot.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PlatformPlayer.cpp" />
+    <ClCompile Include="ScalableTargetWall.cpp" />
     <ClCompile Include="SelectionArea.cpp" />
     <ClCompile Include="SelectionManager.cpp" />
   </ItemGroup>
@@ -138,6 +139,7 @@
     <ClInclude Include="EntityWall.h" />
     <ClInclude Include="GunShot.h" />
     <ClInclude Include="PlatformPlayer.h" />
+    <ClInclude Include="ScalableTargetWall.h" />
     <ClInclude Include="SelectionArea.h" />
     <ClInclude Include="SelectionManager.h" />
   </ItemGroup>

@@ -118,8 +118,8 @@ namespace GameEngine {
 					SDL_Surface* surface = entity->getFrame(gRenderer);
 					if (surface != nullptr) {
 						Rectangle target;
-						target.x = entity->x() + offset.x;
-						target.y = entity->y() + offset.y;
+						target.x = round(entity->x() + offset.x);
+						target.y = round(entity->y() + offset.y);
 						target.width = surface->w;
 						target.height = surface->h;
 						renderSurface(surface, &(SDL_Rect)target);
@@ -130,8 +130,8 @@ namespace GameEngine {
 					if (texture_id != -1) {
 						SingleTexture& texture = Global::texture_manager.get(texture_id);
 						Rectangle target;
-						target.x = entity->x() + offset.x;
-						target.y = entity->y() + offset.y;
+						target.x = round( entity->x() + (float)offset.x );
+						target.y = round( entity->y() + (float)offset.y );
 						target.width = texture.bounds.width;
 						target.height = texture.bounds.height;
 						renderSingleTexture(texture, target);
