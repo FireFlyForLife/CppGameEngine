@@ -2,6 +2,7 @@
 #include "PhysicsPlayer.h"
 #include "AnimationController.h"
 #include "GunShot.h"
+#include "Text_UI_element.h"
 
 namespace GameEngine
 {
@@ -16,6 +17,8 @@ namespace GameEngine
 		int getHealth();
 		void setHealth(int amount);
 		void addHealth(int amount);
+
+		Text_UI_element* game_over = nullptr;
 
 	protected:
 		AnimationController ani_controller;

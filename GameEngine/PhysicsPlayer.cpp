@@ -37,6 +37,9 @@ namespace GameEngine
 
 	void PhysicsPlayer::OnButtonDown(KeyClickArgs * args, int)
 	{
+		if (!allowWalking)
+			return;
+
 		switch (args->scan_code)
 		{
 		case SDL_SCANCODE_A:

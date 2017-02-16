@@ -22,6 +22,7 @@ namespace GameEngine
 
 	protected:
 		bool on_ground = false;
+		bool allowWalking = true;
 
 	private:
 		void OnButtonDown(KeyClickArgs* args, int);

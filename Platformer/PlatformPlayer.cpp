@@ -29,6 +29,9 @@ namespace GameEngine
 
 		if (health <= 0) {
 			ani_controller.enabled = true;
+			allowWalking = false;
+			if (game_over)
+				game_over->enabled = true;
 		}
 
 		ani_controller.Update();
@@ -36,6 +39,9 @@ namespace GameEngine
 
 	void PlatformPlayer::OnMouseDown(MouseClickArgs * args, int)
 	{
+		if (health <= 0)
+			return;
+
 		if (args->scan_code == 1) {
 			const float startOffset = 20;
 			Vector2 start(x(), y());
@@ -53,6 +59,7 @@ namespace GameEngine
 
 	void PlatformPlayer::OnMouseMove(MouseMoveArgs * args, int)
 	{
+
 		if (!crosshair.expired()) {
 			ent_ptr ptr = crosshair.lock();
 			ptr->x(args->point.x);

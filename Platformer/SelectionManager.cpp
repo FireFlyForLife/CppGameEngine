@@ -6,22 +6,25 @@ namespace GameEngine
 {
 	SelectionManager::SelectionManager()
 	{
-		mouseDownListeners.add([this](MouseClickArgs* args, int id) { OnMouseDown(args, id); });
-		mouseMoveListeners.add([this](MouseMoveArgs* args, int id) { OnMouseMove(args, id); });
-		mouseUpListeners.add([this](MouseClickArgs* args, int id) { OnMouseUp(args, id); });
+		ids[0] = mouseDownListeners.add([this](MouseClickArgs* args, int id) { OnMouseDown(args, id); });
+		ids[1] = mouseMoveListeners.add([this](MouseMoveArgs* args, int id) { OnMouseMove(args, id); });
+		ids[2] = mouseUpListeners.add([this](MouseClickArgs* args, int id) { OnMouseUp(args, id); });
 	}
 
 
 	SelectionManager::SelectionManager(SelectionArea* area)
 		: selection_area(area)
 	{
-		mouseDownListeners.add([this](MouseClickArgs* args, int id) { OnMouseDown(args, id); });
-		mouseMoveListeners.add([this](MouseMoveArgs* args, int id) { OnMouseMove(args, id); });
-		mouseUpListeners.add([this](MouseClickArgs* args, int id) { OnMouseUp(args, id); });
+		ids[0] = mouseDownListeners.add([this](MouseClickArgs* args, int id) { OnMouseDown(args, id); });
+		ids[1] = mouseMoveListeners.add([this](MouseMoveArgs* args, int id) { OnMouseMove(args, id); });
+		ids[2] = mouseUpListeners.add([this](MouseClickArgs* args, int id) { OnMouseUp(args, id); });
 	}
 
 	SelectionManager::~SelectionManager()
 	{
+		mouseDownListeners.remove(ids[0]);
+		mouseMoveListeners.remove(ids[1]);
+		mouseUpListeners.remove(ids[2]);
 	}
 
 	void SelectionManager::Update()
@@ -30,8 +33,12 @@ namespace GameEngine
 
 	void SelectionManager::OnMouseDown(MouseClickArgs * args, int)
 	{
+		if (!enabled)
+			return;
+
 		if (args->scan_code == 3) {
 			if (selection_area) {
+				std::cout << selection_area->getRectangle().toStr() << std::endl;
 				getWorld()->entity_list->destroy(selection_area);
 				selection_area.reset();
 			}
@@ -46,7 +53,9 @@ namespace GameEngine
 	}
 	void SelectionManager::OnMouseMove(MouseMoveArgs * args, int)
 	{
-		
+		if (!enabled)
+			return;
+
 		if (args->dragging && args->scan_code == 4 && selection_area != NULL) {
 			World* world = getWorld();
 			Point world_point = world->toWorldSpace(args->point);
@@ -55,6 +64,9 @@ namespace GameEngine
 	}
 	void SelectionManager::OnMouseUp(MouseClickArgs * args, int)
 	{
+		if (!enabled)
+			return;
+
 		if (args->scan_code == 3) {
 			
 		}
