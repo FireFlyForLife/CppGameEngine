@@ -19,19 +19,19 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{9B40FC72-6CCD-42A5-AD96-FFD821FB8578}</ProjectGuid>
-    <RootNamespace>GameEngine</RootNamespace>
+    <ProjectGuid>{93D05C25-1B52-4C0C-A9A9-71BDB840BF74}</ProjectGuid>
+    <RootNamespace>Galaxian</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -57,11 +57,11 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="GameEnginePropertySheet.props" />
+    <Import Project="..\GameEngine\GameEnginePropertySheet.props" />
+    <Import Project="GalaxyPropertySheet.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="GameEnginePropertySheet.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -70,24 +70,13 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)..\Cpp_Lib\SDL2_ttf-2.0.14\include;$(SolutionDir)..\Cpp_Lib\SDL2_image-2.0.1\include;$(SolutionDir)..\Cpp_Lib\SDL2-2.0.5\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)..\Cpp_Lib\SDL2_ttf-2.0.14\lib\x86;$(SolutionDir)..\Cpp_Lib\SDL2_image-2.0.1\lib\x86;$(SolutionDir)..\Cpp_Lib\SDL2-2.0.5\lib\x86;$(LibraryPath)</LibraryPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(SolutionDir)..\Cpp_Lib\SDL2_ttf-2.0.14\include;$(SolutionDir)..\Cpp_Lib\SDL2_image-2.0.1\include;$(SolutionDir)..\Cpp_Lib\SDL2-2.0.5\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)..\Cpp_Lib\SDL2_ttf-2.0.14\lib\x86;$(SolutionDir)..\Cpp_Lib\SDL2_image-2.0.1\lib\x86;$(SolutionDir)..\Cpp_Lib\SDL2-2.0.5\lib\x86;$(LibraryPath)</LibraryPath>
-  </PropertyGroup>
+  <PropertyGroup />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
-    <Link>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <SubSystem>Console</SubSystem>
-    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -107,7 +96,6 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -124,88 +112,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Animation.cpp" />
-    <ClCompile Include="AnimationController.cpp" />
-    <ClCompile Include="BoxShape.cpp" />
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="CollisionManager.cpp" />
-    <ClCompile Include="FollowingCamera.cpp" />
-    <ClCompile Include="FPSCounter.cpp" />
-    <ClCompile Include="PhysicsEngine.cpp" />
-    <ClCompile Include="PhysicsGlobals.cpp" />
-    <ClCompile Include="PhysicsPlayer.cpp" />
-    <ClCompile Include="TextureAtlas.cpp" />
-    <ClCompile Include="Text_UI_element.cpp" />
-    <ClCompile Include="UI_element.cpp" />
-    <ClCompile Include="Debug_utils.cpp" />
-    <ClCompile Include="Entity.cpp" />
-    <ClCompile Include="EntityList.cpp" />
-    <ClCompile Include="Events.cpp" />
-    <ClCompile Include="EventSource.cpp" />
-    <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="Globals.cpp" />
-    <ClCompile Include="Input.cpp" />
-    <ClCompile Include="MoveableCamera.cpp" />
-    <ClCompile Include="Pathfinder.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Point.cpp" />
-    <ClCompile Include="Rectangle.cpp" />
-    <ClCompile Include="Renderer.cpp" />
-    <ClCompile Include="Rock.cpp" />
-    <ClCompile Include="Shape.cpp" />
-    <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="TextureManager.cpp" />
-    <ClCompile Include="Tile.cpp" />
-    <ClCompile Include="TileMap.cpp" />
-    <ClCompile Include="Vector2.cpp" />
-    <ClCompile Include="Vector_Utils.cpp" />
-    <ClCompile Include="World.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Animation.h" />
-    <ClInclude Include="AnimationController.h" />
-    <ClInclude Include="BoxShape.h" />
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="CollisionManager.h" />
-    <ClInclude Include="FollowingCamera.h" />
-    <ClInclude Include="FPSCounter.h" />
-    <ClInclude Include="GenericPoint.h" />
-    <ClInclude Include="GenericRectangle.h" />
-    <ClInclude Include="Physics.h" />
-    <ClInclude Include="PhysicsEngine.h" />
-    <ClInclude Include="PhysicsGlobals.h" />
-    <ClInclude Include="PhysicsPlayer.h" />
-    <ClInclude Include="TextureAtlas.h" />
-    <ClInclude Include="Text_UI_element.h" />
-    <ClInclude Include="UI_element.h" />
-    <ClInclude Include="Debug_utils.h" />
-    <ClInclude Include="Entity.h" />
-    <ClInclude Include="EntityList.h" />
-    <ClInclude Include="Events.h" />
-    <ClInclude Include="EventSource.h" />
-    <ClInclude Include="GameObject.h" />
-    <ClInclude Include="Globals.h" />
-    <ClInclude Include="Includes.h" />
-    <ClInclude Include="Input.h" />
-    <ClInclude Include="MoveableCamera.h" />
-    <ClInclude Include="Pathfinder.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="Point.h" />
-    <ClInclude Include="Rectangle.h" />
-    <ClInclude Include="Renderer.h" />
-    <ClInclude Include="Rock.h" />
-    <ClInclude Include="Shape.h" />
-    <ClInclude Include="Texture.h" />
-    <ClInclude Include="TextureManager.h" />
-    <ClInclude Include="Tile.h" />
-    <ClInclude Include="TileMap.h" />
-    <ClInclude Include="Vector2.h" />
-    <ClInclude Include="Vector_Utils.h" />
-    <ClInclude Include="World.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
-    <None Include="ClassDiagram11.cd" />
+    <ProjectReference Include="..\GameEngine\GameEngine.vcxproj">
+      <Project>{9b40fc72-6ccd-42a5-ad96-ffd821fb8578}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

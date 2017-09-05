@@ -4,7 +4,10 @@
 #include "Rectangle.h"
 
 namespace GameEngine {
-	template<typename T>
+	template<
+		typename T, //real type
+		typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type
+	>
 	struct GenericRectangle
 	{
 		T x;
@@ -22,7 +25,7 @@ namespace GameEngine {
 		{
 		}
 		
-		GenericRectangle(const GenericRectangle<T>& rect) = default;
+		GenericRectangle(const GenericRectangle& rect) = default;
 
 		GenericRectangle(const SDL_Rect& r)
 			: x(r.x), y(r.y), width(r.w), height(r.h)
@@ -66,4 +69,8 @@ namespace GameEngine {
 			return rect;
 		}
 	};
+
+	using IntRect	 = GenericRectangle<int>;
+	using FloatRect	 = GenericRectangle<float>;
+	using DoubleRect = GenericRectangle<double>;
 }

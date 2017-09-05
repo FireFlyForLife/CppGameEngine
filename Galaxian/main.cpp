@@ -17,16 +17,17 @@
 #include "Rock.h"
 #include "Player.h"
 #include "FollowingCamera.h"
-#include "EntityWall.h"
+//#include "EntityWall.h"
 #include "Physics.h"
 #include "PhysicsPlayer.h"
-#include "SelectionManager.h"
-#include "PlatformPlayer.h"
+//#include "SelectionManager.h"
+//#include "PlatformPlayer.h"
 #include "FPSCounter.h"
-#include "ScalableTargetWall.h"
-#include "EnemyCharacter.h"
+//#include "ScalableTargetWall.h"
+//#include "EnemyCharacter.h"
 #include "Animation.h"
 #include "Text_UI_element.h"
+#include "TextureAtlas.h"
 
 using namespace GameEngine;
 
@@ -115,12 +116,10 @@ bool loadMedia()
 	bool success = true;
 
 	Global::texture_manager.setupDefault(gRenderer);
-	Global::texture_manager.add(loadTexture("Art/Robot.png"), "player");
-	Global::texture_manager.add(loadTexture("Art/Grass.png"), "grass");
-	Global::texture_manager.add(loadTexture("Art/Rock.png"), "rock");
-	Global::texture_manager.add(loadTexture("Art/Preview.png"), "preview");
-	Global::texture_manager.add(loadTexture("Art/Crosshair.png"), "crosshair");
-	Global::texture_manager.add(loadTexture("Art/Enemy.png"), "enemy");
+	TextureAtlas textures(loadTexture("Art/TextureAtlas.png"));
+	//red enemy
+	textures.AddAnimation({ 0, 0, 0, 0 }, 3, 100); //idle;
+	textures.AddAnimation({})
 
 	font = TTF_OpenFont("AlphaFridgeMagnets.ttf", 24);
 
@@ -187,7 +186,7 @@ SDL_Texture* loadTexture(std::string path)
 #pragma region Utils
 
 ent_ptr addToWorld(Entity* entity) {
-	return game_world->entity_list->add( entity );
+	return game_world->entity_list->add(entity);
 }
 
 ent_ptr addToWorld(UI_element* ui) {
@@ -250,71 +249,17 @@ int main(int argc, char* args[])
 			addToWorld(x, y, rock);
 		}
 	}
-	for (int x = 0; x < 20; x++) {
-		EntityWall* ent_wall = new EntityWall(x*scale, 10 * scale, "preview");
-		addToWorld(ent_wall);
-	}
 
 	SDL_Texture* expl_texture = loadTexture("Art/Explosion.ani.png");
 	Point size(64, 64);
 	explosion = new Animation(expl_texture, size, 100);
-
-	//create the platforms
-	ScalableTargetWall* beginWall = new ScalableTargetWall(scale * 23, level - scale * 4, "Art/Platform.png", Vector2(32, 160 + scale * 4));
-	addToWorld(beginWall);
-	ScalableTargetWall* floor = new ScalableTargetWall(scale * 23, level + 160, "Art/Platform.png", Vector2(320, 32));
-	addToWorld(floor);
-	ScalableTargetWall* sw0 = new ScalableTargetWall(746, 672, "Art/Platform.png", Vector2(241, 36));
-	addToWorld(sw0);
-	ScalableTargetWall* sw1 = new ScalableTargetWall(853, 432, "Art/Platform.png", Vector2(40, 250));
-	addToWorld(sw1);
-	ScalableTargetWall* sw2 = new ScalableTargetWall(795, 608, "Art/Platform.png", Vector2(56, 30));
-	addToWorld(sw2);
-	ScalableTargetWall* sw3 = new ScalableTargetWall(696, 547, "Art/Platform.png", Vector2(158, 30));
-	addToWorld(sw3);
-	ScalableTargetWall* sw4 = new ScalableTargetWall(678, 758, "Art/Platform.png", Vector2(316, 34));
-	addToWorld(sw4);
-	ScalableTargetWall* sw5 = new ScalableTargetWall(650, 700, "Art/Platform.png", Vector2(37, 80));
-	addToWorld(sw5);
-	EnemyCharacter* enemy = new EnemyCharacter(scale * 30, level + 144, "enemy", *explosion);
-	addToWorld(enemy);
-	EnemyCharacter* e0 = new EnemyCharacter(701, 517, "enemy", *explosion);
-	addToWorld(e0);
-	EnemyCharacter* e1 = new EnemyCharacter(804, 592, "enemy", *explosion);
-	addToWorld(e1);
-	EnemyCharacter* e2 = new EnemyCharacter(798, 647, "enemy", *explosion);
-	addToWorld(e2);
-
-	SelectionManager* selection_manager = new SelectionManager();
-	addToWorld(selection_manager);
-
 	
-
-	//add entities to the world
-	PlatformPlayer* player = new PlatformPlayer(
-		scale * 25, 
-		level,
-		*explosion);
-	ent_ptr player_ptr = addToWorld(player);
-	shared_ptr<PlatformPlayer> platform_player = std::static_pointer_cast<PlatformPlayer>(player_ptr);
 	Text_UI_element* game_over = new Text_UI_element(Global::SCREEN_WIDTH / 2 - 60,
 		Global::SCREEN_HEIGHT / 2 - 20,
 		font,
 		"Game Over!");
 	game_over->enabled = false;
 	addToWorld(game_over);
-	platform_player->game_over = game_over;
-
-	FollowingCamera* camera = new FollowingCamera(player_ptr);
-	camera->offset = Point(Global::SCREEN_WIDTH / 2 - game_world->map->tile_scale / 2, Global::SCREEN_HEIGHT / 2 - game_world->map->tile_scale / 2 );
-	ent_ptr camera_ptr = addToWorld(camera);
-	game_world->camera = std::static_pointer_cast<Camera>( camera_ptr );
-
-	EntityWall* ent_wall = new EntityWall(
-		player->x(),
-		player->y() + 32.f,
-		"preview");
-	addToWorld(ent_wall);
 
 	FPSCounter* counter = new FPSCounter();
 	//addToWorld(counter);
@@ -344,12 +289,6 @@ int main(int argc, char* args[])
 				GameEngine::handle_SDL_Event(&e);
 			}
 		}
-
-		if (platform_player->getHealth() <= 0) {
-			selection_manager->enabled = false;
-		}
-		int health = fmax(0, platform_player->getHealth());
-		health_counter->setText(std::to_string(health));
 
 		//Update all active GameObjects
 		game_world->Update();

@@ -27,7 +27,7 @@ namespace GameEngine {
 	template<typename E, typename T>
 	inline void correctOverlap(E& a, T&) {
 		assert(false && "Only specialisations are allowed");
-		return false;
+		//return false;
 	}
 
 	// adapted from: https://www.gamedev.net/resources/_/technical/game-programming/swept-aabb-collision-detection-and-response-r3084
