@@ -1,7 +1,6 @@
 #include "UnitController.h"
 #include <iostream>
 
-
 namespace GameEngine
 {
 	UnitController::UnitController(World* game_world) : world(game_world)
@@ -57,9 +56,10 @@ namespace GameEngine
 	{
 		if (args->scan_code == 1) {
 			Point world_point = world->toWorldSpace(args->point);
-			delete selection_area;
+			//delete selection_area;
+			deleteSelectionArea();
 			selection_area = new SelectionArea(world_point.x, world_point.y);
-			world->entity_list->entities.push_back(selection_area);
+			world->entity_list->add(selection_area);
 		}
 		else if (args->scan_code == 3) {
 			for each (Unit* unit in selected)
@@ -86,9 +86,9 @@ namespace GameEngine
 			selection_area->setSecondPoint(world_point);
 			Rectangle bounds = selection_area->getRectangle();
 			BoxShape selection_collider(bounds);
-			for each (Entity* entity in world->entity_list->entities)
+			for each (auto entity in world->entity_list->entities)
 			{
-				Unit* unit = dynamic_cast<Unit*>(entity);
+				Unit* unit = dynamic_cast<Unit*>(entity.get());
 				if (unit) {
 					BoxShape* collider = dynamic_cast<BoxShape*>(entity->getCollider()); //TODO: Find solution to this
 					if (collider != nullptr) {
@@ -96,7 +96,7 @@ namespace GameEngine
 						world_collider.x += unit->x();
 						world_collider.y += unit->y();
 						selected.clear();
-						if (hasOverlap(world_collider, selection_collider)) {
+						if (hasOverlap({}, world_collider, {}, selection_collider)) {
 							if (vector_find<Unit*>(selected, unit) == -1)
 								selected.push_back(unit);
 						}
@@ -108,10 +108,22 @@ namespace GameEngine
 	void UnitController::OnMouseUp(MouseClickArgs * args, int)
 	{
 		if (args->scan_code == 1) {
-			EntityList* list = world->entity_list;
-			list->entities.erase(std::remove(list->entities.begin(), list->entities.end(), selection_area), list->entities.end());
-			delete selection_area;
-			selection_area = NULL;
+			deleteSelectionArea();
+			//delete selection_area; //it is a shared_ptr already
+			//selection_area = NULL;
+		}
+	}
+
+	void UnitController::deleteSelectionArea()
+	{
+		EntityList* list = world->entity_list;
+
+		for (auto it = list->begin(); it != list->end(); ++it)
+		{
+			if (it->get() == selection_area) {
+				list->entities.erase(it);
+				return;
+			}
 		}
 	}
 }

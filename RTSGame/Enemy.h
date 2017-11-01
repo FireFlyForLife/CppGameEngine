@@ -45,7 +45,7 @@ namespace GameEngine
 
 	private:
 		struct isNotEnabled {
-			bool operator()(Entity* entity);
+			bool operator()(ent_ptr entity);
 		};
 	};
 

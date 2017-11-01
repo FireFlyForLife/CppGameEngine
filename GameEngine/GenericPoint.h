@@ -71,8 +71,6 @@ namespace GameEngine {
 			Point p{ x, y };
 			return p;
 		}
-
-		static const GenericPoint zero{0, 0};
 	};
 
 	using IntPoint = GenericPoint<int>;

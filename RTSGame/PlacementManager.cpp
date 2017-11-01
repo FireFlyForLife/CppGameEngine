@@ -51,7 +51,7 @@ namespace GameEngine
 			if (!getWorld()->blocking(loc)) {
 				placement_entity->x(preview->x());
 				placement_entity->y(preview->y());
-				getWorld()->entity_list->entities.push_back(placement_entity);
+				getWorld()->entity_list->add(placement_entity);
 				placement_entity = nullptr;
 				bCanPlace = false;
 				preview->enabled = false;

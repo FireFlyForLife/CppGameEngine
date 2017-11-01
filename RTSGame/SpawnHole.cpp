@@ -18,8 +18,8 @@ namespace GameEngine
 		if (lastPressed + delay < time) {
 			ExplosiveEnemy* expl_enemy = new ExplosiveEnemy(x(), y(), "enemy", ani);
 			HealthBar* bar = generateHealthBar(expl_enemy);
-			getWorld()->entity_list->entities.push_back(expl_enemy);
-			getWorld()->entity_list->entities.push_back(bar);
+			getWorld()->entity_list->add(expl_enemy);
+			getWorld()->entity_list->add(bar);
 
 			lastPressed = time;
 			delay *= delay_multiplier;

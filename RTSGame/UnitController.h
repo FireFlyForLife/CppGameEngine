@@ -40,5 +40,7 @@ namespace GameEngine
 		void OnMouseDown(MouseClickArgs*, int);
 		void OnMouseMove(MouseMoveArgs*, int);
 		void OnMouseUp(MouseClickArgs*, int);
+
+		void deleteSelectionArea();
 	};
 }

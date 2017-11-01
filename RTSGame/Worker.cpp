@@ -17,7 +17,7 @@ namespace GameEngine
 	void Worker::Update()
 	{
 		if (base == nullptr)
-			base = dynamic_cast<Spaceport*>( getWorld()->entity_list->findWithTag("base") );
+			base = dynamic_cast<Spaceport*>( getWorld()->entity_list->findWithTag("base").get() );//I created the platformer game, and changed the framework a little, so now I am making this game compatible
 		
 		if (base->getHealth() <= 0)
 			return;
@@ -86,8 +86,8 @@ namespace GameEngine
 	}
 	void Worker::findOre()
 	{
-		std::vector<Entity*> ores = getWorld()->entity_list->findAllWithTag("ore");
-		ores.erase(std::remove_if(ores.begin(), ores.end(), [this](Entity* entity) {
+		std::vector<ent_ptr> ores = getWorld()->entity_list->findAllWithTag("ore");
+		ores.erase(std::remove_if(ores.begin(), ores.end(), [this](ent_ptr entity) {
 			Vector2 mypos{ x(), y() };
 			Vector2 target{ entity->x(), entity->y() };
 			return distanceBetween(mypos, target) > walk_range;
@@ -98,7 +98,7 @@ namespace GameEngine
 
 		int ore_num = rangeRandomAlg2(0, ores.size() - 1);
 
-		ore = ores[ore_num];
+		ore = ores[ore_num].get();
 	}
 
 	int Worker::rangeRandomAlg2(int min, int max) {

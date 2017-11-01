@@ -24,9 +24,9 @@ namespace GameEngine
 		ani_controller.Update();
 
 		Vector2 local(x(), y());
-		for each (Entity* entity in getWorld()->entity_list->entities)
+		for each (auto entity in getWorld()->entity_list->entities)
 		{
-			Actor* actor = dynamic_cast<Actor*>(entity);
+			Actor* actor = dynamic_cast<Actor*>(entity.get());
 			if (actor != nullptr && distanceBetween(local, { actor->x(), actor->y() }) <= radius) {
 				actor->addHealth(-damage);
 			}

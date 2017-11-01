@@ -69,22 +69,22 @@ namespace GameEngine
 
 	void Enemy::findPathToBuilding()
 	{
-		std::vector<Entity*> buildings = getWorld()->entity_list->findAllWithTag(target_tag);
+		std::vector<ent_ptr> buildings = getWorld()->entity_list->findAllWithTag(target_tag);
 		buildings.erase(std::remove_if(buildings.begin(), buildings.end(), isNotEnabled()), buildings.end());
-		auto compare = [this](Entity* a, Entity* b) { 
+		auto compare = [this](ent_ptr a, ent_ptr b) { 
 			return distanceBetween({ x(), y() }, { a->x(), a->y() }) > distanceBetween({ x(), y() }, { b->x(), b->y() });
 		};
-		std::priority_queue<Entity*, std::vector<Entity*>, decltype(compare)> pr_queue(compare);
-		for each (Entity* entity in buildings)
+		std::priority_queue<ent_ptr, std::vector<ent_ptr>, decltype(compare)> pr_queue(compare);
+		for each (auto entity in buildings)
 		{
-			pr_queue.push(entity);
+			pr_queue.emplace(entity);
 		}
 
 		if (pr_queue.size() <= 0)
 			return;
 
-		Entity* top = pr_queue.top();
-		target = reinterpret_cast<Building*>(top);
+		ent_ptr top = pr_queue.top();
+		target = reinterpret_cast<Building*>(top.get());
 
 		int scale = getWorld()->map->tile_scale;
 
@@ -102,8 +102,8 @@ namespace GameEngine
 			std::cout << target->getHealth() << std::endl;
 		}
 	}
-	bool Enemy::isNotEnabled::operator()(Entity * entity)
+	bool Enemy::isNotEnabled::operator()(ent_ptr entity)
 	{
-		return !(entity != nullptr && entity->enabled);
+		return !(entity.get() != nullptr && entity->enabled);
 	}
 }

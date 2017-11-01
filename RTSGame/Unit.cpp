@@ -62,9 +62,9 @@ namespace GameEngine
 	void Unit::lookForEnemies()
 	{
 		World* world = getWorld();
-		for each (Entity* entity in world->entity_list->entities)
+		for each (auto entity in world->entity_list->entities)
 		{
-			Enemy* enemy = dynamic_cast<Enemy*>(entity);
+			Enemy* enemy = dynamic_cast<Enemy*>(entity.get());
 			if (enemy != nullptr) {
 				if (enemy->getHealth() > 0 && enemyInRange(enemy)) {
 					state = ATTACKING;

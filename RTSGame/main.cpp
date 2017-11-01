@@ -201,7 +201,7 @@ SDL_Texture* loadTexture(std::string path)
 
 //utility methods for adding to the game_world
 void addToWorld(Entity* entity) {
-	game_world->entity_list->entities.push_back(std::shared_ptr<Entity>(entity));
+	game_world->entity_list->add(std::shared_ptr<Entity>(entity));
 }
 
 void addToWorld(UI_element* ui) {
@@ -297,9 +297,9 @@ int main(int argc, char* args[])
 	Player* player = new Player(scale*4, scale*17, "player");
 	addToWorld(player);
 
-	Camera* camera = new MoveableCamera(0, 0);
+	std::shared_ptr<Camera> camera = std::make_shared<MoveableCamera>(0, 0);
 	game_world->camera = camera;
-	addToWorld(camera);
+	addToWorld(camera.get());
 
 	UnitController* unit_controller = new UnitController(game_world);
 	addToWorld(unit_controller);
